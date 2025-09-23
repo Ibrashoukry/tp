@@ -1,21 +1,31 @@
 package seedu.mama;
 
+import seedu.mama.command.Command;
+import seedu.mama.model.EntryList;
+import seedu.mama.parser.Parser;
+import seedu.mama.storage.Storage;
+
 import java.util.Scanner;
 
 public class Mama {
     /**
-     * Main entry-point for the java.duke.Mama application.
+     * Main entry-point for the MAMA app.
      */
     public static void main(String[] args) {
-        String logo = " ____        _        \n"
-                + "|  _ \\ _   _| | _____ \n"
-                + "| | | | | | | |/ / _ \\\n"
-                + "| |_| | |_| |   <  __/\n"
-                + "|____/ \\__,_|_|\\_\\___|\n";
-        System.out.println("Hello from\n" + logo);
-        System.out.println("What is your name?");
+        System.out.println("Hello from MAMA");
+        System.out.println("Enter a command (delete ?, delete <index>, bye):");
 
-        Scanner in = new Scanner(System.in);
-        System.out.println("Hello " + in.nextLine());
+        Storage storage = Storage.defaultStorage();
+        EntryList list = storage.loadOrEmpty();
+        Parser parser = new Parser();
+        Scanner sc = new Scanner(System.in);
+
+        while (true) {
+            String line = sc.nextLine();
+            Command cmd = parser.parse(line);
+            String out = cmd.execute(list, storage);
+            System.out.println(out);
+            if (out.startsWith("Bye.")) break;
+        }
     }
 }
