@@ -1,10 +1,10 @@
-package seedu.duke;
+package seedu.mama;
 
 import java.util.Scanner;
 
-public class Duke {
+public class Mama {
     /**
-     * Main entry-point for the java.duke.Duke application.
+     * Main entry-point for the java.duke.Mama application.
      */
     public static void main(String[] args) {
         String logo = " ____        _        \n"
