@@ -3,8 +3,13 @@ package seedu.mama.storage;
 import seedu.mama.model.Entry;
 import seedu.mama.model.EntryList;
 
-import java.io.*;
-import java.nio.file.*;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 
 public class Storage {
     private final Path file;
@@ -17,7 +22,8 @@ public class Storage {
         Path dir = Paths.get("data");
         try {
             Files.createDirectories(dir);
-        } catch (IOException ignored) {
+        } catch (IOException e) {
+            System.err.println("Failed to create data directory: " + e.getMessage());
         }
         return new Storage(dir.resolve("mama.txt"));
     }
@@ -26,19 +32,25 @@ public class Storage {
         EntryList list = new EntryList();
         try {
             if (!Files.exists(file)) {
-                Files.createDirectories(file.getParent());
-                Files.writeString(file, "NOTE|first\nNOTE|second\n");
+                try {
+                    Files.createDirectories(file.getParent());
+                    Files.writeString(file, "NOTE|first\nNOTE|second\n");
+                } catch (IOException e) {
+                    System.err.println("Failed to seed data file: " + e.getMessage());
+                }
             }
             try (BufferedReader br = Files.newBufferedReader(file)) {
                 String line;
                 while ((line = br.readLine()) != null) {
                     try {
                         list.add(Entry.fromStorageString(line));
-                    } catch (Exception ignored) {
+                    } catch (IllegalArgumentException ex) {
+                        System.err.println("Skipping bad line in storage: " + line);
                     }
                 }
             }
-        } catch (IOException ignored) {
+        } catch (IOException e) {
+            System.err.println("Failed to read storage: " + e.getMessage());
         }
         return list;
     }
@@ -52,8 +64,11 @@ public class Storage {
                     bw.newLine();
                 }
             }
-            Files.move(tmp, file, StandardCopyOption.REPLACE_EXISTING, StandardCopyOption.ATOMIC_MOVE);
-        } catch (IOException ignored) {
+            Files.move(tmp, file,
+                    StandardCopyOption.REPLACE_EXISTING,
+                    StandardCopyOption.ATOMIC_MOVE);
+        } catch (IOException e) {
+            System.err.println("Failed to save storage: " + e.getMessage());
         }
     }
 }

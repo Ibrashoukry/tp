@@ -39,7 +39,9 @@ public abstract class Entry {
      */
     public static Entry fromStorageString(String line) {
         String[] parts = line.split("\\|", 2); // TYPE|payload
-        if (parts.length == 0) throw new IllegalArgumentException("Bad line: " + line);
+        if (parts.length == 0) {
+            throw new IllegalArgumentException("Bad line: " + line);
+        }
         switch (parts[0]) {
         case "NOTE":
             return NoteEntry.fromStorage(line);

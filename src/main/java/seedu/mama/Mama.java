@@ -25,7 +25,9 @@ public class Mama {
             Command cmd = parser.parse(line);
             String out = cmd.execute(list, storage);
             System.out.println(out);
-            if (out.startsWith("Bye.")) break;
+            if (out.startsWith("Bye.")) {
+                break;
+            }
         }
     }
 }

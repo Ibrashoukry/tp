@@ -12,7 +12,9 @@ public class DeleteCommand implements Command {
     }
 
     private static String preview(EntryList list) {
-        if (list.size() == 0) return "No entries yet.";
+        if (list.size() == 0) {
+            return "No entries yet.";
+        }
         StringBuilder sb = new StringBuilder("Here are your entries:");
         for (int i = 0; i < list.size(); i++) {
             sb.append(System.lineSeparator()).append(i + 1).append(". ").append(list.get(i).toListLine());
@@ -22,7 +24,9 @@ public class DeleteCommand implements Command {
 
     @Override
     public String execute(EntryList list, Storage storage) {
-        if (indexOneBased == -1) return preview(list);
+        if (indexOneBased == -1) {
+            return preview(list);
+        }
         if (indexOneBased <= 0 || indexOneBased > list.size()) {
             return "Invalid index: " + indexOneBased + System.lineSeparator() + preview(list);
         }
