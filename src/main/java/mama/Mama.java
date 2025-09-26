@@ -1,8 +1,8 @@
-package seedu.duke;
+package mama;
 
 import java.util.Scanner;
 
-public class Duke {
+public class Mama {
     /**
      * Main entry-point for the java.duke.Duke application.
      */
