@@ -1,9 +1,9 @@
-Hello from
- ____        _        
-|  _ \ _   _| | _____ 
-| | | | | | | |/ / _ \
-| |_| | |_| |   <  __/
-|____/ \__,_|_|\_\___|
-
-What is your name?
-Hello James Gosling
+Hello from MAMA
+Enter a command (delete ?, delete <index>, bye):
+Here are your entries:
+1. [NOTE] first
+2. [NOTE] second
+Deleted: [NOTE] first
+Here are your entries:
+1. [NOTE] second
+Bye. Hope to see you again soon!
