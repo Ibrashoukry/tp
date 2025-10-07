@@ -46,6 +46,8 @@ public abstract class Entry {
         case "NOTE":
             return NoteEntry.fromStorage(line);
         // future: case "MEAL": return MealEntry.fromStorage(line);
+        case "WEIGHT":
+            return WeightEntry.fromStorage(line);
         default:
             throw new IllegalArgumentException("Unknown type: " + parts[0]);
         }
