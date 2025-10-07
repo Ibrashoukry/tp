@@ -5,6 +5,10 @@ public class WeightEntry extends Entry {
         super("WEIGHT", description);
     }
 
+    public String getWeight() {
+        return this.description();
+    }
+
     @Override
     public String toStorageString() {
         return "WEIGHT|" + description();

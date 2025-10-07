@@ -29,6 +29,10 @@ public abstract class Entry {
         return "[" + type + "] " + description;
     }
 
+    public Boolean contains(String keyword) {
+        return this.description().contains(keyword);
+    }
+
     /**
      * Stable storage form; subclasses may append fields.
      */
