@@ -3,6 +3,7 @@ package seedu.mama.parser;
 import seedu.mama.command.Command;
 import seedu.mama.command.DeleteCommand;
 import seedu.mama.command.ListCommand;
+import seedu.mama.command.MilkCommand;
 
 public class Parser {
     /**
@@ -28,7 +29,21 @@ public class Parser {
             }
         } else if (trimmed.startsWith("list")) {
             return new ListCommand();
+        } else if (trimmed.startsWith("milk")) {
+            String[] parts = trimmed.split("\\s+");
+            if (parts.length == 2 && parts[1].equals("?")) {
+                return new MilkCommand(-1);
+            }
+            if (parts.length < 2) {
+                return (l, s) -> "Usage: milk VOLUME | delete ?";
+            }
+            try {
+                return new MilkCommand(Integer.parseInt(parts[1]));
+            } catch (NumberFormatException e) {
+                return (l, s) -> "VOLUME must be a number. Try `delete ?`.";
+            }
         }
+
         return (l, s) -> "Unknown command.";
     }
 }
