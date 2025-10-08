@@ -31,16 +31,14 @@ public class Parser {
             return new ListCommand();
         } else if (trimmed.startsWith("milk")) {
             String[] parts = trimmed.split("\\s+");
-            if (parts.length == 2 && parts[1].equals("?")) {
-                return new MilkCommand(-1);
-            }
+
             if (parts.length < 2) {
-                return (l, s) -> "Usage: milk VOLUME | delete ?";
+                return (l, s) -> "Usage: milk VOLUME | How much breast milk did you pump?";
             }
             try {
                 return new MilkCommand(Integer.parseInt(parts[1]));
             } catch (NumberFormatException e) {
-                return (l, s) -> "VOLUME must be a number. Try `delete ?`.";
+                return (l, s) -> "VOLUME must be a number.";
             }
         }
 

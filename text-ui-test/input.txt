@@ -1,4 +1,7 @@
 delete ?
 delete 1
 delete ?
+milk
+milk -10
+milk 80
 bye

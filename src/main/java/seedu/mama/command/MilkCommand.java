@@ -13,13 +13,9 @@ public class MilkCommand implements Command {
 
     @Override
     public String execute(EntryList list, Storage storage) {
-        if (milkVolume == -1) {
-            return "Invalid Volume! Volume of breast milk pumped cannot be empty"
-                    + System.lineSeparator();
-        }
 
         if (milkVolume <= 0) {
-            return "Invalid index: " + milkVolume + "| Volume cannot be negative"
+            return "Invalid Volume: " + milkVolume + " | Volume cannot be negative"
                     + System.lineSeparator();
         }
         Entry newMilk = new MilkEntry(milkVolume + "ml");
