@@ -1,4 +1,8 @@
 delete ?
 delete 1
 delete ?
+weight ?
+weight 83
+weight ?
 bye
+

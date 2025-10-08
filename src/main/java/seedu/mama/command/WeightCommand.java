@@ -5,10 +5,10 @@ import seedu.mama.model.EntryList;
 import seedu.mama.model.WeightEntry;
 import seedu.mama.storage.Storage;
 
-public class AddWeight implements Command {
+public class WeightCommand implements Command {
     private final int weightInput;
 
-    public AddWeight(int weightInput) {
+    public WeightCommand(int weightInput) {
         this.weightInput = weightInput;
     }
 

@@ -6,4 +6,8 @@ Here are your entries:
 Deleted: [NOTE] first
 Here are your entries:
 1. [NOTE] second
+Added new weight entry: [WEIGHT] 83kg
+Your past weights:
+[WEIGHT] 83kg
 Bye. Hope to see you again soon!
+
