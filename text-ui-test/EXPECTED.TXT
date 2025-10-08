@@ -1,5 +1,5 @@
 Hello from MAMA
-Enter a command (delete ?, delete <index>, bye):
+Enter a command (delete ?, delete <index>, bye, list"):
 Here are your entries:
 1. [NOTE] first
 2. [NOTE] second

@@ -13,7 +13,7 @@ public class Mama {
      */
     public static void main(String[] args) {
         System.out.println("Hello from MAMA");
-        System.out.println("Enter a command (delete ?, delete <index>, bye):, list");
+        System.out.println("Enter a command (delete ?, delete <index>, bye, list");
 
         Storage storage = Storage.defaultStorage();
         EntryList list = storage.loadOrEmpty();
