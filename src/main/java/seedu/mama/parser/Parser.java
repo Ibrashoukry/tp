@@ -3,6 +3,7 @@ package seedu.mama.parser;
 import seedu.mama.command.Command;
 import seedu.mama.command.DeleteCommand;
 import seedu.mama.command.AddWorkoutCommand;
+import seedu.mama.command.ListCommand;
 
 public class Parser {
     /**
@@ -26,6 +27,8 @@ public class Parser {
             } catch (NumberFormatException e) {
                 return (l, s) -> "INDEX must be a number. Try `delete ?`.";
             }
+        } else if (trimmed.startsWith("list")) {
+            return new ListCommand();
         }
         if (trimmed.startsWith("workout")) {
             return AddWorkoutCommand.fromInput(trimmed);
