@@ -1,9 +1,16 @@
 Hello from MAMA
-Enter a command (delete ?, delete <index>, bye, list)
-Here are your entries:
-1. [NOTE] first
-2. [NOTE] second
-Deleted: [NOTE] first
-Here are your entries:
-1. [NOTE] second
+Enter a command (workout <description> /dur <duration>, delete <index>, list, bye)
+Got it. I've logged this workout:
+  [Workout] run (30 mins)
+Great job Mama! You now have a total of 1 workouts completed! Lets keep it up!!
+Got it. I've logged this workout:
+  [Workout] swim (30 mins)
+Great job Mama! You now have a total of 2 workouts completed! Lets keep it up!!
+Got it. I've logged this workout:
+  [Workout] cycle (30 mins)
+Great job Mama! You now have a total of 3 workouts completed! Lets keep it up!!
+1. [Workout] run (30 mins)
+2. [Workout] swim (30 mins)
+3. [Workout] cycle (30 mins)
+Deleted: [Workout] swim (30 mins)
 Bye. Hope to see you again soon!
