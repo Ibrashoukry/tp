@@ -29,7 +29,9 @@ public class AddMealCommand implements Command {
     public String execute(EntryList list, Storage storage) {
         MealEntry entry = new MealEntry(mealType, calories);
         list.add(entry);
-        storage.save(list);
+        if (storage != null) {
+            storage.save(list);
+        }
         int totalCal = list.asList().stream() // gets total calorie count
                 .filter(e -> e.type().equals("MEAL"))
                 .mapToInt(e -> ((MealEntry) e).getCalories())

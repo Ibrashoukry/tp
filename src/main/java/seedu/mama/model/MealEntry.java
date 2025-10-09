@@ -8,7 +8,9 @@ public class MealEntry extends Entry {
         this.calories = calories;
     }
 
-    public int getCalories() {return calories;}
+    public int getCalories() {
+        return calories;
+    }
 
     @Override
     public String toListLine() {

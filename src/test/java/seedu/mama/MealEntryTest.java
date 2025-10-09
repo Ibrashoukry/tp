@@ -1,4 +1,3 @@
-
 package seedu.mama;
 
 import org.junit.jupiter.api.Test;
@@ -17,9 +16,9 @@ public class MealEntryTest {
     }
 
     @Test
-    public void toString_returnsFormattedString() {
+    public void toListLine_returnsFormattedString() {
         MealEntry entry = new MealEntry("dinner", 800);
-        String result = entry.toString();
+        String result = entry.toListLine();
         assertTrue(result.contains("dinner"));
         assertTrue(result.contains("800"));
     }

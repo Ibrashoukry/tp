@@ -1,4 +1,4 @@
- package seedu.mama;
+package seedu.mama;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -26,7 +26,7 @@ public class AddMealCommandTest {
         assertEquals(1, entries.size());
         assertEquals("breakfast", ((MealEntry) entries.get(0)).description());
         assertEquals(350, ((MealEntry) entries.get(0)).getCalories());
-        assertTrue(result.toLowerCase().contains("added"));
+        assertTrue(result.toLowerCase().contains("logged"));
     }
 
     @Test
