@@ -1,5 +1,6 @@
 package seedu.mama.parser;
 
+import seedu.mama.command.AddMealCommand;
 import seedu.mama.command.Command;
 import seedu.mama.command.DeleteCommand;
 import seedu.mama.command.AddWorkoutCommand;
@@ -32,6 +33,9 @@ public class Parser {
         }
         if (trimmed.startsWith("workout")) {
             return AddWorkoutCommand.fromInput(trimmed);
+        }
+        if (trimmed.startsWith("meal")) {
+            return AddMealCommand.fromInput(trimmed);
         }
         return (l, s) -> "Unknown command.";
     }
