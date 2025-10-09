@@ -32,13 +32,10 @@ public class Storage {
         EntryList list = new EntryList();
         try {
             if (!Files.exists(file)) {
-                try {
-                    Files.createDirectories(file.getParent());
-                    Files.writeString(file, "NOTE|first\nNOTE|second\n");
-                } catch (IOException e) {
-                    System.err.println("Failed to seed data file: " + e.getMessage());
-                }
+                // No data file yet → start with an empty list
+                return list;
             }
+
             try (BufferedReader br = Files.newBufferedReader(file)) {
                 String line;
                 while ((line = br.readLine()) != null) {
@@ -54,6 +51,7 @@ public class Storage {
         }
         return list;
     }
+
 
     public void save(EntryList list) {
         try {
