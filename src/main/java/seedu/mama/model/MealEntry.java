@@ -22,7 +22,7 @@ public class MealEntry extends Entry {
     }
 
     public static WorkoutEntry fromStorage(String line) {
-        // Expected: WORKOUT|<type>|<duration>
+        // Expected: MEAL|<type>|<calories>
         String[] parts = line.split("\\|");
         String type = parts.length > 1 ? parts[1] : "";
         int cal = parts.length > 2 ? Integer.parseInt(parts[2]) : 0;
