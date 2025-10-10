@@ -1,16 +1,11 @@
-delete ?
+list
 delete 1
-delete ?
-milk
-milk -10
-milk 80
+list
+weight 83
+weight?
 workout run /dur 30
 workout swim /dur 30
 workout cycle /dur 30
 list
-delete 2
-
-weight ?
-weight 83
-weight ?
+delete 4
 bye
