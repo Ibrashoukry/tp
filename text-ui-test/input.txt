@@ -1,8 +1,6 @@
-
 delete ?
 delete 1
 delete ?
-
 workout run /dur 30
 workout swim /dur 30
 workout cycle /dur 30
