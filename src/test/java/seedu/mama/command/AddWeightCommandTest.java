@@ -4,6 +4,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import seedu.mama.model.EntryList;
 import seedu.mama.model.WeightEntry;
+import seedu.mama.storage.Storage;
+
+import java.nio.file.Path;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -11,10 +14,12 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class AddWeightCommandTest {
     private EntryList entries;
+    private Storage storage;
 
     @BeforeEach
     public void setUp() {
         entries = new EntryList();
+        storage = new Storage(Path.of("build", "test-storage-workout.txt"));
     }
 
     @Test
