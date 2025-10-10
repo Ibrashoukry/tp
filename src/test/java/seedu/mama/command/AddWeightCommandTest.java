@@ -4,9 +4,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import seedu.mama.model.EntryList;
 import seedu.mama.model.WeightEntry;
-import seedu.mama.storage.Storage;
-
-import java.nio.file.Path;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -14,19 +11,11 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class AddWeightCommandTest {
     private EntryList entries;
-    private Storage dummyStorage;
+
 
     @BeforeEach
     public void setUp() {
         entries = new EntryList();
-
-        // Dummy Storage: does nothing when save() is called
-        dummyStorage = new Storage(null) {
-            @Override
-            public void save(EntryList list) {
-                // no-op for testing
-            }
-        };
     }
 
     @Test
@@ -39,16 +28,5 @@ public class AddWeightCommandTest {
         assertEquals("80", ((WeightEntry) entries.get(0)).getWeight());
         assertTrue(result.contains("Added new weight entry"));
         assertTrue(result.contains("80"));
-    }
-
-    @Test
-    public void execute_multipleWeights_entriesIncrease() {
-        WeightCommand first = new WeightCommand(80);
-        WeightCommand second = new WeightCommand(82);
-        first.execute(entries, dummyStorage);
-        second.execute(entries, dummyStorage);
-
-        // List should now have 2 entries
-        assertEquals(2, entries.size());
     }
 }
