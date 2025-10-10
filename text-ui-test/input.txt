@@ -7,5 +7,5 @@ workout run /dur 30
 workout swim /dur 30
 workout cycle /dur 30
 list
-delete 4
+delete 5
 bye
