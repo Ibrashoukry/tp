@@ -1,5 +1,14 @@
 Hello from MAMA
-
+Enter a command (delete ?, delete <index>, bye, list)
+Here are your entries:
+1. [NOTE] first
+2. [NOTE] second
+Deleted: [NOTE] first
+Here are your entries:
+1. [NOTE] second
+Added new weight entry: [WEIGHT] 83kg
+Your past weights:
+[WEIGHT] 83kg
 Enter a command (workout <description> /dur <duration>, delete <index>, list, bye)
 Got it. I've logged this workout:
   [Workout] run (30 mins)
@@ -14,6 +23,4 @@ Great job Mama! You now have a total of 3 workouts completed! Lets keep it up!!
 2. [Workout] swim (30 mins)
 3. [Workout] cycle (30 mins)
 Deleted: [Workout] swim (30 mins)
-
 Bye. Hope to see you again soon!
-
