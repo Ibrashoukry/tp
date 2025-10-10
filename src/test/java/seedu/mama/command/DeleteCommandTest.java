@@ -41,7 +41,7 @@ public class DeleteCommandTest {
 
     @Test
     public void execute_validIndex_deletesCorrectEntry() {
-        DeleteCommand cmd = new DeleteCommand(2); // should remove "Swim 1km"
+        DeleteCommand cmd = new DeleteCommand(2);
 
         String output = cmd.execute(list, storage);
 
