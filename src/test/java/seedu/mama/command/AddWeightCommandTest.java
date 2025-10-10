@@ -28,4 +28,14 @@ public class AddWeightCommandTest {
         assertTrue(result.contains("Added new weight entry"));
         assertTrue(result.contains("80"));
     }
+
+    @Test
+    public void execute_multipleMeals_entriesIncrease() {
+        WeightCommand first = new WeightCommand(100);
+        WeightCommand second = new WeightCommand(50);
+        first.execute(entries, null);
+        second.execute(entries, null);
+
+        assertEquals(2, entries.size());
+    }
 }
