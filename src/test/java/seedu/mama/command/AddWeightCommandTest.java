@@ -24,7 +24,7 @@ public class AddWeightCommandTest {
         String result = command.execute(entries, null);
 
         assertEquals(1, entries.size());
-        assertEquals("80", ((WeightEntry) entries.get(0)).getWeight());
+        assertEquals("80kg", ((WeightEntry) entries.get(0)).getWeight());
         assertTrue(result.contains("Added new weight entry"));
         assertTrue(result.contains("80"));
     }
