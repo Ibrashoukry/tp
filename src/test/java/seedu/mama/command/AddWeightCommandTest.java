@@ -30,7 +30,7 @@ public class AddWeightCommandTest {
     }
 
     @Test
-    public void execute_multipleMeals_entriesIncrease() {
+    public void execute_multipleWeight_entriesIncrease() {
         WeightCommand first = new WeightCommand(100);
         WeightCommand second = new WeightCommand(50);
         first.execute(entries, null);
