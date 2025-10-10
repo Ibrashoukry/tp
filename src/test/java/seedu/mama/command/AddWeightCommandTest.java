@@ -19,7 +19,7 @@ public class AddWeightCommandTest {
     }
 
     @Test
-    public void execute_validMeal_addsEntryToList() {
+    public void execute_validWeight_addsEntryToList() {
         WeightCommand command = new WeightCommand(80);
         String result = command.execute(entries, null);
 
