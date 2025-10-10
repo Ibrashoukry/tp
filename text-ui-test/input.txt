@@ -1,7 +1,11 @@
+list
+delete 1
+list
+weight 83
+weight ?
 workout run /dur 30
 workout swim /dur 30
 workout cycle /dur 30
 list
-delete 2
+delete 4
 bye
-
