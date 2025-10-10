@@ -14,9 +14,6 @@ public class Mama {
     public static void main(String[] args) {
         System.out.println("Hello from MAMA");
 
-        System.out.println("Enter a command (workout <description> /dur <duration>, delete <index>, " +
-                "list, milk <volume>, weight <weight>, bye)");
-
         System.out.println("Enter a command (workout <description> /dur <duration>, " +
                 "delete <index>, list, milk <volume>, weight <weight>, bye)");
 
