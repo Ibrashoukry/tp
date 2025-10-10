@@ -29,6 +29,10 @@ public abstract class Entry {
         return "[" + type + "] " + description;
     }
 
+    public Boolean contains(String keyword) {
+        return this.description().contains(keyword);
+    }
+
     /**
      * Stable storage form; subclasses may append fields.
      */
@@ -53,6 +57,8 @@ public abstract class Entry {
             return WorkoutEntry.fromStorage(line);
 
         // future: case "MEAL": return MealEntry.fromStorage(line);
+        case "WEIGHT":
+            return WeightEntry.fromStorage(line);
         default:
             throw new IllegalArgumentException("Unknown type: " + parts[0]);
         }
