@@ -1,0 +1,16 @@
+delete ?
+delete 1
+delete ?
+milk
+milk -10
+milk 80
+workout run /dur 30
+workout swim /dur 30
+workout cycle /dur 30
+list
+delete 2
+
+weight ?
+weight 83
+weight ?
+bye
