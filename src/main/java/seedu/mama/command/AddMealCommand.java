@@ -16,6 +16,9 @@ public class AddMealCommand implements Command {
     public static AddMealCommand fromInput(String input) {
         // Error handling when invalid format to be added
         String desc = input.substring("meal".length()).trim();
+        if (!desc.contains("/cal")) {
+            throw new IllegalArgumentException("Usage: meal <mealType> /cal <calories>");
+        }
         String[] parsedDesc = desc.split("/cal");
         String calStr = parsedDesc[1].trim().split("\\s+")[0];
         int calories = Integer.parseInt(calStr);
@@ -26,7 +29,9 @@ public class AddMealCommand implements Command {
     public String execute(EntryList list, Storage storage) {
         MealEntry entry = new MealEntry(mealType, calories);
         list.add(entry);
-        storage.save(list);
+        if (storage != null) {
+            storage.save(list);
+        }
         int totalCal = list.asList().stream() // gets total calorie count
                 .filter(e -> e.type().equals("MEAL"))
                 .mapToInt(e -> ((MealEntry) e).getCalories())

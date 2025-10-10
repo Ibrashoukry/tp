@@ -8,7 +8,9 @@ public class MealEntry extends Entry {
         this.calories = calories;
     }
 
-    public int getCalories() {return calories;}
+    public int getCalories() {
+        return calories;
+    }
 
     @Override
     public String toListLine() {
@@ -17,15 +19,15 @@ public class MealEntry extends Entry {
 
     @Override
     public String toStorageString() {
-        // Stable storage: WORKOUT|<type>|<duration>
-        return "WORKOUT|" + description() + "|" + calories;
+        // Stable storage: MEAL|<type>|<calories>
+        return "MEAL|" + description() + "|" + calories;
     }
 
-    public static WorkoutEntry fromStorage(String line) {
-        // Expected: WORKOUT|<type>|<duration>
+    public static MealEntry fromStorage(String line) {
+        // Expected: MEAL|<type>|<calories>
         String[] parts = line.split("\\|");
         String type = parts.length > 1 ? parts[1] : "";
         int cal = parts.length > 2 ? Integer.parseInt(parts[2]) : 0;
-        return new WorkoutEntry(type, cal);
+        return new MealEntry(type, cal);
     }
 }
