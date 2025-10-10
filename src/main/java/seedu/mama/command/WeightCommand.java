@@ -29,6 +29,8 @@ public class WeightCommand implements Command {
     @Override
     public String execute(EntryList list, Storage storage) {
         // TO BE CONTINUED
+
+
         if (weightInput == -1) {
             return preview(list);
         }
@@ -39,8 +41,9 @@ public class WeightCommand implements Command {
         }
         Entry newWeight = new WeightEntry(weightInput + "kg");
         list.add(newWeight);
-        storage.save(list);
-
+        if (storage != null) {
+            storage.save(list);
+        }
         return "Added new weight entry: " + newWeight.toListLine();
     }
 }
