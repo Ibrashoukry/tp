@@ -1,8 +1,11 @@
 package seedu.mama.parser;
 
+import seedu.mama.command.AddMealCommand;
 import seedu.mama.command.Command;
 import seedu.mama.command.DeleteCommand;
+import seedu.mama.command.AddWorkoutCommand;
 import seedu.mama.command.ListCommand;
+import seedu.mama.command.MilkCommand;
 
 public class Parser {
     /**
@@ -28,7 +31,26 @@ public class Parser {
             }
         } else if (trimmed.startsWith("list")) {
             return new ListCommand();
+        } else if (trimmed.startsWith("milk")) {
+            String[] parts = trimmed.split("\\s+");
+
+            if (parts.length < 2) {
+                return (l, s) -> "Usage: milk VOLUME | How much breast milk did you pump?";
+            }
+            try {
+                return new MilkCommand(Integer.parseInt(parts[1]));
+            } catch (NumberFormatException e) {
+                return (l, s) -> "VOLUME must be a number.";
+            }
         }
+
+        if (trimmed.startsWith("workout")) {
+            return AddWorkoutCommand.fromInput(trimmed);
+        }
+        if (trimmed.startsWith("meal")) {
+            return AddMealCommand.fromInput(trimmed);
+        }
+
         return (l, s) -> "Unknown command.";
     }
 }
