@@ -2,7 +2,7 @@ list
 delete 1
 list
 weight 83
-weight?
+weight ?
 workout run /dur 30
 workout swim /dur 30
 workout cycle /dur 30
