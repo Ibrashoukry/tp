@@ -17,6 +17,10 @@ public class Mama {
         System.out.println("Enter a command (workout <description> /dur <duration>, delete <index>, " +
                 "list, milk <volume>, weight <weight>, bye)");
 
+        System.out.println("Enter a command (workout <description> /dur <duration>, " +
+                "delete <index>, list, milk <volume>, weight <weight>, bye)");
+
+
         Storage storage = Storage.defaultStorage();
         EntryList list = storage.loadOrEmpty();
         Parser parser = new Parser();

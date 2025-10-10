@@ -1,7 +1,9 @@
 package seedu.mama.parser;
 
 import seedu.mama.command.WeightCommand;
+
 import seedu.mama.command.AddMealCommand;
+
 import seedu.mama.command.Command;
 import seedu.mama.command.DeleteCommand;
 import seedu.mama.command.AddWorkoutCommand;
@@ -47,6 +49,21 @@ public class Parser {
 
         if (trimmed.startsWith("workout")) {
             return AddWorkoutCommand.fromInput(trimmed);
+        }
+
+        if (trimmed.startsWith("weight")) {
+            String[] parts = trimmed.split("\\s+");
+            if (parts.length == 2 && parts[1].equals("?")) {
+                return new WeightCommand(-1);
+            }
+            if (parts.length < 2) {
+                return (l, s) -> "Weight must be a number. Try `weight`+ 'value of weight'";
+            }
+            try {
+                return new WeightCommand(Integer.parseInt(parts[1]));
+            } catch (NumberFormatException e) {
+                return (l, s) -> "Weight must be a number. Try `weight`+ 'value of weight'";
+            }
         }
         if (trimmed.startsWith("meal")) {
             return AddMealCommand.fromInput(trimmed);
