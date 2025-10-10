@@ -3,7 +3,6 @@ package seedu.mama.command;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import seedu.mama.model.EntryList;
-import seedu.mama.model.MilkEntry;
 import seedu.mama.model.WeightEntry;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
