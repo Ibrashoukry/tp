@@ -1,5 +1,5 @@
 Hello from MAMA
-Enter a command (workout <description> /dur <duration>, delete <index>, list, weight <weight>, milk <volume>, bye)
+Enter a command (workout <description> /dur <duration>, delete <index>, list, milk <volume>, weight <weight>, bye)
 No entries found.
 Invalid index: 1
 No entries yet.
