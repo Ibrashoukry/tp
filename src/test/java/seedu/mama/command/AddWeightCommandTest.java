@@ -14,12 +14,19 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class AddWeightCommandTest {
     private EntryList entries;
-    private Storage storage;
+    private Storage dummyStorage;
 
     @BeforeEach
     public void setUp() {
         entries = new EntryList();
-        storage = new Storage(Path.of("build", "test-storage-workout.txt"));
+
+        // Dummy Storage: does nothing when save() is called
+        dummyStorage = new Storage(null) {
+            @Override
+            public void save(EntryList list) {
+                // no-op for testing
+            }
+        };
     }
 
     @Test
@@ -38,8 +45,8 @@ public class AddWeightCommandTest {
     public void execute_multipleWeights_entriesIncrease() {
         WeightCommand first = new WeightCommand(80);
         WeightCommand second = new WeightCommand(82);
-        first.execute(entries, null);
-        second.execute(entries, null);
+        first.execute(entries, dummyStorage);
+        second.execute(entries, dummyStorage);
 
         // List should now have 2 entries
         assertEquals(2, entries.size());
