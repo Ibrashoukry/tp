@@ -1,12 +1,13 @@
 Hello from MAMA
 Enter a command (workout <description> /dur <duration>, delete <index>, list, milk <volume>, weight <weight>, bye)
-No entries found.
+No entries yet.
 Invalid index: 1
 No entries yet.
-No entries found.
-Added new weight entry: [WEIGHT] 83kg
-Your past weights:
-[WEIGHT] 83kg
+No entries yet.
+Usage: milk VOLUME | How much breast milk did you pump?
+Invalid Volume: -10 | Volume cannot be negative
+
+Breast Milk Pumped: [MILK] 80ml
 Got it. I've logged this workout:
   [Workout] run (30 mins)
 Great job Mama! You now have a total of 1 workouts completed! Lets keep it up!!
@@ -16,9 +17,14 @@ Great job Mama! You now have a total of 2 workouts completed! Lets keep it up!!
 Got it. I've logged this workout:
   [Workout] cycle (30 mins)
 Great job Mama! You now have a total of 3 workouts completed! Lets keep it up!!
-1. [WEIGHT] 83kg
+1. [MILK] 80ml
 2. [Workout] run (30 mins)
 3. [Workout] swim (30 mins)
 4. [Workout] cycle (30 mins)
-Deleted: [Workout] cycle (30 mins)
+Deleted: [Workout] run (30 mins)
+Unknown command.
+Your past weights:
+Added new weight entry: [WEIGHT] 83kg
+Your past weights:
+[WEIGHT] 83kg
 Bye. Hope to see you again soon!

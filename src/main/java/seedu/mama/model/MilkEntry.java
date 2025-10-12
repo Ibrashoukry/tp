@@ -5,6 +5,10 @@ public class MilkEntry extends Entry {
         super("MILK", text);
     }
 
+    public String getMilk() {
+        return this.description();
+    }
+
     @Override
     public String toStorageString() {
         return "MILK|" + description();
