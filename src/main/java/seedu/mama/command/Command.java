@@ -10,7 +10,7 @@ public interface Command {
      * @param lists The EntryList to operate on.
      * @param storage The Storage.
      */
-    String execute(EntryList lists, Storage storage);
+    String execute(EntryList lists, Storage storage) throws CommandException;
 
     /**
      * Whether this command should cause the program to exit.
