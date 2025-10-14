@@ -18,7 +18,7 @@ public class ListCommandTest {
     }
 
     @Test
-    public void execute_emptyList_returnsNoEntriesMessage() {
+    public void execute_emptyList_returnsNoEntriesMessage() throws CommandException {
         ListCommand command = new ListCommand();
         String result = command.execute(entries, null);
 
@@ -26,7 +26,7 @@ public class ListCommandTest {
     }
 
     @Test
-    public void execute_singleEntry_returnsOneLine() {
+    public void execute_singleEntry_returnsOneLine() throws CommandException {
         entries.add(new NoteEntry("Buy milk"));
         ListCommand command = new ListCommand();
         String result = command.execute(entries, null);
@@ -36,7 +36,7 @@ public class ListCommandTest {
     }
 
     @Test
-    public void execute_multipleEntries_returnsNumberedList() {
+    public void execute_multipleEntries_returnsNumberedList() throws CommandException {
         entries.add(new NoteEntry("Buy milk"));
         entries.add(new NoteEntry("Finish assignment"));
 

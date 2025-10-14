@@ -1,9 +1,11 @@
 package seedu.mama;
 
 import seedu.mama.command.Command;
+import seedu.mama.command.CommandException;
 import seedu.mama.model.EntryList;
 import seedu.mama.parser.Parser;
 import seedu.mama.storage.Storage;
+
 
 import java.util.Scanner;
 
@@ -11,7 +13,7 @@ public class Mama {
     /**
      * Main entry-point for the MAMA app.
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws CommandException {
         System.out.println("Hello from MAMA");
 
         System.out.println("Enter a command (workout <description> /dur <duration>, " +
