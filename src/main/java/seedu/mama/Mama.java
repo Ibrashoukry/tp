@@ -7,7 +7,6 @@ import seedu.mama.parser.Parser;
 import seedu.mama.storage.Storage;
 
 
-import java.text.ParseException;
 import java.util.Scanner;
 
 public class Mama {
