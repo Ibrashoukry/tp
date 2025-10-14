@@ -12,6 +12,7 @@ import java.nio.file.Path;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class DeleteCommandTest {
 
@@ -21,15 +22,15 @@ public class DeleteCommandTest {
     @BeforeEach
     public void setUp() {
         list = new EntryList();
-        list.add(new WorkoutEntry("Run", 30));     // index 1
-        list.add(new WorkoutEntry("Swim", 30));    // index 2
-        list.add(new WorkoutEntry("Cycle", 30));  // index 3
+        list.add(new WorkoutEntry("Run", 30));
+        list.add(new WorkoutEntry("Swim", 30));
+        list.add(new WorkoutEntry("Cycle", 30));
 
         storage = new Storage(Path.of("build", "test-storage.txt"));
     }
 
     @Test
-    public void execute_previewMode_returnsFormattedList() {
+    public void execute_previewMode_returnsFormattedList() throws CommandException {
         DeleteCommand cmd = new DeleteCommand(-1);
         String result = cmd.execute(list, storage);
 
@@ -40,7 +41,7 @@ public class DeleteCommandTest {
     }
 
     @Test
-    public void execute_validIndex_deletesCorrectEntry() {
+    public void execute_validIndex_deletesCorrectEntry() throws CommandException {
         DeleteCommand cmd = new DeleteCommand(2);
 
         String output = cmd.execute(list, storage);
@@ -54,7 +55,7 @@ public class DeleteCommandTest {
     }
 
     @Test
-    public void execute_invalidIndex_returnsErrorMessage() {
+    public void execute_invalidIndex_returnsErrorMessage() throws CommandException {
         DeleteCommand cmd = new DeleteCommand(5); // out of bounds
 
         String output = cmd.execute(list, storage);
@@ -65,7 +66,7 @@ public class DeleteCommandTest {
     }
 
     @Test
-    public void execute_emptyList_previewShowsNoEntries() {
+    public void execute_emptyList_previewShowsNoEntries() throws CommandException {
         EntryList emptyList = new EntryList();
         DeleteCommand cmd = new DeleteCommand(-1);
 
@@ -75,10 +76,16 @@ public class DeleteCommandTest {
     }
 
     @Test
-    public void execute_zeroIndex_returnsInvalidMessage() {
+    public void execute_zeroIndex_returnsInvalidMessage() throws CommandException {
         DeleteCommand cmd = new DeleteCommand(0);
         String output = cmd.execute(list, storage);
 
         assertTrue(output.startsWith("Invalid index: 0"));
+    }
+
+    @Test
+    public void constructor_illegalIndex_throwsIAE() {
+        assertThrows(IllegalArgumentException.class, () -> new DeleteCommand(-2));
+        assertThrows(IllegalArgumentException.class, () -> new DeleteCommand(0));
     }
 }

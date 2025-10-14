@@ -14,7 +14,7 @@ public class Parser {
     /**
      * Parses raw input into a Command.
      */
-    public Command parse(String input) {
+    public static Command parse(String input) {
         String trimmed = input.trim();
         if (trimmed.equals("bye")) {
             return (l, s) -> "Bye. Hope to see you again soon!";
@@ -25,12 +25,12 @@ public class Parser {
                 return new DeleteCommand(-1);
             }
             if (parts.length < 2) {
-                return (l, s) -> "Usage: delete INDEX | delete ?";
+                return (l, s) -> "Usage: delete INDEX";
             }
             try {
                 return new DeleteCommand(Integer.parseInt(parts[1]));
             } catch (NumberFormatException e) {
-                return (l, s) -> "INDEX must be a number. Try `delete ?`.";
+                return (l, s) -> "INDEX must be a number.";
             }
         } else if (trimmed.startsWith("list")) {
             return new ListCommand();
