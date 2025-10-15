@@ -28,7 +28,8 @@ public final class AddWorkoutCommand implements Command {
         // Assumes lowercase "workout" and exact format, error handling not added yet
         String after = input.substring("workout".length()).trim();
         if (after.isEmpty()) {
-            throw new CommandException("Workout type cannot be empty.\nExpected input format: workout <TYPE> /dur <DURATION>");
+            throw new CommandException("Workout type cannot be empty." +
+                    "\nExpected input format: workout <TYPE> /dur <DURATION>");
         }
 
         if (after.indexOf("/dur") != after.lastIndexOf("/dur")) {
@@ -57,7 +58,9 @@ public final class AddWorkoutCommand implements Command {
         // If there are extra tokens after duration, reject
         if (tokens.length > 1) {
             StringBuilder tail = new StringBuilder(tokens[1]);
-            for (int i = 2; i < tokens.length; i++) tail.append(' ').append(tokens[i]);
+            for (int i = 2; i < tokens.length; i++) {
+                tail.append(' ').append(tokens[i]);
+            }
             throw new CommandException("Unexpected input after duration: '" + tail
                     + "'\nUsage: workout TYPE /dur DURATION");
         }
