@@ -34,7 +34,7 @@ public class Mama {
             } catch (CommandException ce) {
                 // user-facing (runtime) error, like invalid delete index or save failure
                 System.out.println(ce.getMessage());
-                LOG.warning("Command failed: " + ce.getMessage());
+               // LOG.warning("Command failed: " + ce.getMessage());
             } catch (Exception e) {
                 // safeguard for any other unforeseen error
                 System.out.println("An unexpected error occurred: " + e.getMessage());
