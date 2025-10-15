@@ -1,2 +1,3 @@
 NOTE|first
 NOTE|second
+MEAL|breakfast|500

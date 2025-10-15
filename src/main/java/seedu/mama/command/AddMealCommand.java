@@ -13,16 +13,29 @@ public class AddMealCommand implements Command {
         this.calories = calories;
     }
 
-    public static AddMealCommand fromInput(String input) {
-        // Error handling when invalid format to be added
+    public static AddMealCommand fromInput(String input) throws CommandException {
         String desc = input.substring("meal".length()).trim();
+
         if (!desc.contains("/cal")) {
-            throw new IllegalArgumentException("Usage: meal <mealType> /cal <calories>");
+            throw new CommandException("Invalid format! Try: meal <mealType> /cal <calories>");
         }
+
         String[] parsedDesc = desc.split("/cal");
+        if (parsedDesc.length < 2) {
+            throw new CommandException("Invalid format! Try: meal <mealType> /cal <calories>");
+        }
+
+        String mealType = parsedDesc[0].trim();
         String calStr = parsedDesc[1].trim().split("\\s+")[0];
-        int calories = Integer.parseInt(calStr);
-        return new AddMealCommand(parsedDesc[0].trim(), calories);
+
+        int calories;
+        try {
+            calories = Integer.parseInt(calStr);
+        } catch (NumberFormatException e) {
+            throw new CommandException("Calories must be a number.");
+        }
+
+        return new AddMealCommand(mealType, calories);
     }
 
     @Override
