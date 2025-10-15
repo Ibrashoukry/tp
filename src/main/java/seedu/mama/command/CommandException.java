@@ -5,10 +5,10 @@ package seedu.mama.command;
  */
 public class CommandException extends Exception {
     public CommandException(String message) {
-        super("Error: " + message);
+        super(message);
     }
 
     public CommandException(String message, Throwable cause) {
-        super("Error: " + message, cause);
+        super(message, cause);
     }
 }
