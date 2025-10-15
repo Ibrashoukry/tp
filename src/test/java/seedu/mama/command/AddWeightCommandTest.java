@@ -19,7 +19,7 @@ public class AddWeightCommandTest {
     }
 
     @Test
-    public void execute_validWeight_addsEntryToList() {
+    public void execute_validWeight_addsEntryToList() throws CommandException {
         WeightCommand command = new WeightCommand(80);
         String result = command.execute(entries, null);
 
@@ -30,7 +30,7 @@ public class AddWeightCommandTest {
     }
 
     @Test
-    public void execute_multipleWeight_entriesIncrease() {
+    public void execute_multipleWeight_entriesIncrease() throws CommandException {
         WeightCommand first = new WeightCommand(100);
         WeightCommand second = new WeightCommand(50);
         first.execute(entries, null);

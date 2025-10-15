@@ -56,6 +56,9 @@ public abstract class Entry {
         case "WORKOUT":
             return WorkoutEntry.fromStorage(line);
 
+        case "MEAL":
+            return MealEntry.fromStorage(line);
+
         // future: case "MEAL": return MealEntry.fromStorage(line);
         case "WEIGHT":
             return WeightEntry.fromStorage(line);
