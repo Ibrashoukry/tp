@@ -1,12 +1,11 @@
 Hello from MAMA
-Enter a command (workout <description> /dur <duration>, delete <index>, list, bye)
+Enter a command (workout <description> /dur <duration>, weight <weight>, milk <milk volume>, delete <index>, list, bye)
 No entries found.
 Invalid index: 1
 No entries yet.
 No entries found.
 Usage: milk VOLUME | How much breast milk did you pump?
-Invalid Volume: -10 | Volume cannot be negative
-
+An unexpected error occurred: milkVolume must be a positive number!
 Breast Milk Pumped: [MILK] 80ml
 Got it. I've logged this workout:
   [Workout] run (30 mins)
@@ -22,8 +21,7 @@ Great job Mama! You now have a total of 3 workouts completed! Lets keep it up!!
 3. [Workout] swim (30 mins)
 4. [Workout] cycle (30 mins)
 Deleted: [Workout] run (30 mins)
-Your past weights:
+An unexpected error occurred: weightInput must be greater that 0!
 Added new weight entry: [WEIGHT] 83kg
-Your past weights:
-[WEIGHT] 83kg
+An unexpected error occurred: weightInput must be greater that 0!
 Bye. Hope to see you again soon!

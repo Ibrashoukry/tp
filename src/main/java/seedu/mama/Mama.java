@@ -17,7 +17,8 @@ public class Mama {
 
     public static void main(String[] args) {
         System.out.println("Hello from MAMA");
-        System.out.println("Enter a command (workout <description> /dur <duration>, delete <index>, list, bye)");
+        System.out.println("Enter a command (workout <description> /dur <duration>, " +
+                "weight <weight>, milk <milk volume>, delete <index>, list, bye)");
 
         Storage storage = Storage.defaultStorage();
         EntryList list = storage.loadOrEmpty();
