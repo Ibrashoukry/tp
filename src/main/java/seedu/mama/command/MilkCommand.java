@@ -26,7 +26,9 @@ public class MilkCommand implements Command {
 
         Entry newMilk = new MilkEntry(milkVolume + "ml");
         list.add(newMilk);
-        storage.save(list);
+        if (storage != null) {
+            storage.save(list);
+        }
 
         return "Breast Milk Pumped: " + newMilk.toListLine();
     }

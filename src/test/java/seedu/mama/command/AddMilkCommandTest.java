@@ -26,14 +26,14 @@ public class AddMilkCommandTest {
 
         assertEquals(1, entries.size());
         assertEquals("80ml", ((MilkEntry) entries.get(0)).getMilk());
-        assertTrue(result.contains("Added new weight entry"));
-        assertTrue(result.contains("80"));
+        assertTrue(result.contains("Breast Milk Pumped:"));
+        assertTrue(result.contains("80ml"));
     }
 
     @Test
-    public void execute_multipleWeight_entriesIncrease() throws CommandException {
-        WeightCommand first = new WeightCommand(100);
-        WeightCommand second = new WeightCommand(50);
+    public void execute_multipleMilk_entriesIncrease() throws CommandException {
+        MilkCommand first = new MilkCommand(100);
+        MilkCommand second = new MilkCommand(50);
         first.execute(entries, null);
         second.execute(entries, null);
 
