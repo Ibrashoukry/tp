@@ -1,5 +1,6 @@
 package seedu.mama.parser;
 
+import seedu.mama.command.CommandException;
 import seedu.mama.command.WeightCommand;
 
 import seedu.mama.command.AddMealCommand;
@@ -14,7 +15,7 @@ public class Parser {
     /**
      * Parses raw input into a Command.
      */
-    public static Command parse(String input) {
+    public static Command parse(String input) throws CommandException {
         String trimmed = input.trim();
         if (trimmed.equals("bye")) {
             return (l, s) -> "Bye. Hope to see you again soon!";
@@ -47,7 +48,7 @@ public class Parser {
             }
         }
 
-        if (trimmed.startsWith("workout")) {
+        if (trimmed.startsWith("workout ")) {
             return AddWorkoutCommand.fromInput(trimmed);
         }
 
