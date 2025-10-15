@@ -25,7 +25,7 @@ public class AddWorkoutCommandTest {
     }
 
     @Test
-    public void execute_validWorkout_addsEntryToList() {
+    public void execute_validWorkout_addsEntryToList() throws CommandException {
         AddWorkoutCommand command = new AddWorkoutCommand("running", 40);
 
         String result = command.execute(entries, storage);
@@ -40,7 +40,7 @@ public class AddWorkoutCommandTest {
     }
 
     @Test
-    public void execute_multipleWorkouts_entriesIncrease() {
+    public void execute_multipleWorkouts_entriesIncrease() throws CommandException {
         AddWorkoutCommand first = new AddWorkoutCommand("yoga", 60);
         AddWorkoutCommand second = new AddWorkoutCommand("cycling", 30);
 

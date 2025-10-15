@@ -48,7 +48,7 @@ public class Parser {
             }
         }
 
-        if (trimmed.startsWith("workout")) {
+        if (trimmed.startsWith("workout ")) {
             return AddWorkoutCommand.fromInput(trimmed);
         }
 
