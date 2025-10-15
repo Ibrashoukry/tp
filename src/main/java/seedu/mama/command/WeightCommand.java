@@ -13,9 +13,9 @@ public class WeightCommand implements Command {
 
     // weight must be a positive number
     // if not positive, we throw an exception handled by calling code
-    public WeightCommand(int weightInput) {
+    public WeightCommand(int weightInput) throws CommandException {
         if (weightInput <= 0) {
-            throw new IllegalArgumentException("weightInput must be greater that 0!");
+            throw new CommandException("weightInput must be greater that 0!");
         }
         this.weightInput = weightInput;
     }

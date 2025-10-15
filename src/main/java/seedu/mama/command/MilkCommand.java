@@ -13,9 +13,9 @@ public class MilkCommand implements Command {
 
     public final int milkVolume;
     // Only accept positive volume
-    public MilkCommand(int milkVolume) {
+    public MilkCommand(int milkVolume) throws CommandException {
         if (milkVolume < 0) {
-            throw new  IllegalArgumentException("milkVolume must be a positive number!");
+            throw new CommandException("milkVolume must be a positive number!");
         }
         this.milkVolume = milkVolume;
     }
