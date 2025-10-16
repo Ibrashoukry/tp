@@ -24,7 +24,7 @@ public class AddMealCommandTest {
         String result = command.execute(entries, null);
 
         assertEquals(1, entries.size());
-        assertEquals("breakfast", ((MealEntry) entries.get(0)).description());
+        assertEquals("breakfast", entries.get(0).description());
         assertEquals(350, ((MealEntry) entries.get(0)).getCalories());
         assertTrue(result.toLowerCase().contains("logged"));
     }

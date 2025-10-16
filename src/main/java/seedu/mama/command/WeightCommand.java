@@ -5,10 +5,18 @@ import seedu.mama.model.EntryList;
 import seedu.mama.model.WeightEntry;
 import seedu.mama.storage.Storage;
 
+/**
+ * Adds the user weight to the list and returns the user's weight in kg
+ */
 public class WeightCommand implements Command {
     private final int weightInput;
 
-    public WeightCommand(int weightInput) {
+    // weight must be a positive number
+    // if not positive, we throw an exception handled by calling code
+    public WeightCommand(int weightInput) throws CommandException {
+        if (weightInput <= 0) {
+            throw new CommandException("weightInput must be greater that 0!");
+        }
         this.weightInput = weightInput;
     }
 
@@ -28,19 +36,15 @@ public class WeightCommand implements Command {
 
     @Override
     public String execute(EntryList list, Storage storage) {
-        // TO BE CONTINUED
-        if (weightInput == -1) {
-            return preview(list);
-        }
+        // Use an assertion to check for internal errors
+        // confirms our assumption that weight entries should never be null
+        assert this.weightInput > 0 : "The weight input must be greater than 0!";
 
-        if (weightInput <= 0) {
-            return "Invalid weight: " + weightInput + "| Weight cannot be negative"
-                    + System.lineSeparator() + preview(list);
-        }
         Entry newWeight = new WeightEntry(weightInput + "kg");
         list.add(newWeight);
-        storage.save(list);
-
+        if (storage != null) {
+            storage.save(list);
+        }
         return "Added new weight entry: " + newWeight.toListLine();
     }
 }
