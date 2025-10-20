@@ -8,7 +8,6 @@ import seedu.mama.command.AddMealCommand;
 import seedu.mama.command.Command;
 import seedu.mama.command.DeleteCommand;
 import seedu.mama.command.AddWorkoutCommand;
-import seedu.mama.command.ListCommand;
 import seedu.mama.command.MilkCommand;
 
 public class Parser {
@@ -34,7 +33,8 @@ public class Parser {
                 return (l, s) -> "INDEX must be a number.";
             }
         } else if (trimmed.startsWith("list")) {
-            return new ListCommand();
+            String arguments = trimmed.substring("list".length());
+            return ListCommandParser.parseListCommand(arguments);
         } else if (trimmed.startsWith("milk")) {
             String[] parts = trimmed.split("\\s+");
 
