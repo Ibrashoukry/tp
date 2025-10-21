@@ -54,7 +54,6 @@ public abstract class Entry {
             return NoteEntry.fromStorage(line);
 
         case "MILK":
-            updateTotalMilkVol(parts[1]);
             return MilkEntry.fromStorage(line);
 
         case "WORKOUT":

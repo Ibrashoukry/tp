@@ -38,6 +38,7 @@ public class MilkEntry extends Entry {
 
     public static MilkEntry fromStorage(String line) {
         String[] parts = line.split("\\|", 2);
+        updateTotalMilkVol(parts[1]);
         return new MilkEntry(parts.length > 1 ? parts[1] : "");
     }
 }
