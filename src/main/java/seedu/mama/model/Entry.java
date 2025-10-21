@@ -2,6 +2,9 @@ package seedu.mama.model;
 
 import java.util.Objects;
 
+import static seedu.mama.model.MilkEntry.updateTotalMilkVol;
+
+
 /**
  * Base type for all entries (Meal, Pump, Weight, Workout, Note, ...).
  */
@@ -51,6 +54,7 @@ public abstract class Entry {
             return NoteEntry.fromStorage(line);
 
         case "MILK":
+            updateTotalMilkVol(parts[1]);
             return MilkEntry.fromStorage(line);
 
         case "WORKOUT":
