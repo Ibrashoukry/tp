@@ -2,52 +2,87 @@ package seedu.mama.command;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import seedu.mama.model.Entry;
 import seedu.mama.model.EntryList;
-import seedu.mama.model.NoteEntry;
+import seedu.mama.model.MealEntry;
+import seedu.mama.model.WorkoutEntry;
+import seedu.mama.storage.Storage;
+
+
+import java.util.function.Predicate;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class ListCommandTest {
 
     private EntryList entries;
+    private Storage storageStub;
+
+    /**
+     * A simple stub for the Storage class that does nothing.
+     * It's used to provide a non-null Storage object to commands during testing,
+     * satisfying assertions without needing a real storage file.
+     */
+    private static class StorageStub extends Storage {
+        public StorageStub() {
+            super(null);
+        }
+        // This stub class is empty because the ListCommand does not call any Storage methods.
+        // It only needs a non-null Storage object to exist.
+    }
 
     @BeforeEach
     public void setUp() {
         entries = new EntryList();
+        storageStub = new StorageStub();
     }
 
     @Test
     public void execute_emptyList_returnsNoEntriesMessage() throws CommandException {
         ListCommand command = new ListCommand();
-        String result = command.execute(entries, null);
+        String result = command.execute(entries, storageStub);
 
-        assertEquals("No entries found.", result);
-    }
-
-    @Test
-    public void execute_singleEntry_returnsOneLine() throws CommandException {
-        entries.add(new NoteEntry("Buy milk"));
-        ListCommand command = new ListCommand();
-        String result = command.execute(entries, null);
-
-        assertTrue(result.contains("[NOTE] Buy milk"));
-        assertTrue(result.startsWith("1. "));
+        assertEquals("No all entries found.", result);
     }
 
     @Test
     public void execute_multipleEntries_returnsNumberedList() throws CommandException {
-        entries.add(new NoteEntry("Buy milk"));
-        entries.add(new NoteEntry("Finish assignment"));
+        entries.add(new MealEntry("Chicken Rice", 500));
+        entries.add(new WorkoutEntry("Evening Run", 300));
 
         ListCommand command = new ListCommand();
-        String result = command.execute(entries, null);
+        String result = command.execute(entries, storageStub);
+
+        assertTrue(result.startsWith("Here are your all entries:"));
 
         String[] lines = result.split(System.lineSeparator());
-        assertEquals(2, lines.length);
-        assertTrue(lines[0].startsWith("1. "));
-        assertTrue(lines[1].startsWith("2. "));
-        assertTrue(lines[0].contains("Buy milk"));
-        assertTrue(lines[1].contains("Finish assignment"));
+        assertEquals(3, lines.length, "Output should have a header and two entry lines");
+        assertTrue(lines[1].startsWith("1. "));
+        assertTrue(lines[2].startsWith("2. "));
+        assertTrue(lines[1].contains("Chicken Rice"));
+        assertTrue(lines[2].contains("Evening Run"));
+    }
+
+    @Test
+    public void execute_filterByType_returnsFilteredList() throws CommandException {
+        entries.add(new MealEntry("Salad", 350));
+        entries.add(new WorkoutEntry("Morning Yoga", 150));
+        entries.add(new MealEntry("Noodles", 600));
+
+        Predicate<Entry> mealPredicate = entry -> entry instanceof MealEntry;
+        ListCommand command = new ListCommand(mealPredicate, "meal");
+        String result = command.execute(entries, storageStub);
+
+        assertTrue(result.contains("Here are your meal entries:"));
+        assertTrue(result.contains("Salad"));
+        assertTrue(result.contains("Noodles"));
+        assertFalse(result.contains("Morning Yoga"), "Workout entry should not be in the list");
+
+        String[] lines = result.split(System.lineSeparator());
+        assertEquals(3, lines.length);
+        assertTrue(lines[1].startsWith("1. "));
+        assertTrue(lines[2].startsWith("2. "));
     }
 }

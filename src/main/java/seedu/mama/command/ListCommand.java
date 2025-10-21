@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.function.Predicate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.stream.Collectors;
 
 /**
  * Lists entries to the user, either all or filtered by a specific criteria.
