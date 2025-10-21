@@ -58,7 +58,8 @@ public class ListCommand implements Command {
 
         if (filteredEntries.isEmpty()) {
             LOGGER.log(Level.INFO, "No entries found for type: " + displayType);
-            return new CommandResult("No " + headerType + " found."); // e.g., "No entries found." or "No meal entries found."
+            // e.g., "No entries found." or "No meal entries found."
+            return new CommandResult("No " + headerType + " found.");
         }
 
         StringBuilder sb = new StringBuilder("Here are your " + headerType + ":");
