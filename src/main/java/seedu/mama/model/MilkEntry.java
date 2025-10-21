@@ -1,6 +1,8 @@
 package seedu.mama.model;
 
 public class MilkEntry extends Entry {
+    private int totalMilkVol;
+
     public MilkEntry(String text) {
         super("MILK", text);
     }

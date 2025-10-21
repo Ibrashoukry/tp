@@ -66,11 +66,10 @@ public class Parser {
                 return (l, s) -> "Weight must be a number. Try `weight`+ 'value of weight'";
             }
         }
-        
         if (trimmed.startsWith("meal")) {
             return AddMealCommand.fromInput(trimmed);
         }
-
+        
         return (l, s) -> "Unknown command.";
     }
 }
