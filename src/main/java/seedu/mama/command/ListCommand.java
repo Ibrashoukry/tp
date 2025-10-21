@@ -60,13 +60,13 @@ public class ListCommand implements Command {
             return "No " + headerType + " found."; // e.g., "No entries found." or "No meal entries found."
         }
 
-        StringBuilder sb = new StringBuilder("Here are your " + headerType + ":\n"); // e.g., "Here are your entries:"
+        StringBuilder sb = new StringBuilder("Here are your " + headerType + ":");
         for (int i = 0; i < filteredEntries.size(); i++) {
             Entry e = filteredEntries.get(i);
-            sb.append(i + 1)
+            sb.append(System.lineSeparator())
+                    .append(i + 1)
                     .append(". ")
-                    .append(e.toListLine())
-                    .append(System.lineSeparator());
+                    .append(e.toListLine());
         }
 
         LOGGER.log(Level.INFO, "Successfully listed " + filteredEntries.size() + " entries of type: " + displayType);
