@@ -8,6 +8,9 @@ import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import static seedu.mama.model.MilkEntry.fromList;
+import static seedu.mama.model.MilkEntry.minusTotalMilkVol;
+
 public class DeleteCommand implements Command {
     private static final Logger LOG = Logger.getLogger(DeleteCommand.class.getName());
     private final int indexOneBased;
@@ -34,6 +37,11 @@ public class DeleteCommand implements Command {
 
         // Valid delete
         int zeroBased = indexOneBased - 1;
+        if (list.get(zeroBased).contains("milk")) {
+            // decrement the totalMilkVol
+            int vol = fromList(list.get(zeroBased));
+            minusTotalMilkVol(vol);
+        }
         Entry removed = list.deleteByIndex(zeroBased);
         try {
             storage.save(list);
