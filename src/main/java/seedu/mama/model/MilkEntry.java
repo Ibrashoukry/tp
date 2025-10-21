@@ -2,6 +2,7 @@ package seedu.mama.model;
 
 public class MilkEntry extends Entry {
     private static int totalMilkVol;
+    private String dateOfPump;
 
     public static void addTotalMilkVol(int MilkVol) {
         totalMilkVol += MilkVol;
@@ -9,6 +10,10 @@ public class MilkEntry extends Entry {
 
     public static void minusTotalMilkVol(int MilkVol) {
         totalMilkVol -= MilkVol;
+    }
+
+    public String getDateOfPump() {
+        return dateOfPump;
     }
 
     public static int getMilkVol(String volFromStorage) {
@@ -27,8 +32,9 @@ public class MilkEntry extends Entry {
         return "Total breast milk pumped: " + totalMilkVol + "ml";
     }
 
-    public MilkEntry(String text) {
-        super("MILK", text);
+    public MilkEntry(String userInput, String dateOfPump) {
+        super("MILK", userInput);
+        this.dateOfPump = dateOfPump;
     }
 
     public String getMilk() {
@@ -37,12 +43,13 @@ public class MilkEntry extends Entry {
 
     @Override
     public String toStorageString() {
-        return "MILK|" + description();
+        // Stable Storage: MILK|<volume>|<date>
+        return "MILK|" + description() + "|" + getDateOfPump();
     }
 
     public static MilkEntry fromStorage(String line) {
         String[] parts = line.split("\\|", 2);
         addTotalMilkVol(getMilkVol(parts[1]));
-        return new MilkEntry(parts.length > 1 ? parts[1] : "");
+        return new MilkEntry(parts[1], parts[2]);
     }
 }

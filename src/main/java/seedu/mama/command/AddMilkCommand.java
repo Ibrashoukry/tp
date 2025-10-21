@@ -38,7 +38,7 @@ public class AddMilkCommand implements Command {
 
         MilkEntry.addTotalMilkVol(milkVolume);
 
-        Entry newMilk = new MilkEntry(milkVolume + "ml");
+        Entry newMilk = new MilkEntry(milkVolume + "ml", );
         list.add(newMilk);
         if (storage != null) {
             storage.save(list);
