@@ -16,6 +16,7 @@ Great job Mama! You now have a total of 2 workouts completed! Lets keep it up!!
 Got it. I've logged this workout:
   [Workout] cycle (30 mins)
 Great job Mama! You now have a total of 3 workouts completed! Lets keep it up!!
+Here are your entries:
 1. [MILK] 80ml
 2. [Workout] run (30 mins)
 3. [Workout] swim (30 mins)
@@ -24,4 +25,6 @@ Deleted: [Workout] run (30 mins)
 weightInput must be greater that 0!
 Added new weight entry: [WEIGHT] 83kg
 weightInput must be greater that 0!
+Here are your weight entries:
+1. [WEIGHT] 83kg
 Bye. Hope to see you again soon!

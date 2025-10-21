@@ -53,13 +53,14 @@ public class ListCommand implements Command {
                 .filter(predicate)
                 .toList();
 
+        String headerType = displayType.equals("all") ? "entries" : displayType + " entries";
+
         if (filteredEntries.isEmpty()) {
             LOGGER.log(Level.INFO, "No entries found for type: " + displayType);
-            return "No " + displayType + " entries found.";
+            return "No " + headerType + " found."; // e.g., "No entries found." or "No meal entries found."
         }
 
-        // Build the output string from the filtered list
-        StringBuilder sb = new StringBuilder("Here are your " + displayType + " entries:\n");
+        StringBuilder sb = new StringBuilder("Here are your " + headerType + ":\n"); // e.g., "Here are your entries:"
         for (int i = 0; i < filteredEntries.size(); i++) {
             Entry e = filteredEntries.get(i);
             sb.append(i + 1)
