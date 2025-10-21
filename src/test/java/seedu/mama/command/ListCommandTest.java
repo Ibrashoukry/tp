@@ -44,7 +44,7 @@ public class ListCommandTest {
         ListCommand command = new ListCommand();
         String result = command.execute(entries, storageStub);
 
-        assertEquals("No all entries found.", result);
+        assertEquals("No entries found.", result);
     }
 
     @Test
@@ -55,7 +55,7 @@ public class ListCommandTest {
         ListCommand command = new ListCommand();
         String result = command.execute(entries, storageStub);
 
-        assertTrue(result.startsWith("Here are your all entries:"));
+        assertTrue(result.startsWith("Here are your entries:"));
 
         String[] lines = result.split(System.lineSeparator());
         assertEquals(3, lines.length, "Output should have a header and two entry lines");
