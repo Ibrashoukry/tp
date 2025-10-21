@@ -4,6 +4,7 @@ import seedu.mama.model.Entry;
 import seedu.mama.model.EntryList;
 import seedu.mama.model.MilkEntry;
 import seedu.mama.storage.Storage;
+import seedu.mama.ui.Ui;
 
 /**
  * Adds how much breast milk has been pumped and returns the user
@@ -24,12 +25,14 @@ public class AddMilkCommand implements Command {
     public String execute(EntryList list, Storage storage) {
         assert this.milkVolume > 0 : "The milkVolume must be greater than 0!";
 
+        MilkEntry.addTotalMilkVol(milkVolume);
+
         Entry newMilk = new MilkEntry(milkVolume + "ml");
         list.add(newMilk);
         if (storage != null) {
             storage.save(list);
         }
 
-        return "Breast Milk Pumped: " + newMilk.toListLine();
+        return "Breast Milk Pumped: " + newMilk.toListLine() + "\n" +  MilkEntry.toTotalMilk();
     }
 }
