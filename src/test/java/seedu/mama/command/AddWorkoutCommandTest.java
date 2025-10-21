@@ -28,14 +28,14 @@ public class AddWorkoutCommandTest {
     public void execute_validWorkout_addsEntryToList() throws CommandException {
         AddWorkoutCommand command = new AddWorkoutCommand("running", 40);
 
-        String result = command.execute(entries, storage);
+        CommandResult result = command.execute(entries, storage);
 
         assertEquals(1, entries.size(), "One workout entry should be added");
         Entry first = entries.get(0);
         assertTrue(first instanceof WorkoutEntry, "Entry should be a WorkoutEntry");
         assertEquals("[Workout] running (40 mins)", first.toListLine());
-        assertTrue(result.toLowerCase().contains("logged")
-                        || result.toLowerCase().contains("added"),
+        assertTrue(result.getFeedbackToUser().toLowerCase().contains("logged")
+                        || result.getFeedbackToUser().toLowerCase().contains("added"),
                 "Result should confirm the workout was recorded");
     }
 

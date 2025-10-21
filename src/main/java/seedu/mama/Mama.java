@@ -2,9 +2,11 @@ package seedu.mama;
 
 import seedu.mama.command.Command;
 import seedu.mama.command.CommandException;
+import seedu.mama.command.CommandResult;
 import seedu.mama.model.EntryList;
 import seedu.mama.parser.Parser;
 import seedu.mama.storage.Storage;
+import seedu.mama.ui.Ui;
 
 import java.util.Scanner;
 import java.util.logging.Logger;
@@ -30,8 +32,12 @@ public class Mama {
             String userInput = sc.nextLine();
             try {
                 Command command = Parser.parse(userInput);
-                String output = command.execute(list, storage);
-                System.out.println(output);
+                CommandResult result = command.execute(list, storage);
+                System.out.println(result.getFeedbackToUser());
+                if (result.isExit()) {
+                    Ui.showMessage("Shutting down...");
+                    break;
+                }
             } catch (CommandException ce) {
                 // user-facing (runtime) error, like invalid delete index or save failure
                 System.out.println(ce.getMessage());

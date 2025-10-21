@@ -21,7 +21,7 @@ public class DeleteCommand implements Command {
     }
 
     @Override
-    public String execute(EntryList list, Storage storage) throws CommandException {
+    public CommandResult execute(EntryList list, Storage storage) throws CommandException {
         Objects.requireNonNull(list, "EntryList is null");
         Objects.requireNonNull(storage, "Storage is null");
         assert list.size() >= 0 : "EntryList size must be non-negative";
@@ -42,7 +42,7 @@ public class DeleteCommand implements Command {
             throw new CommandException("Failed to save after delete", e);
         }
         LOG.info(() -> "Deleted entry at index " + indexOneBased + ": " + removed.toListLine());
-        return "Deleted: " + removed.toListLine();
+        return new CommandResult("Deleted: " + removed.toListLine());
     }
 
     private static String previewList(EntryList list) {

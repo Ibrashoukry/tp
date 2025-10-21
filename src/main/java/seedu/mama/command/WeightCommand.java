@@ -35,7 +35,7 @@ public class WeightCommand implements Command {
     }
 
     @Override
-    public String execute(EntryList list, Storage storage) {
+    public CommandResult execute(EntryList list, Storage storage) {
         // Use an assertion to check for internal errors
         // confirms our assumption that weight entries should never be null
         assert this.weightInput > 0 : "The weight input must be greater than 0!";
@@ -45,6 +45,6 @@ public class WeightCommand implements Command {
         if (storage != null) {
             storage.save(list);
         }
-        return "Added new weight entry: " + newWeight.toListLine();
+        return new CommandResult("Added new weight entry: " + newWeight.toListLine());
     }
 }
