@@ -2,14 +2,14 @@ package seedu.mama.command;
 
 import seedu.mama.model.Entry;
 import seedu.mama.model.EntryList;
+import seedu.mama.model.MilkEntry;
 import seedu.mama.storage.Storage;
 
 import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import static seedu.mama.model.MilkEntry.fromList;
-import static seedu.mama.model.MilkEntry.minusTotalMilkVol;
+import static seedu.mama.model.MilkEntry.*;
 
 public class DeleteCommand implements Command {
     private static final Logger LOG = Logger.getLogger(DeleteCommand.class.getName());
@@ -37,11 +37,13 @@ public class DeleteCommand implements Command {
 
         // Valid delete
         int zeroBased = indexOneBased - 1;
-        if (list.get(zeroBased).contains("milk")) {
-            // decrement the totalMilkVol
+
+        if (list.get(zeroBased).type().equals("MILK")) {
             int vol = fromList(list.get(zeroBased));
+            LOG.info(() -> "Volume of milk reduced by: " + vol + "ml");
             minusTotalMilkVol(vol);
         }
+
         Entry removed = list.deleteByIndex(zeroBased);
         try {
             storage.save(list);
