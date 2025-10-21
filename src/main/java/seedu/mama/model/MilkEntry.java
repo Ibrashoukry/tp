@@ -7,6 +7,10 @@ public class MilkEntry extends Entry {
         totalMilkVol += MilkVol;
     }
 
+    public static void minusTotalMilkVol(int MilkVol) {
+        totalMilkVol -= MilkVol;
+    }
+
     public static int getMilkVol(String volFromStorage) {
         if (volFromStorage.endsWith("ml")) {
             volFromStorage = volFromStorage.substring(0, volFromStorage.length() - 2);
@@ -14,9 +18,11 @@ public class MilkEntry extends Entry {
         return Integer.parseInt(volFromStorage);
     }
 
-    public static void updateTotalMilkVol(String line) {
-        int milkVol = getMilkVol(line);
-        addTotalMilkVol(milkVol);
+    public static int fromList(Entry e) {
+        String line = e.description();
+        String[] parts = line.split("]");
+        parts[1] = parts[1].trim();
+        return getMilkVol(parts[1]);
     }
 
     public static String toTotalMilk() {
@@ -38,7 +44,7 @@ public class MilkEntry extends Entry {
 
     public static MilkEntry fromStorage(String line) {
         String[] parts = line.split("\\|", 2);
-        updateTotalMilkVol(parts[1]);
+        addTotalMilkVol(getMilkVol(parts[1]));
         return new MilkEntry(parts.length > 1 ? parts[1] : "");
     }
 }
