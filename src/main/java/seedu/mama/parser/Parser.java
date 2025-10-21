@@ -9,7 +9,7 @@ import seedu.mama.command.Command;
 import seedu.mama.command.DeleteCommand;
 import seedu.mama.command.AddWorkoutCommand;
 import seedu.mama.command.ListCommand;
-import seedu.mama.command.MilkCommand;
+import seedu.mama.command.AddMilkCommand;
 
 public class Parser {
     /**
@@ -42,7 +42,7 @@ public class Parser {
                 return (l, s) -> "Usage: milk VOLUME | How much breast milk did you pump?";
             }
             try {
-                return new MilkCommand(Integer.parseInt(parts[1]));
+                return new AddMilkCommand(Integer.parseInt(parts[1]));
             } catch (NumberFormatException e) {
                 return (l, s) -> "VOLUME must be a number.";
             }

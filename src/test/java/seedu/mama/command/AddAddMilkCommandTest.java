@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
-public class AddMilkCommandTest {
+public class AddAddMilkCommandTest {
     private EntryList entries;
 
 
@@ -20,7 +20,7 @@ public class AddMilkCommandTest {
 
     @Test
     public void execute_validMilk_addsEntryToList() throws CommandException {
-        MilkCommand command = new MilkCommand(80);
+        AddMilkCommand command = new AddMilkCommand(80);
         String result = command.execute(entries, null);
 
         assertEquals(1, entries.size());
@@ -31,8 +31,8 @@ public class AddMilkCommandTest {
 
     @Test
     public void execute_multipleMilk_entriesIncrease() throws CommandException {
-        MilkCommand first = new MilkCommand(100);
-        MilkCommand second = new MilkCommand(50);
+        AddMilkCommand first = new AddMilkCommand(100);
+        AddMilkCommand second = new AddMilkCommand(50);
         first.execute(entries, null);
         second.execute(entries, null);
 

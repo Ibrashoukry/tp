@@ -9,11 +9,11 @@ import seedu.mama.storage.Storage;
  * Adds how much breast milk has been pumped and returns the user
  * the amount of breast milk pumped in ml
  */
-public class MilkCommand implements Command {
+public class AddMilkCommand implements Command {
 
     public final int milkVolume;
     // Only accept positive volume
-    public MilkCommand(int milkVolume) throws CommandException {
+    public AddMilkCommand(int milkVolume) throws CommandException {
         if (milkVolume < 0) {
             throw new CommandException("milkVolume must be a positive number!");
         }
