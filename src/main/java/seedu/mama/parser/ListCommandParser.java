@@ -51,9 +51,9 @@ public class ListCommandParser {
             predicate = entry -> entry instanceof WeightEntry;
             break;
         default:
-            final String VALID_TYPES = "meal, workout, milk, or weight";
+            final String validTypes = "meal, workout, milk, or weight";
             throw new CommandException(
-                    String.format("Unknown type: '%s'. Please use %s.", type, VALID_TYPES)
+                    String.format("Unknown type: '%s'. Please use %s.", type, validTypes)
             );
         }
 
