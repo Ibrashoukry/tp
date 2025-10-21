@@ -20,8 +20,6 @@ public class MilkEntry extends Entry {
 
     public static int fromList(Entry e) {
         String line = e.description();
-//        String[] parts = line.split("]");
-//        parts[1] = parts[1].trim();
         return getMilkVol(line);
     }
 
