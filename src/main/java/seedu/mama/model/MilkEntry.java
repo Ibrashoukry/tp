@@ -20,12 +20,12 @@ public class MilkEntry extends Entry {
         this.date = formatDate(dateTime);
     }
 
-    public static void addTotalMilkVol(int MilkVol) {
-        totalMilkVol += MilkVol;
+    public static void addTotalMilkVol(int milkVol) {
+        totalMilkVol += milkVol;
     }
 
-    public static void minusTotalMilkVol(int MilkVol) {
-        totalMilkVol -= MilkVol;
+    public static void minusTotalMilkVol(int milkVol) {
+        totalMilkVol -= milkVol;
     }
 
 
@@ -51,8 +51,6 @@ public class MilkEntry extends Entry {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yy HH:mm");
         return date.format(formatter);
     }
-
-
 
     @Override
     public String toListLine() {
