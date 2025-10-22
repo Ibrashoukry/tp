@@ -6,7 +6,19 @@ import java.time.format.DateTimeFormatter;
 
 public class MilkEntry extends Entry {
     private static int totalMilkVol;
+    private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yy HH:mm");
+
     private final String date;
+
+    public MilkEntry(String userInput) {
+        super("MILK", userInput);
+        this.date = LocalDateTime.now().format(formatter);
+    }
+
+    public MilkEntry(String userInput, LocalDateTime dateTime) {
+        super("MILK", userInput);
+        this.date = formatDate(dateTime);
+    }
 
     public static void addTotalMilkVol(int MilkVol) {
         totalMilkVol += MilkVol;
@@ -16,7 +28,6 @@ public class MilkEntry extends Entry {
         totalMilkVol -= MilkVol;
     }
 
-    private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yy HH:mm");
 
     public static int getMilkVol(String volFromStorage) {
         if (volFromStorage.endsWith("ml")) {
@@ -34,20 +45,14 @@ public class MilkEntry extends Entry {
         return "Total breast milk pumped: " + totalMilkVol + "ml";
     }
 
-    public MilkEntry(String userInput) {
-        super("MILK", userInput);
-        this.date = LocalDateTime.now().format(formatter);
-    }
+
 
     public String formatDate(LocalDateTime date) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yy HH:mm");
         return date.format(formatter);
     }
 
-    public MilkEntry(String userInput, LocalDateTime dateTime) {
-        super("MILK", userInput);
-        this.date = formatDate(dateTime);
-    }
+
 
     @Override
     public String toListLine() {

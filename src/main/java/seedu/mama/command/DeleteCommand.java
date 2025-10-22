@@ -2,14 +2,11 @@ package seedu.mama.command;
 
 import seedu.mama.model.Entry;
 import seedu.mama.model.EntryList;
-import seedu.mama.model.MilkEntry;
 import seedu.mama.storage.Storage;
 
 import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import static seedu.mama.model.MilkEntry.*;
 
 public class DeleteCommand implements Command {
     private static final Logger LOG = Logger.getLogger(DeleteCommand.class.getName());
