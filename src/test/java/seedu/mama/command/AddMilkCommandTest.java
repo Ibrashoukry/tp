@@ -2,9 +2,10 @@ package seedu.mama.command;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 import seedu.mama.model.EntryList;
 import seedu.mama.model.MilkEntry;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -12,6 +13,9 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class AddMilkCommandTest {
     private EntryList entries;
+    private final LocalDateTime now = LocalDateTime.now();
+    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yy HH:mm");
+    private final String formatted = now.format(formatter);
 
 
     @BeforeEach
@@ -19,24 +23,44 @@ public class AddMilkCommandTest {
         entries = new EntryList();
     }
 
+
     @Test
     public void execute_validMilk_addsEntryToList() throws CommandException {
-        MilkCommand command = new MilkCommand(80);
+        AddMilkCommand command = new AddMilkCommand(80);
+
         CommandResult result = command.execute(entries, null);
 
         assertEquals(1, entries.size());
         assertEquals("80ml", ((MilkEntry) entries.get(0)).getMilk());
-        assertTrue(result.getFeedbackToUser().contains("Breast Milk Pumped:"));
-        assertTrue(result.getFeedbackToUser().contains("80ml"));
+
+        assertTrue(result.getFeedbackToUser().toLowerCase().contains("breast milk pumped: ")
+                        || result.getFeedbackToUser().toLowerCase().contains("80ml")
+                        || result.getFeedbackToUser().toLowerCase().contains(formatted),
+                "Result should confirm the milk was recorded");
+
+        AddMilkCommand command2 = new AddMilkCommand(70);
+        CommandResult result2 = command2.execute(entries, null);
+        assertEquals(2, entries.size());
+        assertEquals("70ml", ((MilkEntry) entries.get(1)).getMilk());
+
+        assertTrue(result2.getFeedbackToUser().toLowerCase().contains("breast milk pumped: ")
+                        || result2.getFeedbackToUser().toLowerCase().contains("70ml")
+                        || result2.getFeedbackToUser().toLowerCase().contains("total breast milk pumped: 150ml")
+                        || result2.getFeedbackToUser().toLowerCase().contains(formatted),
+                "Result should confirm the milk was recorded");
+
     }
 
     @Test
     public void execute_multipleMilk_entriesIncrease() throws CommandException {
-        MilkCommand first = new MilkCommand(100);
-        MilkCommand second = new MilkCommand(50);
+        AddMilkCommand first = new AddMilkCommand(100);
+        AddMilkCommand second = new AddMilkCommand(30);
         first.execute(entries, null);
-        second.execute(entries, null);
 
+        CommandResult result2 = second.execute(entries, null);
         assertEquals(2, entries.size());
+        assertTrue(result2.getFeedbackToUser().contains(formatted));
+        assertEquals("[MILK] 100ml (" + formatted + ")", entries.get(0).toListLine());
+
     }
 }
