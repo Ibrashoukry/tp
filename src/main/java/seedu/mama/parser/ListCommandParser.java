@@ -4,10 +4,7 @@ import seedu.mama.command.Command;
 import seedu.mama.command.CommandException;
 import seedu.mama.command.ListCommand;
 import seedu.mama.model.Entry;
-import seedu.mama.model.MealEntry;
-import seedu.mama.model.MilkEntry;
-import seedu.mama.model.WeightEntry;
-import seedu.mama.model.WorkoutEntry;
+import seedu.mama.model.EntryType;
 
 import java.util.function.Predicate;
 
@@ -31,32 +28,23 @@ public class ListCommandParser {
         // Case 2: Arguments are provided, expect a type filter (e.g., "list /t meal")
         String[] parts = arguments.trim().split("\\s+");
         if (parts.length != 2 || !parts[0].equals("/t")) {
-            throw new CommandException("Invalid format! Usage: list /t [meal|workout|milk|weight]");
+            throw new CommandException("Invalid format! Usage: list /t ["
+                    + EntryType.getValidTypesString() + "]");
         }
 
-        String type = parts[1].toLowerCase();
-        Predicate<Entry> predicate;
+        String typeInput = parts[1].toLowerCase();
+        try {
+            // Let the enum handle the validation automatically
+            EntryType entryType = EntryType.valueOf(typeInput.toUpperCase());
 
-        switch (type) {
-        case "meal":
-            predicate = entry -> entry instanceof MealEntry;
-            break;
-        case "workout":
-            predicate = entry -> entry instanceof WorkoutEntry;
-            break;
-        case "milk":
-            predicate = entry -> entry instanceof MilkEntry;
-            break;
-        case "weight":
-            predicate = entry -> entry instanceof WeightEntry;
-            break;
-        default:
-            final String validTypes = "meal, workout, milk, or weight";
-            throw new CommandException(
-                    String.format("Unknown type: '%s'. Please use %s.", type, validTypes)
-            );
+            // Create a more robust predicate by checking the entry's own type string
+            Predicate<Entry> predicate = entry -> entry.type().equalsIgnoreCase(entryType.name());
+
+            return new ListCommand(predicate, typeInput);
+        } catch (IllegalArgumentException e) {
+            // This catch block runs if the string is not a valid enum constant
+            throw new CommandException(String.format("Unknown type: '%s'. Please use one of: %s.",
+                    typeInput, EntryType.getValidTypesString()));
         }
-
-        return new ListCommand(predicate, type);
     }
 }
