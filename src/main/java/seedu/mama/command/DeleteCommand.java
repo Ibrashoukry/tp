@@ -38,12 +38,6 @@ public class DeleteCommand implements Command {
         // Valid delete
         int zeroBased = indexOneBased - 1;
 
-        if (list.get(zeroBased).type().equals("MILK")) {
-            int vol = fromList(list.get(zeroBased));
-            LOG.info(() -> "Volume of milk reduced by: " + vol + "ml");
-            minusTotalMilkVol(vol);
-        }
-
         Entry removed = list.deleteByIndex(zeroBased);
         try {
             storage.save(list);
