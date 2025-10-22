@@ -12,4 +12,5 @@ delete 2
 weight ?
 weight 83
 weight ?
+list /t weight
 bye

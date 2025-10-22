@@ -1,8 +1,8 @@
-package seedu.mama;
+package seedu.mama.command;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import seedu.mama.command.AddMealCommand;
+
 import seedu.mama.model.EntryList;
 import seedu.mama.model.MealEntry;
 
@@ -21,12 +21,12 @@ public class AddMealCommandTest {
     @Test
     public void execute_validMeal_addsEntryToList() {
         AddMealCommand command = new AddMealCommand("breakfast", 350);
-        String result = command.execute(entries, null);
+        CommandResult result = command.execute(entries, null);
 
         assertEquals(1, entries.size());
         assertEquals("breakfast", entries.get(0).description());
         assertEquals(350, ((MealEntry) entries.get(0)).getCalories());
-        assertTrue(result.toLowerCase().contains("logged"));
+        assertTrue(result.getFeedbackToUser().toLowerCase().contains("logged"));
     }
 
     @Test

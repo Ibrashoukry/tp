@@ -79,7 +79,7 @@ public final class AddWorkoutCommand implements Command {
     }
 
     @Override
-    public String execute(EntryList list, Storage storage) throws CommandException {
+    public CommandResult execute(EntryList list, Storage storage) throws CommandException {
         WorkoutEntry entry = new WorkoutEntry(workoutType, duration);
         list.add(entry);
         if (storage != null) {
@@ -88,9 +88,9 @@ public final class AddWorkoutCommand implements Command {
         long workoutCount = list.asList().stream()
                 .filter(e -> e.type().equals("WORKOUT"))
                 .count();
-        return "Got it. I've logged this workout:\n"
+        return new CommandResult("Got it. I've logged this workout:\n"
                 + "  " + entry.toListLine() + "\n"
                 + "Great job Mama! You now have a total of " + workoutCount
-                + " workouts completed! Lets keep it up!!";
+                + " workouts completed! Lets keep it up!!");
     }
 }

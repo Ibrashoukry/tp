@@ -1,6 +1,7 @@
 package seedu.mama.parser;
 
 import seedu.mama.command.CommandException;
+import seedu.mama.command.CommandResult;
 import seedu.mama.command.WeightCommand;
 
 import seedu.mama.command.AddMealCommand;
@@ -8,83 +9,107 @@ import seedu.mama.command.AddMealCommand;
 import seedu.mama.command.Command;
 import seedu.mama.command.DeleteCommand;
 import seedu.mama.command.AddWorkoutCommand;
-import seedu.mama.command.ListCommand;
 import seedu.mama.command.MilkCommand;
 
+/**
+ * Parses raw user input strings into the appropriate {@link Command} objects.
+ * <p>
+ * The {@code Parser} is responsible for interpreting user commands and returning
+ * executable {@code Command} instances. It performs basic input validation and
+ * provides feedback through {@link CommandResult} messages when invalid syntax
+ * or arguments are detected.
+ * <p>
+ * Example usages:
+ * <ul>
+ *     <li>{@code delete 2} → returns a {@link DeleteCommand}</li>
+ *     <li>{@code milk 150} → returns a {@link MilkCommand}</li>
+ *     <li>{@code weight 5} → returns a {@link WeightCommand}</li>
+ * </ul>
+ */
 public class Parser {
+
     /**
-     * Parses raw input into a Command.
+     * Parses the given raw user input and returns the corresponding {@link Command}.
+     * <p>
+     * The parser identifies the command keyword (e.g., {@code delete}, {@code list}, {@code milk})
+     * and constructs an appropriate {@code Command} instance. If the command is invalid or
+     * arguments are missing, the parser returns a command that produces a {@link CommandResult}
+     * containing an error message.
+     *
+     * @param input Raw user input entered by the user.
+     * @return A {@link Command} representing the parsed user intent.
+     * @throws CommandException If a parsing error occurs that cannot be handled internally.
      */
     public static Command parse(String input) throws CommandException {
         String trimmed = input.trim();
+
+        // Handles the "bye" command (terminates the program)
         if (trimmed.equals("bye")) {
-            return (l, s) -> "Bye. Hope to see you again soon!";
+            return (l, s) -> new CommandResult("Bye. Hope to see you again soon!");
         }
+
+        // Handles "delete" commands
         if (trimmed.startsWith("delete")) {
             String[] parts = trimmed.split("\\s+");
             if (parts.length == 2 && parts[1].equals("?")) {
                 return new DeleteCommand(-1);
             }
             if (parts.length < 2) {
-                return (l, s) -> "Usage: delete INDEX";
+                return (l, s) -> new CommandResult("Usage: delete INDEX");
             }
             try {
                 return new DeleteCommand(Integer.parseInt(parts[1]));
             } catch (NumberFormatException e) {
-                return (l, s) -> "INDEX must be a number.";
+                return (l, s) -> new CommandResult("INDEX must be a number.");
             }
-        } else if (trimmed.startsWith("list")) {
-            return new ListCommand();
-        } else if (trimmed.startsWith("milk")) {
+        }
+
+        // Handles "list" command
+        if (trimmed.startsWith("list")) {
+            String arguments = trimmed.substring("list".length());
+            return ListCommandParser.parseListCommand(arguments);
+        }
+
+        // Handles "milk" command
+        if (trimmed.startsWith("milk")) {
             String[] parts = trimmed.split("\\s+");
 
             if (parts.length < 2) {
-                return (l, s) -> "Usage: milk VOLUME | How much breast milk did you pump?";
+                return (l, s) -> new CommandResult("Usage: milk VOLUME | How much breast milk did you pump?");
             }
             try {
                 return new MilkCommand(Integer.parseInt(parts[1]));
             } catch (NumberFormatException e) {
-                return (l, s) -> "VOLUME must be a number.";
+                return (l, s) -> new CommandResult("VOLUME must be a number.");
             }
         }
 
+        // Handles "workout" command
         if (trimmed.startsWith("workout ")) {
             return AddWorkoutCommand.fromInput(trimmed);
         }
 
+        // Handles "weight" command
         if (trimmed.startsWith("weight")) {
             String[] parts = trimmed.split("\\s+");
             if (parts.length == 2 && parts[1].equals("?")) {
                 return new WeightCommand(-1);
             }
             if (parts.length < 2) {
-                return (l, s) -> "Weight must be a number. Try `weight`+ 'value of weight'";
+                return (l, s) -> new CommandResult("Weight must be a number. Try `weight`+ 'value of weight'");
             }
             try {
                 return new WeightCommand(Integer.parseInt(parts[1]));
             } catch (NumberFormatException e) {
-                return (l, s) -> "Weight must be a number. Try `weight`+ 'value of weight'";
+                return (l, s) -> new CommandResult("Weight must be a number. Try `weight`+ 'value of weight'");
             }
         }
+
+        // Handles "meal" command
         if (trimmed.startsWith("meal")) {
             return AddMealCommand.fromInput(trimmed);
         }
 
-
-        if (trimmed.startsWith("weight")) {
-            String[] parts = trimmed.split("\\s+");
-            if (parts.length == 2 && parts[1].equals("?")) {
-                return new WeightCommand(-1);
-            }
-            if (parts.length < 2) {
-                return (l, s) -> "Weight must be a number. Try `weight`+ 'value of weight'";
-            }
-            try {
-                return new WeightCommand(Integer.parseInt(parts[1]));
-            } catch (NumberFormatException e) {
-                return (l, s) -> "Weight must be a number. Try `weight`+ 'value of weight'";
-            }
-        }
-        return (l, s) -> "Unknown command.";
+        return (l, s) -> new CommandResult("Unknown command.");
     }
 }

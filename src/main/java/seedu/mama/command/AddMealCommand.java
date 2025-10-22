@@ -39,7 +39,7 @@ public class AddMealCommand implements Command {
     }
 
     @Override
-    public String execute(EntryList list, Storage storage) {
+    public CommandResult execute(EntryList list, Storage storage) {
         MealEntry entry = new MealEntry(mealType, calories);
         list.add(entry);
         if (storage != null) {
@@ -49,9 +49,9 @@ public class AddMealCommand implements Command {
                 .filter(e -> e.type().equals("MEAL"))
                 .mapToInt(e -> ((MealEntry) e).getCalories())
                 .sum();
-        return "Got it. I've logged this meal:\n"
+        return new CommandResult("Got it. I've logged this meal:\n"
                 + "  " + entry.toListLine() + "\n"
                 + "You now have a total of " + totalCal
-                + " calories recorded! Keep up the good work!";
+                + " calories recorded! Keep up the good work!");
     }
 }
