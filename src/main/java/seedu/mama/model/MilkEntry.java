@@ -40,7 +40,7 @@ public class MilkEntry extends Entry {
     }
 
     public String formatDate(LocalDateTime date) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yy HH:mm");
         return date.format(formatter);
     }
 
