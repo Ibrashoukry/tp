@@ -35,17 +35,20 @@ public class Parser {
             }
         } else if (trimmed.startsWith("list")) {
             return new ListCommand();
-        } else if (trimmed.startsWith("milk")) {
-            String[] parts = trimmed.split("\\s+");
+        }
 
-            if (parts.length < 2) {
-                return (l, s) -> "Usage: milk VOLUME | How much breast milk did you pump?";
-            }
-            try {
-                return new AddMilkCommand(Integer.parseInt(parts[1]));
-            } catch (NumberFormatException e) {
-                return (l, s) -> "VOLUME must be a number.";
-            }
+        if (trimmed.startsWith("milk")) {
+//            String[] parts = trimmed.split("\\s+");
+//
+//            if (parts.length < 2) {
+//                return (l, s) -> "Usage: milk VOLUME | How much breast milk did you pump?";
+//            }
+//            try {
+//                return new AddMilkCommand(Integer.parseInt(parts[1]));
+//            } catch (NumberFormatException e) {
+//                return (l, s) -> "VOLUME must be a number.";
+//            }
+            return AddMilkCommand.fromInput(trimmed);
         }
 
         if (trimmed.startsWith("workout ")) {
