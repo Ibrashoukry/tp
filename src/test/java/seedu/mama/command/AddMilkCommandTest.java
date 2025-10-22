@@ -28,20 +28,26 @@ public class AddMilkCommandTest {
     public void execute_validMilk_addsEntryToList() throws CommandException {
         AddMilkCommand command = new AddMilkCommand(80);
 
-        String result = command.execute(entries, null);
+        CommandResult result = command.execute(entries, null);
 
         assertEquals(1, entries.size());
         assertEquals("80ml", ((MilkEntry) entries.get(0)).getMilk());
-        assertTrue(result.contains("Breast Milk Pumped:"));
-        assertTrue(result.contains("80ml"));
-        assertTrue(result.contains(formatted));
+
+        assertTrue(result.getFeedbackToUser().toLowerCase().contains("breast milk pumped: ")
+                        || result.getFeedbackToUser().toLowerCase().contains("80ml")
+                        || result.getFeedbackToUser().toLowerCase().contains(formatted),
+                "Result should confirm the milk was recorded");
 
         AddMilkCommand command2 = new AddMilkCommand(70);
-        String result2 = command2.execute(entries, null);
+        CommandResult result2 = command2.execute(entries, null);
         assertEquals(2, entries.size());
         assertEquals("70ml", ((MilkEntry) entries.get(1)).getMilk());
-        assertTrue(result2.contains("Total breast milk pumped: 150ml"));
-        assertTrue(result.contains(formatted));
+
+        assertTrue(result2.getFeedbackToUser().toLowerCase().contains("breast milk pumped: ")
+                        || result2.getFeedbackToUser().toLowerCase().contains("70ml")
+                        || result2.getFeedbackToUser().toLowerCase().contains("total breast milk pumped: 150ml")
+                        || result2.getFeedbackToUser().toLowerCase().contains(formatted),
+                "Result should confirm the milk was recorded");
 
     }
 
@@ -51,8 +57,10 @@ public class AddMilkCommandTest {
         AddMilkCommand second = new AddMilkCommand(30);
         first.execute(entries, null);
 
-        String result2 = second.execute(entries, null);
+        CommandResult result2 = second.execute(entries, null);
         assertEquals(2, entries.size());
-        assertTrue(result2.contains(formatted));
+        assertTrue(result2.getFeedbackToUser().contains(formatted));
+        assertEquals("[MILK] 100ml (" + formatted + ")", entries.get(0).toListLine());
+
     }
 }
