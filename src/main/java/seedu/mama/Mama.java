@@ -32,32 +32,37 @@ public class Mama {
         EntryList list = storage.loadOrEmpty();
 
         Scanner sc = new Scanner(System.in);
-        boolean isRunning = true;
 
-        while (isRunning) {
-            String userInput = sc.nextLine();
+        while (true) {
+            // ✅ Prevent NoSuchElementException if input file ends (important for runtest.sh)
+            if (!sc.hasNextLine()) {
+                break;
+            }
+
+            String userInput = sc.nextLine().trim();
+            if (userInput.isEmpty()) {
+                continue; // ignore blank lines
+            }
+
+            if (userInput.equalsIgnoreCase("bye")) {
+                System.out.println("Bye. Hope to see you again soon!");
+                break;
+            }
+
             try {
                 Command command = Parser.parse(userInput);
                 CommandResult result = command.execute(list, storage);
                 System.out.println(result.getFeedbackToUser());
-                if (result.isExit()) {
-                    Ui.showMessage("Shutting down...");
-                    break;
-                }
             } catch (CommandException ce) {
                 LOG.log(Level.WARNING, "Command failed: " + ce.getMessage());
-                System.out.println(ce.getMessage()); // show user-friendly message only
-                continue; // keep app responsive
+                System.out.println(ce.getMessage()); // show user-friendly message
             } catch (Exception e) {
                 // safeguard for any other unforeseen error
                 System.out.println("An unexpected error occurred: " + e.getMessage());
-                LOG.severe("Unexpected exception: " + e);
-            }
-
-            if (userInput.equalsIgnoreCase("bye")) {
-                isRunning = false;
+                LOG.log(Level.SEVERE, "Unexpected exception", e);
             }
         }
+
         sc.close();
     }
 }

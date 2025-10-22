@@ -22,9 +22,30 @@ Here are your entries:
 3. [Workout] swim (30 mins)
 4. [Workout] cycle (30 mins)
 Deleted: [Workout] run (30 mins)
-weightInput must be greater that 0!
 Added new weight entry: [WEIGHT] 83kg
-weightInput must be greater that 0!
 Here are your weight entries:
 1. [WEIGHT] 83kg
+Got it. I've logged this meal:
+  [Meal] breakfast (450 kcal)
+You now have a total of 450 calories recorded! Keep up the good work!
+Got it. I've logged this meal:
+  [Meal] lunch (600 kcal)
+You now have a total of 1050 calories recorded! Keep up the good work!
+Here are your meal entries:
+1. [Meal] breakfast (450 kcal)
+2. [Meal] lunch (600 kcal)
+Added: [MEASURE] waist=75cm, hips=95cm
+Added: [MEASURE] waist=76cm, hips=96cm, chest=88cm, arm=30cm
+Here are your measure entries:
+1. [MEASURE] waist=75cm, hips=95cm
+2. [MEASURE] waist=76cm, hips=96cm, chest=88cm, arm=30cm
+Deleted: [Workout] cycle (30 mins)
+Here are your entries:
+1. [MILK] 80ml
+2. [Workout] swim (30 mins)
+3. [WEIGHT] 83kg
+4. [Meal] breakfast (450 kcal)
+5. [Meal] lunch (600 kcal)
+6. [MEASURE] waist=75cm, hips=95cm
+7. [MEASURE] waist=76cm, hips=96cm, chest=88cm, arm=30cm
 Bye. Hope to see you again soon!
