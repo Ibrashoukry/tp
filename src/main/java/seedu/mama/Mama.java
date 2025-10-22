@@ -22,7 +22,13 @@ public class Mama {
         assert false : "dummy assertion set to fail";
         System.out.println("Hello from MAMA");
         System.out.println("Enter a command (workout <description> /dur <duration>, " +
-                "weight <weight>, milk <volume> /date <yyyy/MM/dd>, delete <index>, list, bye)");
+                "workout goal, " +
+                "workout goal <duration in minutes>, " +
+                "weight <weight>, " +
+                "milk <volume> /date <yyyy/MM/dd>, " +
+                "delete <index>, " +
+                "list, " +
+                "bye)");
 
         Storage storage = Storage.defaultStorage();
         EntryList list = storage.loadOrEmpty();

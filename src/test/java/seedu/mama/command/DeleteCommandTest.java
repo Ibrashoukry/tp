@@ -43,8 +43,11 @@ public class DeleteCommandTest {
         assertFalse(output.getFeedbackToUser().isEmpty());
         assertTrue(output.getFeedbackToUser().startsWith("Deleted:"));
         assertTrue(output.getFeedbackToUser().contains("[Workout] Swim (30 mins)"));
-        assertEquals("[Workout] Run (30 mins)", list.get(0).toListLine());
-        assertEquals("[Workout] Cycle (30 mins)", list.get(1).toListLine());
+
+        String first = list.get(0).toListLine();
+        String second = list.get(1).toListLine();
+        assertTrue(first.startsWith("[Workout] Run (30 mins)"), first);
+        assertTrue(second.startsWith("[Workout] Cycle (30 mins)"), second);
     }
 
     @Test

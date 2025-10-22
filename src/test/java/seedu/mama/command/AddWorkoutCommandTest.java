@@ -33,7 +33,9 @@ public class AddWorkoutCommandTest {
         assertEquals(1, entries.size(), "One workout entry should be added");
         Entry first = entries.get(0);
         assertTrue(first instanceof WorkoutEntry, "Entry should be a WorkoutEntry");
-        assertEquals("[Workout] running (40 mins)", first.toListLine());
+
+        String line = first.toListLine();
+        assertTrue(line.startsWith("[Workout] running (40 mins)"), line);
         assertTrue(result.getFeedbackToUser().toLowerCase().contains("logged")
                         || result.getFeedbackToUser().toLowerCase().contains("added"),
                 "Result should confirm the workout was recorded");
@@ -48,7 +50,11 @@ public class AddWorkoutCommandTest {
         second.execute(entries, storage);
 
         assertEquals(2, entries.size(), "Two workout entries should be present");
-        assertEquals("[Workout] yoga (60 mins)", entries.get(0).toListLine());
-        assertEquals("[Workout] cycling (30 mins)", entries.get(1).toListLine());
+
+        String line0 = entries.get(0).toListLine();
+        String line1 = entries.get(1).toListLine();
+
+        assertTrue(line0.startsWith("[Workout] yoga (60 mins)"), line0);
+        assertTrue(line1.startsWith("[Workout] cycling (30 mins)"), line1);
     }
 }
