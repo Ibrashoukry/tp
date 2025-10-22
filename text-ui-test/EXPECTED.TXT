@@ -4,10 +4,6 @@ No entries found.
 Invalid index: 1
 No entries yet.
 No entries found.
-Volume must be a number
-milkVolume must be a positive number!
-Breast Milk Pumped: [MILK] 80ml (22/10/25 21:29)
-Total breast milk pumped: 80ml
 Got it. I've logged this workout:
   [Workout] run (30 mins)
 Great job Mama! You now have a total of 1 workouts completed! Lets keep it up!!
@@ -18,37 +14,24 @@ Got it. I've logged this workout:
   [Workout] cycle (30 mins)
 Great job Mama! You now have a total of 3 workouts completed! Lets keep it up!!
 Here are your entries:
-1. [MILK] 80ml (22/10/25 21:29)
-2. [Workout] run (30 mins)
-3. [Workout] swim (30 mins)
-4. [Workout] cycle (30 mins)
-Deleted: [Workout] run (30 mins)
+1. [Workout] run (30 mins)
+2. [Workout] swim (30 mins)
+3. [Workout] cycle (30 mins)
+Deleted: [Workout] swim (30 mins)
 weightInput must be greater that 0!
 Added new weight entry: [WEIGHT] 83kg
 weightInput must be greater that 0!
 Here are your weight entries:
 1. [WEIGHT] 83kg
-Got it. I've logged this meal:
-  [Meal] breakfast (450 kcal)
-You now have a total of 450 calories recorded! Keep up the good work!
-Got it. I've logged this meal:
-  [Meal] lunch (600 kcal)
-You now have a total of 1050 calories recorded! Keep up the good work!
-Here are your meal entries:
-1. [Meal] breakfast (450 kcal)
-2. [Meal] lunch (600 kcal)
 Added: [MEASURE] waist=75cm, hips=95cm
 Added: [MEASURE] waist=76cm, hips=96cm, chest=88cm, arm=30cm
 Here are your measure entries:
 1. [MEASURE] waist=75cm, hips=95cm
 2. [MEASURE] waist=76cm, hips=96cm, chest=88cm, arm=30cm
-Deleted: [Workout] cycle (30 mins)
+Deleted: [WEIGHT] 83kg
 Here are your entries:
-1. [MILK] 80ml (22/10/25 21:29)
-2. [Workout] swim (30 mins)
-3. [WEIGHT] 83kg
-4. [Meal] breakfast (450 kcal)
-5. [Meal] lunch (600 kcal)
-6. [MEASURE] waist=75cm, hips=95cm
-7. [MEASURE] waist=76cm, hips=96cm, chest=88cm, arm=30cm
+1. [Workout] run (30 mins)
+2. [Workout] cycle (30 mins)
+3. [MEASURE] waist=75cm, hips=95cm
+4. [MEASURE] waist=76cm, hips=96cm, chest=88cm, arm=30cm
 Bye. Hope to see you again soon!
