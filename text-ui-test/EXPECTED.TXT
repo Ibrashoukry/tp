@@ -1,12 +1,13 @@
 Hello from MAMA
-Enter a command (workout <description> /dur <duration>, weight <weight>, milk <milk volume>, delete <index>, list, bye)
+Enter a command (workout <description> /dur <duration>, weight <weight>, milk <volume> /date <yyyy/MM/dd>, delete <index>, list, bye)
 No entries found.
 Invalid index: 1
 No entries yet.
 No entries found.
-Usage: milk VOLUME | How much breast milk did you pump?
+Volume must be a number
 milkVolume must be a positive number!
-Breast Milk Pumped: [MILK] 80ml
+Breast Milk Pumped: [MILK] 80ml (22/10/25 15:26)
+Total breast milk pumped: 80ml
 Got it. I've logged this workout:
   [Workout] run (30 mins)
 Great job Mama! You now have a total of 1 workouts completed! Lets keep it up!!
@@ -17,7 +18,7 @@ Got it. I've logged this workout:
   [Workout] cycle (30 mins)
 Great job Mama! You now have a total of 3 workouts completed! Lets keep it up!!
 Here are your entries:
-1. [MILK] 80ml
+1. [MILK] 80ml (22/10/25 15:26)
 2. [Workout] run (30 mins)
 3. [Workout] swim (30 mins)
 4. [Workout] cycle (30 mins)
