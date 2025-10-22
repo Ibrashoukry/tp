@@ -5,8 +5,8 @@ import seedu.mama.model.MealEntry;
 import seedu.mama.storage.Storage;
 
 public class AddMealCommand implements Command {
-    private String mealType;
-    private int calories;
+    private final String mealType;
+    private final int calories;
 
     public AddMealCommand(String mealType, int calories) {
         this.mealType = mealType;
@@ -45,13 +45,28 @@ public class AddMealCommand implements Command {
         if (storage != null) {
             storage.save(list);
         }
-        int totalCal = list.asList().stream() // gets total calorie count
+
+        int totalCal = list.asList().stream()
                 .filter(e -> e.type().equals("MEAL"))
                 .mapToInt(e -> ((MealEntry) e).getCalories())
                 .sum();
+
+        // Calculate difference from goal
+        Integer goal = (storage != null) ? storage.loadGoal() : null;
+        String goalMsg = "";
+        if (goal != null) {
+            int diff = totalCal - goal;
+            if (diff > 0) {
+                goalMsg = "\nYou are " + diff + " kcal over your goal!";
+            } else {
+                goalMsg = "\nYou have " + Math.abs(diff) + " kcal left to reach your goal.";
+            }
+        }
+
         return new CommandResult("Got it. I've logged this meal:\n"
                 + "  " + entry.toListLine() + "\n"
-                + "You now have a total of " + totalCal
-                + " calories recorded! Keep up the good work!");
+                + "You now have a total of " + totalCal + " kcal recorded!"
+                + goalMsg);
     }
+
 }
