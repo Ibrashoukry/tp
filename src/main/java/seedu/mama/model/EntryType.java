@@ -7,7 +7,8 @@ public enum EntryType {
     MEAL(MealEntry.class),
     WORKOUT(WorkoutEntry.class),
     MILK(MilkEntry.class),
-    WEIGHT(WeightEntry.class);
+    WEIGHT(WeightEntry.class),
+    MEASURE(BodyMeasurementEntry.class);
 
     // This field can be used for more advanced logic later if needed
     public final Class<? extends Entry> entryClass;
