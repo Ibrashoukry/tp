@@ -48,6 +48,9 @@ public abstract class Entry {
             throw new IllegalArgumentException("Bad line: " + line);
         }
         switch (parts[0]) {
+        case "GOAL":
+            return GoalEntry.fromStorage(line);
+
         case "NOTE":
             return NoteEntry.fromStorage(line);
 
@@ -60,7 +63,6 @@ public abstract class Entry {
         case "MEAL":
             return MealEntry.fromStorage(line);
 
-        // future: case "MEAL": return MealEntry.fromStorage(line);
         case "WEIGHT":
             return WeightEntry.fromStorage(line);
         default:
