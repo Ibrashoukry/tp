@@ -1,15 +1,12 @@
 package seedu.mama.model;
 
-import seedu.mama.command.CommandException;
-
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-import static seedu.mama.command.AddMilkCommand.parseDate;
 
 public class MilkEntry extends Entry {
     private static int totalMilkVol;
-    private LocalDate dateOfPump;
+    private final String date;
 
     public static void addTotalMilkVol(int MilkVol) {
         totalMilkVol += MilkVol;
@@ -19,9 +16,7 @@ public class MilkEntry extends Entry {
         totalMilkVol -= MilkVol;
     }
 
-    public LocalDate getDateOfPump() {
-        return dateOfPump;
-    }
+    private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yy HH:mm");
 
     public static int getMilkVol(String volFromStorage) {
         if (volFromStorage.endsWith("ml")) {
@@ -39,34 +34,49 @@ public class MilkEntry extends Entry {
         return "Total breast milk pumped: " + totalMilkVol + "ml";
     }
 
-    public MilkEntry(String userInput, LocalDate dateOfPump) {
+    public MilkEntry(String userInput) {
         super("MILK", userInput);
-        this.dateOfPump = dateOfPump;
+        this.date = LocalDateTime.now().format(formatter);
+    }
+
+    public String formatDate(LocalDateTime date) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+        return date.format(formatter);
+    }
+
+    public MilkEntry(String userInput, LocalDateTime dateTime) {
+        super("MILK", userInput);
+        this.date = formatDate(dateTime);
     }
 
     @Override
     public String toListLine() {
-        return "[" + type() + "] " + description() + " (" + getDateOfPump() + ")";
+        return "[" + type() + "] " + description() + " (" + date + ")";
     }
 
     public String getMilk() {
         return this.description();
     }
 
+    public String getDate() {
+        return this.date;
+    }
+
     @Override
     public String toStorageString() {
         // Stable Storage: MILK|<volume>|<date>
-        return "MILK|" + description() + "|" + getDateOfPump();
+        return "MILK|" + description() + "|" + date;
     }
 
     public static MilkEntry fromStorage(String line) {
-        // Expected: MILK|<volume>|<date>
+        // Expected: MILK|<volume>|<date> <time>
         String[] parts = line.split("\\|");
         String volume = parts[1];
-        String dateStr = parts[2];
+        String dateStr = parts[2]; // e.g., "22/10/25 11:19"
 
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyy-MM-dd");
-        LocalDate date =  LocalDate.parse(dateStr, formatter);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yy HH:mm");
+        LocalDateTime date = LocalDateTime.parse(dateStr, formatter);
+
         addTotalMilkVol(getMilkVol(volume));
 
         return new MilkEntry(volume, date);
