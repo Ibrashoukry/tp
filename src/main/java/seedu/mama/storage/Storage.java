@@ -43,7 +43,9 @@ public class Storage {
 
                 while ((line = br.readLine()) != null) {
 
-                    if (line.startsWith("GOAL|")) continue; // skip goal line
+                    if (line.startsWith("GOAL|")) {
+                        continue; // skip goal line
+                    }
 
                     try {
                         list.add(Entry.fromStorageString(line));
@@ -63,7 +65,9 @@ public class Storage {
      */
     public Integer loadGoal() {
         try {
-            if (!Files.exists(file)) return null;
+            if (!Files.exists(file)) {
+                return null;
+            }
 
             try (BufferedReader br = Files.newBufferedReader(file)) {
                 String line;

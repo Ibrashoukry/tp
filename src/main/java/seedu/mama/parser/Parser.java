@@ -136,7 +136,7 @@ public class Parser {
                     return new CommandResult("No calorie goal set yet. Use: goal <calories>");
                 }
 
-               // show how many calories logged
+                // show how many calories logged
                 int totalCal = list.asList().stream()
                         .filter(e -> e.type().equals("MEAL"))
                         .mapToInt(e -> ((seedu.mama.model.MealEntry) e).getCalories())
