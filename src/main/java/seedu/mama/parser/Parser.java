@@ -38,16 +38,6 @@ public class Parser {
         }
 
         if (trimmed.startsWith("milk")) {
-//            String[] parts = trimmed.split("\\s+");
-//
-//            if (parts.length < 2) {
-//                return (l, s) -> "Usage: milk VOLUME | How much breast milk did you pump?";
-//            }
-//            try {
-//                return new AddMilkCommand(Integer.parseInt(parts[1]));
-//            } catch (NumberFormatException e) {
-//                return (l, s) -> "VOLUME must be a number.";
-//            }
             return AddMilkCommand.fromInput(trimmed);
         }
 
