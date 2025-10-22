@@ -28,7 +28,8 @@ public class ListCommand implements Command {
 
     /**
      * Constructor for a ListCommand that filters entries.
-     * @param predicate The condition to filter entries by.
+     *
+     * @param predicate   The condition to filter entries by.
      * @param displayType A string representing the filter type for the success message.
      */
     public ListCommand(Predicate<Entry> predicate, String displayType) {
@@ -41,7 +42,7 @@ public class ListCommand implements Command {
     }
 
     @Override
-    public String execute(EntryList entries, Storage storage) throws CommandException {
+    public CommandResult execute(EntryList entries, Storage storage) throws CommandException {
         // Assert that method parameters are not null.
         assert entries != null : "The EntryList object passed to ListCommand should not be null.";
         assert storage != null : "The Storage object passed to ListCommand should not be null.";
@@ -57,7 +58,8 @@ public class ListCommand implements Command {
 
         if (filteredEntries.isEmpty()) {
             LOGGER.log(Level.INFO, "No entries found for type: " + displayType);
-            return "No " + headerType + " found."; // e.g., "No entries found." or "No meal entries found."
+            // e.g., "No entries found." or "No meal entries found."
+            return new CommandResult("No " + headerType + " found.");
         }
 
         StringBuilder sb = new StringBuilder("Here are your " + headerType + ":");
@@ -70,6 +72,6 @@ public class ListCommand implements Command {
         }
 
         LOGGER.log(Level.INFO, "Successfully listed " + filteredEntries.size() + " entries of type: " + displayType);
-        return sb.toString().trim();
+        return new CommandResult(sb.toString().trim());
     }
 }

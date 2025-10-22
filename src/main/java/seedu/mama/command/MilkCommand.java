@@ -12,6 +12,7 @@ import seedu.mama.storage.Storage;
 public class MilkCommand implements Command {
 
     public final int milkVolume;
+
     // Only accept positive volume
     public MilkCommand(int milkVolume) throws CommandException {
         if (milkVolume < 0) {
@@ -21,7 +22,7 @@ public class MilkCommand implements Command {
     }
 
     @Override
-    public String execute(EntryList list, Storage storage) {
+    public CommandResult execute(EntryList list, Storage storage) {
         assert this.milkVolume > 0 : "The milkVolume must be greater than 0!";
 
         Entry newMilk = new MilkEntry(milkVolume + "ml");
@@ -30,6 +31,6 @@ public class MilkCommand implements Command {
             storage.save(list);
         }
 
-        return "Breast Milk Pumped: " + newMilk.toListLine();
+        return new CommandResult("Breast Milk Pumped: " + newMilk.toListLine());
     }
 }

@@ -2,6 +2,7 @@ package seedu.mama.command;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
 import seedu.mama.model.EntryList;
 import seedu.mama.model.MilkEntry;
 
@@ -21,12 +22,12 @@ public class AddMilkCommandTest {
     @Test
     public void execute_validMilk_addsEntryToList() throws CommandException {
         MilkCommand command = new MilkCommand(80);
-        String result = command.execute(entries, null);
+        CommandResult result = command.execute(entries, null);
 
         assertEquals(1, entries.size());
         assertEquals("80ml", ((MilkEntry) entries.get(0)).getMilk());
-        assertTrue(result.contains("Breast Milk Pumped:"));
-        assertTrue(result.contains("80ml"));
+        assertTrue(result.getFeedbackToUser().contains("Breast Milk Pumped:"));
+        assertTrue(result.getFeedbackToUser().contains("80ml"));
     }
 
     @Test

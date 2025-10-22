@@ -1,4 +1,4 @@
-package seedu.mama;
+package seedu.mama.command;
 
 import org.junit.jupiter.api.Test;
 import seedu.mama.model.MealEntry;

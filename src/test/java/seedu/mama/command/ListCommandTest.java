@@ -2,6 +2,7 @@ package seedu.mama.command;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
 import seedu.mama.model.Entry;
 import seedu.mama.model.EntryList;
 import seedu.mama.model.MealEntry;
@@ -42,9 +43,9 @@ public class ListCommandTest {
     @Test
     public void execute_emptyList_returnsNoEntriesMessage() throws CommandException {
         ListCommand command = new ListCommand();
-        String result = command.execute(entries, storageStub);
+        CommandResult result = command.execute(entries, storageStub);
 
-        assertEquals("No entries found.", result);
+        assertEquals("No entries found.", result.getFeedbackToUser());
     }
 
     @Test
@@ -53,11 +54,11 @@ public class ListCommandTest {
         entries.add(new WorkoutEntry("Evening Run", 300));
 
         ListCommand command = new ListCommand();
-        String result = command.execute(entries, storageStub);
+        CommandResult result = command.execute(entries, storageStub);
 
-        assertTrue(result.startsWith("Here are your entries:"));
+        assertTrue(result.getFeedbackToUser().startsWith("Here are your entries:"));
 
-        String[] lines = result.split(System.lineSeparator());
+        String[] lines = result.getFeedbackToUser().split(System.lineSeparator());
         assertEquals(3, lines.length, "Output should have a header and two entry lines");
         assertTrue(lines[1].startsWith("1. "));
         assertTrue(lines[2].startsWith("2. "));
@@ -73,14 +74,14 @@ public class ListCommandTest {
 
         Predicate<Entry> mealPredicate = entry -> entry instanceof MealEntry;
         ListCommand command = new ListCommand(mealPredicate, "meal");
-        String result = command.execute(entries, storageStub);
+        CommandResult result = command.execute(entries, storageStub);
 
-        assertTrue(result.contains("Here are your meal entries:"));
-        assertTrue(result.contains("Salad"));
-        assertTrue(result.contains("Noodles"));
-        assertFalse(result.contains("Morning Yoga"), "Workout entry should not be in the list");
+        assertTrue(result.getFeedbackToUser().contains("Here are your meal entries:"));
+        assertTrue(result.getFeedbackToUser().contains("Salad"));
+        assertTrue(result.getFeedbackToUser().contains("Noodles"));
+        assertFalse(result.getFeedbackToUser().contains("Morning Yoga"), "Workout entry should not be in the list");
 
-        String[] lines = result.split(System.lineSeparator());
+        String[] lines = result.getFeedbackToUser().split(System.lineSeparator());
         assertEquals(3, lines.length);
         assertTrue(lines[1].startsWith("1. "));
         assertTrue(lines[2].startsWith("2. "));
