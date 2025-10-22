@@ -37,7 +37,8 @@ public final class ViewWorkoutGoalCommand implements Command {
             LocalDateTime ts = LocalDateTime.parse(w.getDate(), FMT);
             if (WeekCheck.inSameWeek(ts, weekStart)) {
                 minutesThisWeek += w.getDuration();
-                thisWeeksWorkouts.add("[Workout] " + w.description() + " (" + w.getDuration() + " mins) (" + w.getDate() + ")");
+                thisWeeksWorkouts.add("[Workout] " + w.description() + " (" +
+                        w.getDuration() + " mins) (" + w.getDate() + ")");
             }
         }
 

@@ -21,8 +21,13 @@ public final class WorkoutGoalEntry extends Entry {
         this.date = setAt.format(FMT);
     }
 
-    public int getMinutesPerWeek() { return minutesPerWeek; }
-    public String getDate() { return date; }
+    public int getMinutesPerWeek() {
+        return minutesPerWeek;
+    }
+
+    public String getDate() {
+        return date;
+    }
 
     @Override
     public String toListLine() {

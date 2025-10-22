@@ -1,6 +1,5 @@
 package seedu.mama.command;
 
-import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 
 import seedu.mama.model.EntryList;

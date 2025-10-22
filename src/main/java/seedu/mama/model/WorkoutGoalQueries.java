@@ -13,7 +13,9 @@ public final class WorkoutGoalQueries {
         LocalDateTime latestTs = null;
 
         for (Entry e : list.asList()) {
-            if (!"WORKOUT_GOAL".equals(e.type())) continue;
+            if (!"WORKOUT_GOAL".equals(e.type())) {
+                continue;
+            }
             WorkoutGoalEntry g = (WorkoutGoalEntry) e;
             LocalDateTime ts = LocalDateTime.parse(g.getDate(), FMT);
             if (WeekCheck.inSameWeek(ts, weekStart)) {
@@ -30,7 +32,9 @@ public final class WorkoutGoalQueries {
     public static int sumWorkoutMinutesThisWeek(EntryList list, LocalDateTime weekStart) {
         int sum = 0;
         for (Entry e : list.asList()) {
-            if (!"WORKOUT".equals(e.type())) continue;
+            if (!"WORKOUT".equals(e.type())) {
+                continue;
+            }
             WorkoutEntry w = (WorkoutEntry) e;
             LocalDateTime ts = LocalDateTime.parse(w.getDate(), FMT);
             if (WeekCheck.inSameWeek(ts, weekStart)) {
