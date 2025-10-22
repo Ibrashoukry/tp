@@ -9,7 +9,7 @@ import seedu.mama.command.AddMealCommand;
 import seedu.mama.command.Command;
 import seedu.mama.command.DeleteCommand;
 import seedu.mama.command.AddWorkoutCommand;
-import seedu.mama.command.MilkCommand;
+import seedu.mama.command.AddMilkCommand;
 
 /**
  * Parses raw user input strings into the appropriate {@link Command} objects.
@@ -22,7 +22,7 @@ import seedu.mama.command.MilkCommand;
  * Example usages:
  * <ul>
  *     <li>{@code delete 2} → returns a {@link DeleteCommand}</li>
- *     <li>{@code milk 150} → returns a {@link MilkCommand}</li>
+ *     <li>{@code milk 150} → returns a {@link AddMilkCommand}</li>
  *     <li>{@code weight 5} → returns a {@link WeightCommand}</li>
  * </ul>
  */
@@ -63,25 +63,14 @@ public class Parser {
                 return (l, s) -> new CommandResult("INDEX must be a number.");
             }
         }
-
         // Handles "list" command
         if (trimmed.startsWith("list")) {
             String arguments = trimmed.substring("list".length());
             return ListCommandParser.parseListCommand(arguments);
         }
 
-        // Handles "milk" command
         if (trimmed.startsWith("milk")) {
-            String[] parts = trimmed.split("\\s+");
-
-            if (parts.length < 2) {
-                return (l, s) -> new CommandResult("Usage: milk VOLUME | How much breast milk did you pump?");
-            }
-            try {
-                return new MilkCommand(Integer.parseInt(parts[1]));
-            } catch (NumberFormatException e) {
-                return (l, s) -> new CommandResult("VOLUME must be a number.");
-            }
+            return AddMilkCommand.fromInput(trimmed);
         }
 
         // Handles "workout" command

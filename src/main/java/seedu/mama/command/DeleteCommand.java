@@ -34,6 +34,7 @@ public class DeleteCommand implements Command {
 
         // Valid delete
         int zeroBased = indexOneBased - 1;
+
         Entry removed = list.deleteByIndex(zeroBased);
         try {
             storage.save(list);
