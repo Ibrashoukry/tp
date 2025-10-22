@@ -5,10 +5,6 @@ import seedu.mama.model.EntryList;
 import seedu.mama.model.MilkEntry;
 import seedu.mama.storage.Storage;
 
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
-import java.time.LocalDate;
-
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -44,7 +40,7 @@ public class AddMilkCommand implements Command {
     }
 
     @Override
-    public String execute(EntryList list, Storage storage) {
+    public CommandResult execute(EntryList list, Storage storage) {
         // Log the start of the execution
         LOG.log(Level.INFO, "Executing AddMilkCommand.");
 
@@ -62,6 +58,6 @@ public class AddMilkCommand implements Command {
         }
 
         LOG.log(Level.INFO, "AddMilkCommand successfully executed, adding: " + milkVolume + "ml");
-        return "Breast Milk Pumped: " + newMilk.toListLine() + "\n" + MilkEntry.toTotalMilk();
+        return new CommandResult("Breast Milk Pumped: " + newMilk.toListLine() + "\n" + MilkEntry.toTotalMilk());
     }
 }

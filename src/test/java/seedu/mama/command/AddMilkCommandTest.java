@@ -14,6 +14,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class AddMilkCommandTest {
     private EntryList entries;
 
+
     @BeforeEach
     public void setUp() {
         entries = new EntryList();
@@ -26,8 +27,6 @@ public class AddMilkCommandTest {
     @Test
     public void execute_validMilk_addsEntryToList() throws CommandException {
         AddMilkCommand command = new AddMilkCommand(80);
-
-
 
         String result = command.execute(entries, null);
 

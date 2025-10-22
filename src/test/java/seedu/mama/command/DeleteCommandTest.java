@@ -37,12 +37,12 @@ public class DeleteCommandTest {
     public void execute_validIndex_deletesCorrectEntry() throws CommandException {
         DeleteCommand cmd = new DeleteCommand(2);
 
-        String output = cmd.execute(list, storage);
+        CommandResult output = cmd.execute(list, storage);
 
         assertEquals(2, list.size());
-        assertFalse(output.isEmpty());
-        assertTrue(output.startsWith("Deleted:"));
-        assertTrue(output.contains("[Workout] Swim (30 mins)"));
+        assertFalse(output.getFeedbackToUser().isEmpty());
+        assertTrue(output.getFeedbackToUser().startsWith("Deleted:"));
+        assertTrue(output.getFeedbackToUser().contains("[Workout] Swim (30 mins)"));
         assertEquals("[Workout] Run (30 mins)", list.get(0).toListLine());
         assertEquals("[Workout] Cycle (30 mins)", list.get(1).toListLine());
     }
