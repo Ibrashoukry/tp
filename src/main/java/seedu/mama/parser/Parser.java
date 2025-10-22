@@ -3,6 +3,8 @@ package seedu.mama.parser;
 import seedu.mama.command.CommandException;
 import seedu.mama.command.CommandResult;
 import seedu.mama.command.SetGoalCommand;
+import seedu.mama.command.SetWorkoutGoalCommand;
+import seedu.mama.command.ViewWorkoutGoalCommand;
 import seedu.mama.command.WeightCommand;
 
 import seedu.mama.command.AddMealCommand;
@@ -74,8 +76,23 @@ public class Parser {
             return AddMilkCommand.fromInput(trimmed);
         }
 
-        // Handles "workout" command
-        if (trimmed.startsWith("workout ")) {
+        // Handles "workout goal" command, needs to be checked before generic "workout " command
+        if (trimmed.toLowerCase().startsWith("workout goal")) {
+            String[] parts = trimmed.split("\\s+");
+            if (parts.length == 2) {
+                // "workout goal" with no minutes input → view current workout goal
+                return new ViewWorkoutGoalCommand();
+            }
+            // otherwise, delegate to the setter parser: "workout goal <minutes>"
+            try {
+                return SetWorkoutGoalCommand.fromInput(trimmed);
+            } catch (CommandException e) {
+                return (l, s) -> new CommandResult(e.getMessage());
+            }
+        }
+
+        // Handles "workout " command
+        if (trimmed.toLowerCase().startsWith("workout ")) {
             return AddWorkoutCommand.fromInput(trimmed);
         }
 

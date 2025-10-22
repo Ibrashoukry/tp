@@ -129,4 +129,5 @@ public class Storage {
             System.err.println("Failed to save calorie goal: " + e.getMessage());
         }
     }
+
 }
