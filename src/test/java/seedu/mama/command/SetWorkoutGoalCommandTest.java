@@ -2,6 +2,7 @@ package seedu.mama.command;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
 import seedu.mama.model.Entry;
 import seedu.mama.model.EntryList;
 import seedu.mama.model.WeekCheck;
@@ -18,8 +19,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * Tests for workout goal feature:
- *  - SetWorkoutGoalCommand parsing + execution
- *  - Integration with AddWorkoutCommand (reminders, remaining minutes)
+ * - SetWorkoutGoalCommand parsing + execution
+ * - Integration with AddWorkoutCommand (reminders, remaining minutes)
  */
 public class SetWorkoutGoalCommandTest {
 

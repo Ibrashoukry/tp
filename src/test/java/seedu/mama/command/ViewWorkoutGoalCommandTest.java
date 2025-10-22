@@ -2,7 +2,7 @@ package seedu.mama.command;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import seedu.mama.model.Entry;
+
 import seedu.mama.model.EntryList;
 import seedu.mama.model.WeekCheck;
 import seedu.mama.model.WorkoutEntry;
@@ -12,7 +12,6 @@ import seedu.mama.storage.Storage;
 import java.nio.file.Path;
 import java.time.LocalDateTime;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class ViewWorkoutGoalCommandTest {
