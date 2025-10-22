@@ -1,0 +1,2 @@
+Hello from MAMA
+Enter a command (workout <description> /dur <duration>, weight <weight>, milk <volume> /date <yyyy/MM/dd>, delete <index>, list, bye)
