@@ -2,6 +2,7 @@ package seedu.mama.model;
 
 import java.util.Objects;
 
+
 /**
  * Base type for all entries (Meal, Pump, Weight, Workout, Note, ...).
  */
