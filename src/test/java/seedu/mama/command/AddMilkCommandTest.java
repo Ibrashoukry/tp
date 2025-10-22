@@ -13,6 +13,9 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class AddMilkCommandTest {
     private EntryList entries;
+    LocalDateTime now = LocalDateTime.now();
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yy HH:mm");
+    String formatted = now.format(formatter);
 
 
     @BeforeEach
@@ -20,9 +23,6 @@ public class AddMilkCommandTest {
         entries = new EntryList();
     }
 
-    LocalDateTime now = LocalDateTime.now();
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yy HH:mm");
-    String formatted = now.format(formatter);
 
     @Test
     public void execute_validMilk_addsEntryToList() throws CommandException {
