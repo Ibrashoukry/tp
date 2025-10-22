@@ -1,0 +1,24 @@
+list
+delete 1
+list
+milk
+milk -10
+milk 80
+workout run /dur 30
+workout swim /dur 30
+workout cycle /dur 30
+list
+delete 2
+weight ?
+weight 83
+weight ?
+list /t weight
+meal breakfast /cal 450
+meal lunch /cal 600
+list /t meal
+measure waist/75 hips/95
+measure waist/76 hips/96 chest/88 arm/30
+list /t measure
+delete 3
+list
+bye

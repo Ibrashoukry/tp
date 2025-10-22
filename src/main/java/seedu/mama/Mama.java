@@ -6,7 +6,6 @@ import seedu.mama.command.CommandResult;
 import seedu.mama.model.EntryList;
 import seedu.mama.parser.Parser;
 import seedu.mama.storage.Storage;
-import seedu.mama.ui.Ui;
 
 import java.util.Scanner;
 import java.util.logging.Level;
@@ -19,8 +18,6 @@ public class Mama {
     private static final Logger LOG = Logger.getLogger(Mama.class.getName());
 
     public static void main(String[] args) {
-
-        assert false : "dummy assertion set to fail";
         System.out.println("Hello from MAMA");
         System.out.println("Enter a command ("
                 + "workout <description> /dur <duration>, "
@@ -36,14 +33,14 @@ public class Mama {
         Scanner sc = new Scanner(System.in);
 
         while (true) {
-            // ✅ Prevent NoSuchElementException if input file ends (important for runtest.sh)
+            // EOF-safe for text-ui tests
             if (!sc.hasNextLine()) {
                 break;
             }
 
             String userInput = sc.nextLine().trim();
             if (userInput.isEmpty()) {
-                continue; // ignore blank lines
+                continue;
             }
 
             if (userInput.equalsIgnoreCase("bye")) {
@@ -57,11 +54,10 @@ public class Mama {
                 System.out.println(result.getFeedbackToUser());
             } catch (CommandException ce) {
                 LOG.log(Level.WARNING, "Command failed: " + ce.getMessage());
-                System.out.println(ce.getMessage()); // show user-friendly message
+                System.out.println(ce.getMessage());
             } catch (Exception e) {
-                // safeguard for any other unforeseen error
-                System.out.println("An unexpected error occurred: " + e.getMessage());
                 LOG.log(Level.SEVERE, "Unexpected exception", e);
+                System.out.println("An unexpected error occurred: " + e.getMessage());
             }
         }
 
