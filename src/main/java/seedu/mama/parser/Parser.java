@@ -152,13 +152,13 @@ public class Parser {
                 }
             }
 
-
             try {
                 return new seedu.mama.command.AddMeasurementCommand(waist, hips, chest, thigh, arm);
             } catch (seedu.mama.command.CommandException e) {
                 return (l, s) -> new CommandResult(e.getMessage());
             }
-          
+        }
+
         // Handles "goal" command
         if (trimmed.startsWith("goal ")) {
             // "goal <calorie goal>" -> set new goal
@@ -195,8 +195,6 @@ public class Parser {
                 return new CommandResult(progress);
             };
         }
-
-
         return (l, s) -> new CommandResult("Unknown command.");
     }
 }

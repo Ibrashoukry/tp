@@ -1,23 +1,11 @@
 Hello from MAMA
-Enter a command (workout <description> /dur <duration>, meal <meal description> /cal <calories>, weight <weight>, milk <milk volume>, measure waist/<cm> hips/<cm> [chest/<cm>] [thigh/<cm>] [arm/<cm>], delete <index>, list, bye)
+Enter a command (workout <description> /dur <duration>, meal <meal description> /cal <calories>, weight <weight>, milk <milk volume> /date <yyyy/MM/dd>, measure waist/<cm> hips/<cm> [chest/<cm>] [thigh/<cm>] [arm/<cm>], delete <index>, list, bye)
 No entries found.
 Invalid index: 1
 No entries yet.
 No entries found.
-Got it. I've logged this workout:
-  [Workout] run (30 mins)
-Great job Mama! You now have a total of 1 workouts completed! Lets keep it up!!
-Got it. I've logged this workout:
-  [Workout] swim (30 mins)
-Great job Mama! You now have a total of 2 workouts completed! Lets keep it up!!
-Got it. I've logged this workout:
-  [Workout] cycle (30 mins)
-Great job Mama! You now have a total of 3 workouts completed! Lets keep it up!!
-Here are your entries:
-1. [Workout] run (30 mins)
-2. [Workout] swim (30 mins)
-3. [Workout] cycle (30 mins)
-Deleted: [Workout] swim (30 mins)
+Invalid index: 2
+No entries yet.
 weightInput must be greater that 0!
 Added new weight entry: [WEIGHT] 83kg
 weightInput must be greater that 0!
@@ -28,10 +16,8 @@ Added: [MEASURE] waist=76cm, hips=96cm, chest=88cm, arm=30cm
 Here are your measure entries:
 1. [MEASURE] waist=75cm, hips=95cm
 2. [MEASURE] waist=76cm, hips=96cm, chest=88cm, arm=30cm
-Deleted: [WEIGHT] 83kg
+Deleted: [MEASURE] waist=76cm, hips=96cm, chest=88cm, arm=30cm
 Here are your entries:
-1. [Workout] run (30 mins)
-2. [Workout] cycle (30 mins)
-3. [MEASURE] waist=75cm, hips=95cm
-4. [MEASURE] waist=76cm, hips=96cm, chest=88cm, arm=30cm
+1. [WEIGHT] 83kg
+2. [MEASURE] waist=75cm, hips=95cm
 Bye. Hope to see you again soon!

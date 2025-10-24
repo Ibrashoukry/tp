@@ -1,10 +1,6 @@
 list
 delete 1
 list
-workout run /dur 30
-workout swim /dur 30
-workout cycle /dur 30
-list
 delete 2
 weight ?
 weight 83
