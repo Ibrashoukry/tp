@@ -2,6 +2,9 @@ package seedu.mama.parser;
 
 import seedu.mama.command.CommandException;
 import seedu.mama.command.CommandResult;
+import seedu.mama.command.SetGoalCommand;
+import seedu.mama.command.SetWorkoutGoalCommand;
+import seedu.mama.command.ViewWorkoutGoalCommand;
 import seedu.mama.command.WeightCommand;
 
 import seedu.mama.command.AddMealCommand;
@@ -73,8 +76,23 @@ public class Parser {
             return AddMilkCommand.fromInput(trimmed);
         }
 
-        // Handles "workout" command
-        if (trimmed.startsWith("workout ")) {
+        // Handles "workout goal" command, needs to be checked before generic "workout " command
+        if (trimmed.toLowerCase().startsWith("workout goal")) {
+            String[] parts = trimmed.split("\\s+");
+            if (parts.length == 2) {
+                // "workout goal" with no minutes input → view current workout goal
+                return new ViewWorkoutGoalCommand();
+            }
+            // otherwise, delegate to the setter parser: "workout goal <minutes>"
+            try {
+                return SetWorkoutGoalCommand.fromInput(trimmed);
+            } catch (CommandException e) {
+                return (l, s) -> new CommandResult(e.getMessage());
+            }
+        }
+
+        // Handles "workout " command
+        if (trimmed.toLowerCase().startsWith("workout ")) {
             return AddWorkoutCommand.fromInput(trimmed);
         }
 
@@ -140,6 +158,42 @@ public class Parser {
             } catch (seedu.mama.command.CommandException e) {
                 return (l, s) -> new CommandResult(e.getMessage());
             }
+          
+        // Handles "goal" command
+        if (trimmed.startsWith("goal ")) {
+            // "goal <calorie goal>" -> set new goal
+            String desc = trimmed.substring("goal".length()).trim();
+
+            if (desc.isEmpty()) {
+                throw new CommandException("Invalid format! Try: goal <calories>");
+            }
+
+            try {
+                int goal = Integer.parseInt(desc.split("\\s+")[0]);
+                return new SetGoalCommand(goal);
+            } catch (NumberFormatException e) {
+                throw new CommandException("Calorie goal must be a number.");
+            }
+        }
+
+        if (trimmed.equals("goal")) {
+            // Just "goal" -> show current goal
+            return (list, storage) -> {
+                Integer goalValue = (storage != null) ? storage.loadGoal() : null;
+                if (goalValue == null) {
+                    return new CommandResult("No calorie goal set yet. Use: goal <calories>");
+                }
+
+                // show how many calories logged
+                int totalCal = list.asList().stream()
+                        .filter(e -> e.type().equals("MEAL"))
+                        .mapToInt(e -> ((seedu.mama.model.MealEntry) e).getCalories())
+                        .sum();
+
+                String progress = "Your current calorie goal is: " + goalValue + " kcal."
+                        + " | Progress: " + totalCal + " kcal logged.";
+                return new CommandResult(progress);
+            };
         }
 
 

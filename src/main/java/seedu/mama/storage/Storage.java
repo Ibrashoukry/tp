@@ -10,6 +10,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Storage {
     private final Path file;
@@ -38,7 +40,13 @@ public class Storage {
 
             try (BufferedReader br = Files.newBufferedReader(file)) {
                 String line;
+
                 while ((line = br.readLine()) != null) {
+
+                    if (line.startsWith("GOAL|")) {
+                        continue; // skip goal line
+                    }
+
                     try {
                         list.add(Entry.fromStorageString(line));
                     } catch (IllegalArgumentException ex) {
@@ -52,11 +60,44 @@ public class Storage {
         return list;
     }
 
+    /**
+     * Loads calorie goal if present, otherwise returns null.
+     */
+    public Integer loadGoal() {
+        try {
+            if (!Files.exists(file)) {
+                return null;
+            }
+
+            try (BufferedReader br = Files.newBufferedReader(file)) {
+                String line;
+                while ((line = br.readLine()) != null) {
+                    if (line.startsWith("GOAL|")) {
+                        String[] parts = line.split("\\|");
+                        if (parts.length == 2) {
+                            return Integer.parseInt(parts[1]);
+                        }
+                    }
+                }
+            }
+        } catch (IOException | NumberFormatException e) {
+            System.err.println("Failed to load calorie goal: " + e.getMessage());
+        }
+        return null;
+    }
+
 
     public void save(EntryList list) {
         try {
+            Integer existingGoal = loadGoal();
             Path tmp = file.resolveSibling(file.getFileName() + ".tmp");
+
             try (BufferedWriter bw = Files.newBufferedWriter(tmp)) {
+                if (existingGoal != null) {
+                    bw.write("GOAL|" + existingGoal);
+                    bw.newLine();
+                }
+
                 for (Entry e : list.asList()) {
                     bw.write(e.toStorageString());
                     bw.newLine();
@@ -69,4 +110,24 @@ public class Storage {
             System.err.println("Failed to save storage: " + e.getMessage());
         }
     }
+
+    /**
+     * Writes or updates the goal line at the top of the file.
+     */
+    public void saveGoal(int goal) {
+        try {
+            List<String> lines = new ArrayList<>();
+
+            if (Files.exists(file)) {
+                lines = Files.readAllLines(file);
+                lines.removeIf(line -> line.startsWith("GOAL|"));
+            }
+
+            lines.add(0, "GOAL|" + goal);
+            Files.write(file, lines);
+        } catch (IOException e) {
+            System.err.println("Failed to save calorie goal: " + e.getMessage());
+        }
+    }
+
 }

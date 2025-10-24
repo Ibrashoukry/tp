@@ -23,7 +23,7 @@ public class Mama {
                 + "workout <description> /dur <duration>, "
                 + "meal <meal description> /cal <calories>, "
                 + "weight <weight>, "
-                + "milk <milk volume>, "
+                + "milk <milk volume> /date <yyyy/MM/dd>, "
                 + "measure waist/<cm> hips/<cm> [chest/<cm>] [thigh/<cm>] [arm/<cm>], "
                 + "delete <index>, list, bye)");
 
