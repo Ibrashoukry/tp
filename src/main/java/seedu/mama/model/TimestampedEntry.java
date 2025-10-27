@@ -25,13 +25,14 @@ public abstract class TimestampedEntry extends Entry {
         return timestamp;
     }
 
+    public LocalDateTime getTimestamp() {
+        return this.timestamp;
+    }
+
     public String timestampString() {
         return DateTimeUtil.format(timestamp);
     }
 
-    /**
-     * Helper to append "|<timestamp>" consistently for storage lines.
-     */
     protected String withTimestamp(String storagePrefix) {
         return storagePrefix + "|" + DateTimeUtil.format(timestamp);
     }

@@ -6,6 +6,9 @@ import seedu.mama.util.DateTimeUtil;
 import java.time.LocalDateTime;
 import java.util.List;
 
+/**
+ * Helper methods for querying workout goals and workouts.
+ */
 public final class WorkoutGoalQueries {
     private WorkoutGoalQueries() {
     }
@@ -19,7 +22,7 @@ public final class WorkoutGoalQueries {
             if (e instanceof WorkoutEntry we) {
                 LocalDateTime ts = ((TimestampedEntry) we).timestamp();
                 if (DateTimeUtil.inSameWeek(ts, weekStart)) {
-                    sum += we.duration();
+                    sum += we.getDuration();
                 }
             }
         }
@@ -27,31 +30,24 @@ public final class WorkoutGoalQueries {
     }
 
     /**
-     * The goal in effect for this week:
-     * - pick the latest goal whose timestamp is within this week; else
-     * - pick the latest goal strictly before weekStart (carry-forward).
-     * Returns null if no goal exists.
+     * Returns the workout goal set within this week only.
+     * <p>
+     * If multiple goals exist this week, return the latest one.
+     * Returns null if no goal was set during this week.
      */
     public static WorkoutGoalEntry currentWeekGoal(List<Entry> all, LocalDateTime weekStart) {
-        WorkoutGoalEntry bestInWeek = null;
-        WorkoutGoalEntry latestBefore = null;
+        WorkoutGoalEntry latestThisWeek = null;
 
         for (Entry e : all) {
             if (e instanceof WorkoutGoalEntry g) {
                 LocalDateTime ts = ((TimestampedEntry) g).timestamp();
                 if (DateTimeUtil.inSameWeek(ts, weekStart)) {
-                    if (bestInWeek == null ||
-                            ts.isAfter(((TimestampedEntry) bestInWeek).timestamp())) {
-                        bestInWeek = g;
-                    }
-                } else if (ts.isBefore(weekStart)) {
-                    if (latestBefore == null ||
-                            ts.isAfter(((TimestampedEntry) latestBefore).timestamp())) {
-                        latestBefore = g;
+                    if (latestThisWeek == null || ts.isAfter(((TimestampedEntry) latestThisWeek).timestamp())) {
+                        latestThisWeek = g;
                     }
                 }
             }
         }
-        return (bestInWeek != null) ? bestInWeek : latestBefore;
+        return latestThisWeek;
     }
 }

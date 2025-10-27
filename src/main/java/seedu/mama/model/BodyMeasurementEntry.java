@@ -21,10 +21,18 @@ public class BodyMeasurementEntry extends TimestampedEntry {
      */
     public BodyMeasurementEntry(int waistCm, int hipsCm, Integer chestCm, Integer thighCm, Integer armCm) {
         super("MEASURE", "Body measurements");
-        if (waistCm <= 0 || hipsCm <= 0) throw new IllegalArgumentException("Waist/hips must be > 0");
-        if (chestCm != null && chestCm <= 0) throw new IllegalArgumentException("Chest must be > 0");
-        if (thighCm != null && thighCm <= 0) throw new IllegalArgumentException("Thigh must be > 0");
-        if (armCm != null && armCm <= 0) throw new IllegalArgumentException("Arm must be > 0");
+        if (waistCm <= 0 || hipsCm <= 0) {
+            throw new IllegalArgumentException("Waist/hips must be > 0");
+        }
+        if (chestCm != null && chestCm <= 0) {
+            throw new IllegalArgumentException("Chest must be > 0");
+        }
+        if (thighCm != null && thighCm <= 0) {
+            throw new IllegalArgumentException("Thigh must be > 0");
+        }
+        if (armCm != null && armCm <= 0) {
+            throw new IllegalArgumentException("Arm must be > 0");
+        }
         this.waistCm = waistCm;
         this.hipsCm = hipsCm;
         this.chestCm = chestCm;
@@ -53,16 +61,26 @@ public class BodyMeasurementEntry extends TimestampedEntry {
         List<String> parts = new ArrayList<>();
         parts.add("waist=" + waistCm + "cm");
         parts.add("hips=" + hipsCm + "cm");
-        if (chestCm != null) parts.add("chest=" + chestCm + "cm");
-        if (thighCm != null) parts.add("thigh=" + thighCm + "cm");
-        if (armCm != null) parts.add("arm=" + armCm + "cm");
+        if (chestCm != null) {
+            parts.add("chest=" + chestCm + "cm");
+        }
+        if (thighCm != null) {
+            parts.add("thigh=" + thighCm + "cm");
+        }
+        if (armCm != null) {
+            parts.add("arm=" + armCm + "cm");
+        }
         return "[MEASURE] " + String.join(", ", parts) + " (" + timestampString() + ")";
     }
 
     @Override
     public String toStorageString() {
         return withTimestamp(String.join("|", "MEASURE",
-                String.valueOf(waistCm), String.valueOf(hipsCm), v(chestCm), v(thighCm), v(armCm)));
+                String.valueOf(waistCm),
+                String.valueOf(hipsCm),
+                v(chestCm),
+                v(thighCm),
+                v(armCm)));
     }
 
     /**

@@ -30,15 +30,15 @@ public final class ViewWorkoutGoalCommand implements Command {
         List<String> thisWeeksWorkouts = new ArrayList<>();
 
         for (Entry e : list.asList()) {
-            if (!"WORKOUT".equals(e.type())) {
-                continue;
-            }
-            WorkoutEntry w = (WorkoutEntry) e;
-            LocalDateTime ts = LocalDateTime.parse(w.getDate(), FMT);
-            if (DateTimeUtil.inSameWeek(ts, weekStart)) {
-                minutesThisWeek += w.getDuration();
-                thisWeeksWorkouts.add("[Workout] " + w.description() + " (" +
-                        w.getDuration() + " mins) (" + w.getDate() + ")");
+            if (e instanceof WorkoutEntry w) {
+                LocalDateTime ts = w.getTimestamp(); // <-- use real timestamp
+                if (DateTimeUtil.inSameWeek(ts, weekStart)) {
+                    minutesThisWeek += w.getDuration();
+                    thisWeeksWorkouts.add(
+                            "[Workout] " + w.description() +
+                                    " (" + w.getDuration() + " mins) (" + w.timestampString() + ")"
+                    );
+                }
             }
         }
 

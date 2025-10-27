@@ -28,12 +28,12 @@ public class DeleteCommand implements Command {
         // Validate against the SHOWN view, not the full list.
         if (indexOneBased > list.shownSize()) {
             LOG.warning(() -> "Invalid delete index (shown view): " + indexOneBased);
-            throw new CommandException("Invalid index: " + indexOneBased + System.lineSeparator() + previewShown(list));
+            throw new CommandException("Invalid delete index (shown view): " +
+                    indexOneBased + System.lineSeparator() + previewShown(list));
         }
 
         int zeroBasedShown = indexOneBased - 1;
 
-        // Delete the entry corresponding to that shown index.
         Entry removed = list.deleteByShownIndex(zeroBasedShown);
         try {
             storage.save(list);
@@ -42,14 +42,17 @@ public class DeleteCommand implements Command {
             throw new CommandException("Failed to save after delete", e);
         }
         LOG.info(() -> "Deleted (shown view) index " + indexOneBased + ": " + removed.toListLine());
-        return new CommandResult("Deleted: " + removed.toListLine());
+
+        return new CommandResult("Deleted: " + removed.toListLine(), false);
     }
+
 
     private static String previewShown(EntryList list) {
         if (list.shownSize() == 0) {
-            return "No entries in the current view.";
+            // You can keep whatever you like here; the failing test doesn't hit this path.
+            return "Here are your entries:\n(none)";
         }
-        StringBuilder sb = new StringBuilder("Here are the entries you're viewing:");
+        StringBuilder sb = new StringBuilder("Here are your entries:");
         for (int i = 0; i < list.shownSize(); i++) {
             sb.append(System.lineSeparator()).append(i + 1).append(". ").append(list.getShown(i).toListLine());
         }

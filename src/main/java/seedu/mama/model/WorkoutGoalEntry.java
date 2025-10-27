@@ -5,10 +5,6 @@ import seedu.mama.util.DateTimeUtil;
 
 import java.time.LocalDateTime;
 
-/**
- * Storage (strict):
- * WORKOUT_GOAL|<minutesPerWeek>|<dd/MM/yy HH:mm>
- */
 public final class WorkoutGoalEntry extends TimestampedEntry {
     private final int minutesPerWeek;
 
