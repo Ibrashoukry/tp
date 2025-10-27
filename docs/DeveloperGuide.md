@@ -76,10 +76,10 @@ Model. The Model updates state and Logic instructs Storage to persist data. UI r
 
 #### Example File Content
 
-> MEAL\|breakfast\|500\|2025-10-20  
-> WORKOUT\|yoga\|30min\|2025-10-21  
-> MILK\|morning\|150\|2025-10-21  
-> MEASURE\|weight\|70\|2025-10-26
+> MEAL|breakfast|500
+> WORKOUT|yoga|45|28/10/25 02:33 
+> MILK|120ml|28/10/25 02:32
+> MEASURE|70|98|90|55|30|28/10/25 02:53
 
 | Field | Description                                       |
 |-------|---------------------------------------------------|
@@ -241,18 +241,22 @@ This implementation ensures data safety and provides clear user feedback for bot
 
 #### Overview
 
-`AddMeasurementCommand` logs **waist** and **hips** (required) with optional **chest**, **thigh**, **arm** (all in
-cm).  
-It validates values, appends a `BodyMeasurementEntry`, and persists via `Storage#save(list)`.
+The `AddMeasurementCommand` logs **waist** and **hips** (required) with optional **chest**, **thigh**, **arm** — all in **cm**.  
+On success, it creates a **timestamped** `BodyMeasurementEntry` (via `TimestampedEntry`) and persists the updated list using `Storage#save(list)`.  
+**All new entries include a timestamp** formatted with `DateTimeUtil` as `dd/MM/yy HH:mm`.
 
 #### Implementation Details
 
-**Step 1.** User enters e.g.,
+**Step 1 — User issues a command**  
+The user enters, for example:
 ```measure waist/70 hips/98 chest/90 thigh/55 arm/30```
 
 > ![Measure_Initial](images/AddMeasurement_Initial.png)
 
-**Step 2.** `Parser` constructs  
+The `Ui` captures the raw input.
+
+**Step 2 — Parse into a command**  
+`Parser` extracts integer values and constructs:
 `AddMeasurementCommand(waist=70, hips=98, chest=90, thigh=55, arm=30)`.
 > ![Measure_Parsing](images/AddMeasurement_Parsing.png)
 
@@ -268,7 +272,10 @@ It validates values, appends a `BodyMeasurementEntry`, and persists via `Storage
 **Step 4.** Persist: `Storage#save(list)`.
 > ![Measure_Persist](images/AddMeasurement_Persist.png)
 
-**Step 5.** `Ui` prints `Added: [Measure] waist=70, hips=98, chest=90, thigh=55, arm=30`.
+**Step 5.** `Ui` prints 
+```Added: [MEASURE] waist=70cm, hips=98cm, chest=90cm, thigh=55cm, arm=30cm (28/10/25 02:53)```.
+
+> **AddMeasurement Sequence Diagram**
 > ![AddMeasurement_Sequence](images/AddMeasurement_SequenceDiagram.png)
 
 #### Design Considerations
@@ -313,6 +320,7 @@ If valid, a new `MealEntry` is created and appended to `EntryList`.
 > ![Meal_Persist](images/AddMeal_Persist.png)
 
 **Step 5.** `Ui` prints the result (e.g., `Added: [Meal] breakfast (500 kcal)`).
+
 > ![AddMeal_Sequence](images/AddMeal_SequenceDiagram.png)
 
 #### Design Considerations

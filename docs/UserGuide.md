@@ -27,9 +27,7 @@ Mama is lightweight, works entirely **offline**, and runs on any system with Jav
 
 ```java -jar mama.jar```
 
-5. You should see a welcome message and command prompt:
-
-> Welcome to Mama! What would you like to do today?
+5. You should see a welcome message and command prompt.
 
 6. Type a command and press **Enter** to start logging your activities.
 
@@ -50,6 +48,7 @@ You can also filter entries by their type.
 **Format**
 
 > list
+>
 > list /t TYPE
 
 
@@ -81,14 +80,9 @@ Removes an entry by its index as shown in the `list` command.
 ```delete 2```
 ```delete 5```
 
-**Expected Output**
-> Deleted entry: MEAL | breakfast | 500 | 2025-10-20
+**Notes**
 
-
-**Error Cases**
-
-- If the index is invalid or out of range, Mama will display  
-  `Invalid index: Please provide a valid entry number.`
+- Use the `list` command to find the correct index first.
 
 ---
 
@@ -107,7 +101,6 @@ Adds a meal entry with its calorie value.
 **Notes**
 
 - `CALORIES` must be a positive integer.
-- Meals are stored with the current date by default.
 
 ---
 
@@ -126,7 +119,7 @@ Adds a workout entry with its duration (in minutes).
 **Notes**
 
 - `DURATION` must be a positive integer.
-- *Coming soon:* view a summary of weekly workout durations.
+- Each workout is timestamped automatically.
 
 ---
 
@@ -136,6 +129,7 @@ Sets or views your **weekly workout goal**.
 
 **Formats**
 > workout goal MINUTES → sets a new goal
+>
 > workout goal → views current goal
 
 
@@ -146,7 +140,6 @@ Sets or views your **weekly workout goal**.
 **Notes**
 
 - The goal represents total minutes of workouts per week.
-- *Coming soon:* automatic progress bar and goal reminders.
 
 ---
 
@@ -165,6 +158,7 @@ Records a milk-pumping session in millilitres (ml).
 **Notes**
 
 - `VOLUME` must be a non-negative integer.
+- Each entry records the date and time automatically.
 
 ---
 
@@ -182,9 +176,7 @@ Adds a body-weight entry in kilograms.
 
 **Notes**
 
-- Only whole numbers are supported.  
-  *Coming soon:* support for decimal values.
-- Use `weight ?` (if supported in your version) to preview previous records.
+- The value must be a whole number.
 
 ---
 
@@ -214,6 +206,7 @@ Sets or displays your daily calorie goal.
 
 **Formats**
 > goal CALORIES → sets a new goal
+>
 > goal → views current goal
 
 
@@ -224,7 +217,6 @@ Sets or displays your daily calorie goal.
 **Notes**
 
 - Calories are summed from logged meals.
-- *Coming soon:* automatic goal tracking and progress report.
 
 ---
 
@@ -239,9 +231,9 @@ Ends the session and saves all data automatically.
 **Example**
 ```bye```
 
-**Expected Output**
-> Bye. Hope to see you again soon!
+**Notes**
 
+- Your data is saved automatically before exiting, so no need to save manually.
 
 ---
 
@@ -251,11 +243,13 @@ Mama automatically creates and updates a text file named `mama.txt` in the same 
 Each entry is stored on a separate line, using the `|` character as a separator.
 
 **Example Content**
-> MEAL|breakfast|500|2025-10-20
-> WORKOUT|yoga|30|2025-10-21
-> MILK|150|2025-10-21
-> MEASURE|weight|70|2025-10-26
-
+> MEAL|breakfast|500
+>
+> WORKOUT|yoga|45|28/10/25 02:33
+>
+> MILK|120ml|28/10/25 02:32
+>
+> MEASURE|70|98|90|55|30|28/10/25 02:53
 
 **Notes**
 
@@ -266,17 +260,11 @@ Each entry is stored on a separate line, using the `|` character as a separator.
 
 ## FAQ
 
-**Q:** Can I log decimals for weight or milk volume?  
-**A:** Not yet. Only whole numbers are supported. *(Coming soon)*
-
 **Q:** How do I filter only specific entries?  
 **A:** Use `list /t TYPE`. Example: `list /t meal`.
 
 **Q:** Why do I get an invalid index error?  
 **A:** The index number must exist in the list shown by `list`.
-
-**Q:** Can I undo a deletion?  
-**A:** Not in this version. *(Coming soon: Undo/Redo feature.)*
 
 **Q:** Does Mama require internet access?  
 **A:** No. Everything is stored locally for privacy.
@@ -297,25 +285,4 @@ Each entry is stored on a separate line, using the `|` character as a separator.
 | **Add Measurement** | `measure waist/WAIST hips/HIPS [chest/CHEST] [thigh/THIGH] [arm/ARM]` | `measure waist/78 hips/92` |
 | **Calorie Goal**    | `goal [CALORIES]`                                                     | `goal 1800`                |
 | **Exit**            | `bye`                                                                 | `bye`                      |
-
----
-
-## Coming Soon
-
-- Undo/Redo functionality
-- Multi-index deletion (e.g., `delete 2 3 4`)
-- Graphical summaries (weekly progress, BMI charts)
-- Integration with wearable devices
-- Decimal support for weight and milk volume
-
----
-
-## Notes on PDF Conversion
-
-When finalising your submission:
-
-- Save this page as **PDF from the GitHub Pages view**, following the module’s guide exactly.
-- Ensure all **hyperlinks work** in the PDF.
-- Keep image/screenshot resolution reasonable — final PDF must be **≤ 15 MB**.
-- Avoid expandable panels or GIFs as they are not PDF-friendly.
 
