@@ -1,20 +1,20 @@
 Hello from MAMA
-Enter a command (workout <description> /dur <duration>, meal <meal description> /cal <calories>, weight <weight>, milk <milk volume> /date <yyyy/MM/dd>, measure waist/<cm> hips/<cm> [chest/<cm>] [thigh/<cm>] [arm/<cm>], delete <index>, list, bye)
+Enter a command (workout <description> /dur <duration>, meal <meal description> /cal <calories>, weight <weight>, milk <volume>, measure waist/<cm> hips/<cm> [chest/<cm>] [thigh/<cm>] [arm/<cm>], delete <index>, list [/t TYPE], dashboard, workout goal <minutes>, workout goal, goal <calories>, goal, bye)
 No entries found.
-Invalid delete index (shown view): 1
+Error: Invalid delete index (shown view): 1
 Here are your entries:
 (none)
 No entries found.
-Invalid delete index (shown view): 2
+Error: Invalid delete index (shown view): 2
 Here are your entries:
 (none)
-weightInput must be greater that 0!
+Error: weightInput must be greater that 0!
 Added new weight entry: [WEIGHT] 83kg
-weightInput must be greater that 0!
+Error: weightInput must be greater that 0!
 Here are your weight entries:
 1. [WEIGHT] 83kg
 No measure entries found.
-Invalid delete index (shown view): 3
+Error: Invalid delete index (shown view): 3
 Here are your entries:
 (none)
 Here are your entries:

@@ -1,6 +1,7 @@
 package seedu.mama.model;
 
 import seedu.mama.storage.Storage;
+import seedu.mama.util.DateTimeUtil;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -35,13 +36,13 @@ public class DashboardSummary {
         LOGGER.log(Level.INFO, "Calculating dashboard summary data...");
 
         LocalDate today = LocalDate.now();
-        LocalDateTime weekStart = WeekCheck.weekStartMonday(LocalDateTime.now());
+        LocalDateTime weekStart = DateTimeUtil.weekStartMonday(LocalDateTime.now());
 
         this.caloriesToday = calculateCaloriesToday(list);
         this.calorieGoal = storage.loadGoal(); // Assumes storage handles potential nulls
         this.milkToday = calculateMilkToday(list, today);
-        this.workoutMinutesThisWeek = WorkoutGoalQueries.sumWorkoutMinutesThisWeek(list, weekStart);
-        this.workoutGoal = WorkoutGoalQueries.currentWeekGoal(list, weekStart);
+        this.workoutMinutesThisWeek = WorkoutGoalQueries.sumWorkoutMinutesThisWeek(list.asList(), weekStart);
+        this.workoutGoal = WorkoutGoalQueries.currentWeekGoal(list.asList(), weekStart);
 
         LOGGER.log(Level.INFO, "Dashboard summary calculated.");
     }
@@ -58,28 +59,21 @@ public class DashboardSummary {
     private int calculateMilkToday(EntryList list, LocalDate today) {
         assert list != null : "EntryList cannot be null for milk calculation";
         assert today != null : "Today's date cannot be null";
+
         int totalMilk = 0;
         for (Entry entry : list.asList()) {
-            if (entry.type().equalsIgnoreCase(EntryType.MILK.name())) {
-                MilkEntry milkEntry = (MilkEntry) entry;
-                try {
-                    LocalDateTime entryDateTime = LocalDateTime.parse(milkEntry.getDate(), DATE_FORMATTER);
-                    if (entryDateTime.toLocalDate().isEqual(today)) {
-                        totalMilk += MilkEntry.getMilkVol(milkEntry.getMilk());
-                    }
-                } catch (DateTimeParseException e) {
-                    LOGGER.log(Level.WARNING, "Could not parse date for milk entry: "
-                            + milkEntry.toListLine(), e);
-                    // Skip entries with invalid dates
-                } catch (NumberFormatException e) {
-                    LOGGER.log(Level.WARNING, "Could not parse milk volume for entry: "
-                            + milkEntry.toListLine(), e);
-                    // Skip entries with invalid volume
+            if ("MILK".equals(entry.type())) {                 // or EntryType.MILK.name()
+                MilkEntry m = (MilkEntry) entry;
+                // timestamp() comes from TimestampedEntry
+                if (m.timestamp().toLocalDate().isEqual(today)) {
+                    // volumeMl() is the instance getter you added in MilkEntry
+                    totalMilk += MilkEntry.volumeMl();
                 }
             }
         }
         return totalMilk;
     }
+
 
     // Getters
     public int getCaloriesToday() {

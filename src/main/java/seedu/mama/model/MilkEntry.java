@@ -17,7 +17,7 @@ public class MilkEntry extends TimestampedEntry {
     private static int totalMilkVol = 0;
 
     // 3) Instance fields
-    private final int volumeMl;
+    private static int volumeMl = 0;
 
     // 4) Constructors (ALL ctors before any methods)
 
@@ -26,15 +26,15 @@ public class MilkEntry extends TimestampedEntry {
      */
     public MilkEntry(String userInput) {
         super(TYPE, normalizeVolume(userInput));
-        this.volumeMl = parseVolumeMl(userInput);
+        volumeMl = parseVolumeMl(userInput);
     }
 
     /**
      * Deserialization path with explicit timestamp.
      */
-    private MilkEntry(String userInput, LocalDateTime when) {
+    public MilkEntry(String userInput, LocalDateTime when) {
         super(TYPE, normalizeVolume(userInput), when);
-        this.volumeMl = parseVolumeMl(userInput);
+        volumeMl = parseVolumeMl(userInput);
     }
 
     // 5) Methods (static or instance)
@@ -69,6 +69,12 @@ public class MilkEntry extends TimestampedEntry {
     public String getMilk() {
         return this.description();
     }
+
+    // in MilkEntry
+    public static int volumeMl() {
+        return volumeMl;
+    }
+
 
     @Override
     public String toListLine() {
