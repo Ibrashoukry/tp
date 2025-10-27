@@ -5,8 +5,6 @@ import seedu.mama.util.DateTimeUtil;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -15,7 +13,6 @@ import java.util.logging.Logger;
  */
 public class DashboardSummary {
     private static final Logger LOGGER = Logger.getLogger(DashboardSummary.class.getName());
-    private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("dd/MM/yy HH:mm");
 
     private final int caloriesToday;
     private final Integer calorieGoal;
@@ -25,7 +22,8 @@ public class DashboardSummary {
 
     /**
      * Constructs a summary by analyzing the entry list and storage.
-     * @param list The list of all entries.
+     *
+     * @param list    The list of all entries.
      * @param storage The storage to load goals from.
      */
     public DashboardSummary(EntryList list, Storage storage) {
@@ -79,15 +77,19 @@ public class DashboardSummary {
     public int getCaloriesToday() {
         return caloriesToday;
     }
+
     public Integer getCalorieGoal() {
         return calorieGoal;
     }
+
     public int getMilkToday() {
         return milkToday;
     }
+
     public int getWorkoutMinutesThisWeek() {
         return workoutMinutesThisWeek;
     }
+
     public WorkoutGoalEntry getWorkoutGoal() {
         return workoutGoal;
     }
