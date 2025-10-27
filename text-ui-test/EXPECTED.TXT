@@ -1,14 +1,14 @@
 Hello from MAMA
-Enter a command (workout <description> /dur <duration>, meal <meal description> /cal <calories>, weight <weight>, milk <milk volume> /date <yyyy/MM/dd>, measure waist/<cm> hips/<cm> [chest/<cm>] [thigh/<cm>] [arm/<cm>], delete <index>, list, bye)
+Enter a command (workout <description> /dur <duration>, meal <meal description> /cal <calories>, weight <weight>, milk <volume>, measure waist/<cm> hips/<cm> [chest/<cm>] [thigh/<cm>] [arm/<cm>], delete <index>, list [/t TYPE], dashboard, workout goal <minutes>, workout goal, goal <calories>, goal, bye)
 No entries found.
-Invalid index: 1
+Error: Invalid index: 1
 No entries yet.
 No entries found.
-Invalid index: 2
+Error: Invalid index: 2
 No entries yet.
-weightInput must be greater that 0!
+Error: weightInput must be greater that 0!
 Added new weight entry: [WEIGHT] 83kg
-weightInput must be greater that 0!
+Error: weightInput must be greater that 0!
 Here are your weight entries:
 1. [WEIGHT] 83kg
 Added: [MEASURE] waist=75cm, hips=95cm
