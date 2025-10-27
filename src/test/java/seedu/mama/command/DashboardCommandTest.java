@@ -15,22 +15,24 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class DashboardCommandTest {
 
     private EntryList entries;
-    private Storage storageStub; // Renamed for clarity
+    private Storage storageStub;
 
-    // Re-using the StorageStub from ListCommandTest is fine,
-    // or you can copy it here if preferred.
     private static class StorageStub extends Storage {
         public StorageStub() {
-            super(null); // Call parent constructor
+            super(null);
         }
-        // If DashboardCommand starts using Storage methods,
-        // you might need to add dummy implementations here.
+
+        // For this test, we want to simulate that no goal is loaded.
+        @Override
+        public Integer loadGoal() {
+            return null; // Return null to simulate no goal being set.
+        }
     }
 
     @BeforeEach
     public void setUp() {
         entries = new EntryList();
-        storageStub = new StorageStub(); // Instantiate the stub
+        storageStub = new StorageStub();
     }
 
     @Test
@@ -42,7 +44,6 @@ public class DashboardCommandTest {
 
         // Act
         DashboardCommand command = new DashboardCommand();
-        // Pass the stub here
         CommandResult result = command.execute(entries, storageStub);
         String output = result.getFeedbackToUser();
 
