@@ -6,8 +6,8 @@ import seedu.mama.model.EntryList;
 import seedu.mama.model.WorkoutGoalQueries;
 import seedu.mama.model.WorkoutEntry;
 import seedu.mama.model.WorkoutGoalEntry;
-import seedu.mama.model.WeekCheck;
 import seedu.mama.storage.Storage;
+import seedu.mama.util.DateTimeUtil;
 
 /**
  * Command to add a workout entry with a type and duration in minutes.
@@ -94,11 +94,11 @@ public final class AddWorkoutCommand implements Command {
 
         // 2) Compute weekly goal status
         LocalDateTime now = LocalDateTime.now();
-        LocalDateTime weekStart = WeekCheck.weekStartMonday(now);
+        LocalDateTime weekStart = DateTimeUtil.weekStartMonday(now);
 
         // Uses helpers in WorkoutGoalQueries
-        WorkoutGoalEntry goal = WorkoutGoalQueries.currentWeekGoal(list, weekStart);
-        int weekSoFar = WorkoutGoalQueries.sumWorkoutMinutesThisWeek(list, weekStart);
+        WorkoutGoalEntry goal = WorkoutGoalQueries.currentWeekGoal(list.asList(), weekStart);
+        int weekSoFar = WorkoutGoalQueries.sumWorkoutMinutesThisWeek(list.asList(), weekStart);
         int remaining = (goal == null) ? 0 : Math.max(0, goal.getMinutesPerWeek() - weekSoFar);
 
         // 3) Build the feedback, modified to use string builder

@@ -1,59 +1,78 @@
+// src/main/java/seedu/mama/model/WorkoutEntry.java
 package seedu.mama.model;
 
+import seedu.mama.util.DateTimeUtil;
+
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
-public final class WorkoutEntry extends Entry {
-    private static final DateTimeFormatter FMT = DateTimeFormatter.ofPattern("dd/MM/yy HH:mm");
+/**
+ * Storage (strict):
+ * WORKOUT|<type>|<durationMins>|<dd/MM/yy HH:mm>
+ */
+public final class WorkoutEntry extends TimestampedEntry {
+    private final String workoutType;   // e.g., "run", "yoga"
+    private final int durationMins;     // minutes
 
-    private final int duration; // minutes
-    private final String date;
-
-    // New constructor (auto timestamp)
-    public WorkoutEntry(String workoutType, int duration) {
+    /**
+     * New entries created from user input. Timestamp = now().
+     */
+    public WorkoutEntry(String workoutType, int durationMins) {
         super("WORKOUT", workoutType.trim());
-        this.duration = duration;
-        this.date = LocalDateTime.now().format(FMT);
+        this.workoutType = workoutType.trim();
+        this.durationMins = durationMins;
+        if (durationMins <= 0) {
+            throw new IllegalArgumentException("Workout duration must be positive minutes.");
+        }
     }
 
-    // For storage/tests with explicit timestamp
-    public WorkoutEntry(String workoutType, int duration, LocalDateTime when) {
-        super("WORKOUT", workoutType.trim());
-        this.duration = duration;
-        this.date = when.format(FMT);
+    /**
+     * Deserialization with explicit timestamp.
+     */
+    public WorkoutEntry(String workoutType, int durationMins, LocalDateTime when) {
+        super("WORKOUT", workoutType.trim(), when);
+        this.workoutType = workoutType.trim();
+        this.durationMins = durationMins;
+    }
+
+    public int duration() {
+        return durationMins;
     }
 
     public int getDuration() {
-        return duration;
+        return durationMins;
     }
 
+
+    /**
+     * Keep for any existing code that printed a date string.
+     */
     public String getDate() {
-        return date;
+        return timestampString();
     }
 
     @Override
     public String toListLine() {
-        return "[Workout] " + description() + " (" + duration + " mins) (" + date + ")";
+        // [WORKOUT] run - 30 mins (28/10/25 23:59)
+        return "[WORKOUT] " + workoutType + " - " + durationMins + " mins (" + timestampString() + ")";
     }
 
     @Override
     public String toStorageString() {
-        // Stable storage: WORKOUT|<type>|<duration>|<date>
-        return "WORKOUT|" + description() + "|" + duration + "|" + date;
+        // WORKOUT|run|30|28/10/25 23:59
+        return withTimestamp("WORKOUT|" + workoutType + "|" + durationMins);
     }
 
+    /**
+     * STRICT: WORKOUT|type|duration|timestamp
+     */
     public static WorkoutEntry fromStorage(String line) {
-        String[] parts = line.split("\\|", 4);
-        if (!"WORKOUT".equals(parts[0])) {
-            throw new IllegalArgumentException("Bad workout line: " + line);
+        String[] p = line.split("\\|", -1);
+        if (p.length != 4 || !"WORKOUT".equals(p[0])) {
+            throw new IllegalArgumentException("Bad WORKOUT line (expect 4 parts): " + line);
         }
-        String type = parts[1];
-        int dur = Integer.parseInt(parts[2]);
-        if (parts.length >= 4) {
-            LocalDateTime when = LocalDateTime.parse(parts[3], FMT);
-            return new WorkoutEntry(type, dur, when);
-        }
-        // legacy line (no timestamp) → stamp “now” so it joins the current week
-        return new WorkoutEntry(type, dur);
+        String type = p[1];
+        int mins = Integer.parseInt(p[2].trim());
+        LocalDateTime ts = DateTimeUtil.parse(p[3].trim());
+        return new WorkoutEntry(type, mins, ts);
     }
 }

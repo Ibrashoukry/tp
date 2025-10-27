@@ -1,6 +1,7 @@
 package seedu.mama.model;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import static java.lang.Integer.parseInt;
@@ -34,4 +35,5 @@ public class EntryList {
     public List<Entry> asList() {
         return new ArrayList<>(items);
     }
+
 }
