@@ -6,8 +6,7 @@ import java.time.LocalDateTime;
 import java.util.Objects;
 
 /**
- * Common base for entries that are created with a timestamp.
- * Unifies date/time handling and formatting.
+ * Common base for entries that carry a creation timestamp.
  */
 public abstract class TimestampedEntry extends Entry {
     private final LocalDateTime timestamp;
@@ -17,9 +16,9 @@ public abstract class TimestampedEntry extends Entry {
         this.timestamp = LocalDateTime.now();
     }
 
-    protected TimestampedEntry(String type, String description, LocalDateTime timestamp) {
+    protected TimestampedEntry(String type, String description, LocalDateTime when) {
         super(type, description);
-        this.timestamp = Objects.requireNonNull(timestamp);
+        this.timestamp = Objects.requireNonNull(when, "timestamp");
     }
 
     public LocalDateTime timestamp() {
@@ -31,7 +30,7 @@ public abstract class TimestampedEntry extends Entry {
     }
 
     /**
-     * Helper so subclasses can append "|<timestamp>" consistently in storage.
+     * Helper to append "|<timestamp>" consistently for storage lines.
      */
     protected String withTimestamp(String storagePrefix) {
         return storagePrefix + "|" + DateTimeUtil.format(timestamp);

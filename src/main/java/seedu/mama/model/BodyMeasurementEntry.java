@@ -10,16 +10,12 @@ import java.util.logging.Logger;
 
 /**
  * Represents a set of body measurements in centimeters.
- *
- * <p><strong>Storage format (new)</strong>:</p>
- * <pre>
+ * <p>
+ * Storage (new):
  * MEASURE|<waist>|<hips>|<chest or ->|<thigh or ->|<arm or ->|<dd/MM/yy HH:mm>
- * </pre>
- *
- * <p><strong>Storage format (legacy, still accepted)</strong>:</p>
- * <pre>
+ * <p>
+ * Storage (legacy, still accepted on load):
  * MEASURE|<waist>|<hips>|<chest or ->|<thigh or ->|<arm or ->
- * </pre>
  */
 public class BodyMeasurementEntry extends TimestampedEntry {
     private static final Logger LOG = Logger.getLogger(BodyMeasurementEntry.class.getName());
@@ -30,9 +26,10 @@ public class BodyMeasurementEntry extends TimestampedEntry {
     private final Integer thighCm; // optional
     private final Integer armCm;   // optional
 
-    /** Public constructor for new entries created by user input (uses now()). */
-    public BodyMeasurementEntry(int waistCm, int hipsCm,
-                                Integer chestCm, Integer thighCm, Integer armCm) {
+    /**
+     * For new user-created entries → timestamp = now().
+     */
+    public BodyMeasurementEntry(int waistCm, int hipsCm, Integer chestCm, Integer thighCm, Integer armCm) {
         super("MEASURE", "Body measurements");
 
         if (waistCm <= 0 || hipsCm <= 0) {
@@ -65,7 +62,9 @@ public class BodyMeasurementEntry extends TimestampedEntry {
                 waistCm, hipsCm, v(chestCm), v(thighCm), v(armCm)));
     }
 
-    /** Private constructor for deserialization (restore exact timestamp from file). */
+    /**
+     * For deserialization – restores exact timestamp from file.
+     */
     private BodyMeasurementEntry(int waistCm, int hipsCm,
                                  Integer chestCm, Integer thighCm, Integer armCm,
                                  LocalDateTime when) {
@@ -88,7 +87,7 @@ public class BodyMeasurementEntry extends TimestampedEntry {
         parts.add("hips=" + hipsCm + "cm");
         if (chestCm != null) parts.add("chest=" + chestCm + "cm");
         if (thighCm != null) parts.add("thigh=" + thighCm + "cm");
-        if (armCm != null)   parts.add("arm=" + armCm + "cm");
+        if (armCm != null) parts.add("arm=" + armCm + "cm");
         return "[MEASURE] " + String.join(", ", parts) + " (" + timestampString() + ")";
     }
 
@@ -101,22 +100,17 @@ public class BodyMeasurementEntry extends TimestampedEntry {
 
     public static BodyMeasurementEntry fromStorage(String line) {
         try {
-            String[] p = line.split("\\|", -1); // keep empties
-            if (p.length < 3) {
-                throw new IllegalArgumentException("Bad MEASURE line: " + line);
-            }
+            String[] p = line.split("\\|", -1);
             int waist = Integer.parseInt(p[1]);
             int hips = Integer.parseInt(p[2]);
             Integer chest = parseNullable(p, 3);
             Integer thigh = parseNullable(p, 4);
             Integer arm = parseNullable(p, 5);
 
-            // New format includes timestamp at index 6.
             if (p.length >= 7 && p[6] != null && !p[6].isEmpty()) {
                 LocalDateTime ts = DateTimeUtil.parse(p[6].trim());
                 return new BodyMeasurementEntry(waist, hips, chest, thigh, arm, ts);
             }
-            // Legacy path (no timestamp)
             return new BodyMeasurementEntry(waist, hips, chest, thigh, arm);
         } catch (RuntimeException ex) {
             Logger.getLogger(BodyMeasurementEntry.class.getName())
