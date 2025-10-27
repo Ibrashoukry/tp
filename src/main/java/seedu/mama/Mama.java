@@ -28,6 +28,7 @@ public class Mama {
                 "milk <volume> /date <yyyy/MM/dd>, " +
                 "delete <index>, " +
                 "list, " +
+                "dashboard, " +
                 "bye)");
 
         Storage storage = Storage.defaultStorage();
