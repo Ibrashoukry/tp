@@ -70,7 +70,7 @@ You can also filter entries by their type.
 
 ### 2. Deleting an Entry — `delete`
 
-Removes an entry by its index as shown in the `list` command.
+Removes an entry by its index as shown in the `list` or `list /t TYPE` command.
 
 **Format**
 > delete INDEX
@@ -82,7 +82,7 @@ Removes an entry by its index as shown in the `list` command.
 
 **Notes**
 
-- Use the `list` command to find the correct index first.
+- Use the `list` or `list /t TYPE` command to find the correct index first.
 
 ---
 
