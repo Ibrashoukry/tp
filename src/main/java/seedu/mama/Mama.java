@@ -9,58 +9,70 @@ import seedu.mama.storage.Storage;
 import seedu.mama.ui.Ui;
 
 import java.util.Scanner;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class Mama {
-    /**
-     * Main entry-point for the MAMA app.
-     */
     private static final Logger LOG = Logger.getLogger(Mama.class.getName());
 
-    public static void main(String[] args) {
+    // --- Add Ui instance ---
+    private final Ui ui;
+    private final Storage storage;
+    private final EntryList list;
 
-        assert false : "dummy assertion set to fail";
-        System.out.println("Hello from MAMA");
-        System.out.println("Enter a command (workout <description> /dur <duration>, " +
-                "workout goal, " +
-                "workout goal <duration in minutes>, " +
-                "weight <weight>, " +
-                "milk <volume> /date <yyyy/MM/dd>, " +
-                "delete <index>, " +
-                "list, " +
-                "dashboard, " +
-                "bye)");
+    /**
+     * Constructor for Mama application logic.
+     * Initializes components.
+     */
+    public Mama() {
+        ui = new Ui();
+        storage = Storage.defaultStorage();
+        list = storage.loadOrEmpty();
+    }
 
-        Storage storage = Storage.defaultStorage();
-        EntryList list = storage.loadOrEmpty();
+    /**
+     * Runs the main application loop.
+     */
+    public void run() {
+        ui.showWelcome();
 
         Scanner sc = new Scanner(System.in);
-        boolean isRunning = true;
+        while (true) {
+            if (!sc.hasNextLine()) {
+                break; // Handle EOF for tests
+            }
+            String userInput = sc.nextLine().trim();
+            if (userInput.isEmpty()) {
+                continue;
+            }
 
-        while (isRunning) {
-            String userInput = sc.nextLine();
             try {
                 Command command = Parser.parse(userInput);
                 CommandResult result = command.execute(list, storage);
-                System.out.println(result.getFeedbackToUser());
+                Ui.showMessage(result.getFeedbackToUser());
+
                 if (result.isExit()) {
-                    Ui.showMessage("Shutting down...");
                     break;
                 }
-            } catch (CommandException ce) {
-                // user-facing (runtime) error, like invalid delete index or save failure
-                System.out.println(ce.getMessage());
-                LOG.warning("Command failed: " + ce.getMessage());
-            } catch (Exception e) {
-                // safeguard for any other unforeseen error
-                System.out.println("An unexpected error occurred: " + e.getMessage());
-                LOG.severe("Unexpected exception: " + e);
-            }
 
-            if (userInput.equalsIgnoreCase("bye")) {
-                isRunning = false;
+                // Temporary check for "bye" until CommandResult handles exit
+                if (userInput.equalsIgnoreCase("bye")) {
+                    break;
+                }
+
+            } catch (CommandException ce) {
+                LOG.log(Level.WARNING, "Command failed: " + ce.getMessage());
+                ui.showError(ce.getMessage()); // <-- Use Ui to show error
+            } catch (Exception e) {
+                LOG.log(Level.SEVERE, "Unexpected exception", e);
+                ui.showError("An unexpected error occurred: " + e.getMessage()); // <-- Use Ui to show error
             }
         }
         sc.close();
+    }
+
+
+    public static void main(String[] args) {
+        new Mama().run(); // Create instance and run
     }
 }
