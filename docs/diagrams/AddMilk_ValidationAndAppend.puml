@@ -1,0 +1,18 @@
+@startuml
+title Validation & Append
+
+skinparam shadowing false
+skinparam defaultFontName Arial
+skinparam rectangle {
+  RoundCorner 12
+  FontSize 14
+}
+
+rectangle "EntryList (before)" as BEFORE #EEF1F4
+
+rectangle "EntryList (after)" as AFTER #EEF1F4 {
+  rectangle "[MILK] 30ml (dd/MM/yy HH:mm)" as ITEM #FFF2CC
+}
+
+BEFORE -right-> AFTER : append new MilkEntry
+@enduml

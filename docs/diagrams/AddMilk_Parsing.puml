@@ -1,0 +1,18 @@
+@startuml
+' ===== Parsing command =====
+title Parsing command
+
+skinparam shadowing false
+skinparam defaultFontName Arial
+skinparam rectangle {
+  RoundCorner 12
+  FontSize 14
+}
+
+rectangle "UI" as UI #E3F2FD
+rectangle "Logic/Parser" as P #E8F5E9
+
+UI -right-> P : milk 30
+P -left-> UI  : AddMilkCommand(30)
+
+@enduml
