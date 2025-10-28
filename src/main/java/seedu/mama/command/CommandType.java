@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
  * Defines the available commands and their basic usage format for display.
  */
 public enum CommandType {
-    WORKOUT("workout <description> /dur <duration>"),
+    WORKOUT("workout <description> /dur <duration (mins)> /feel <feeling (out of 5)>"),
     MEAL("meal <meal description> /cal <calories>"),
     WEIGHT("weight <weight>"),
     MILK("milk <volume>"),
