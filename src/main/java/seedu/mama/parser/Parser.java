@@ -6,7 +6,7 @@ import seedu.mama.command.DashboardCommand;
 import seedu.mama.command.SetGoalCommand;
 import seedu.mama.command.SetWorkoutGoalCommand;
 import seedu.mama.command.ViewWorkoutGoalCommand;
-import seedu.mama.command.WeightCommand;
+import seedu.mama.command.AddWeightCommand;
 
 import seedu.mama.command.AddMealCommand;
 
@@ -27,7 +27,7 @@ import seedu.mama.command.AddMilkCommand;
  * <ul>
  *     <li>{@code delete 2} → returns a {@link DeleteCommand}</li>
  *     <li>{@code milk 150} → returns a {@link AddMilkCommand}</li>
- *     <li>{@code weight 5} → returns a {@link WeightCommand}</li>
+ *     <li>{@code weight 5} → returns a {@link AddWeightCommand}</li>
  * </ul>
  */
 public class Parser {
@@ -105,13 +105,13 @@ public class Parser {
         if (trimmed.startsWith("weight")) {
             String[] parts = trimmed.split("\\s+");
             if (parts.length == 2 && parts[1].equals("?")) {
-                return new WeightCommand(-1);
+                return new AddWeightCommand(-1);
             }
             if (parts.length < 2) {
                 return (l, s) -> new CommandResult("Weight must be a number. Try `weight`+ 'value of weight'");
             }
             try {
-                return new WeightCommand(Integer.parseInt(parts[1]));
+                return new AddWeightCommand(Integer.parseInt(parts[1]));
             } catch (NumberFormatException e) {
                 return (l, s) -> new CommandResult("Weight must be a number. Try `weight`+ 'value of weight'");
             }
