@@ -8,11 +8,11 @@ import seedu.mama.storage.Storage;
 
 /**
  * Sets the user's weekly workout goal (in minutes) and persists it.
- * <p>
- * Usage: workout goal <minutes>
- * <p>
+ *
+ * Usage: {@code workout goal <minutes>}
+ *
  * Behavior:
- * - Parses "workout goal <minutes>" where <minutes> is a positive integer.
+ * - Parses "{@code workout goal <minutes>}" where {@code <minutes>} is a positive integer.
  * - Appends a new WorkoutGoalEntry to the provided EntryList.
  * - Saves the updated list via Storage.
  * <p>
@@ -34,7 +34,7 @@ public class SetWorkoutGoalCommand implements Command {
     }
 
     /**
-     * Parses a user input of the form "workout goal <minutes>" into a command.
+     * Parses a user input of the form "{@code workout goal <minutes>}" into a command.
      * Expects exactly three whitespace-separated tokens: "workout", "goal", and a positive integer.
      *
      * @param input full user input string

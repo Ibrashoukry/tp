@@ -54,10 +54,6 @@ public final class WorkoutEntry extends TimestampedEntry {
      * Returns a single-line display string, e.g.:
      * "[Workout] running (40 mins, feel 4/5) (2025-10-28T09:15)"
      */
-    /**
-     * Display line shown to the user.
-     * Must start exactly like "[Workout] running (40 mins)" to satisfy tests.
-     */
     @Override
     public String toListLine() {
         return "[Workout] " + workoutType + " (" + durationMins + " mins, feel " + feel + "/5) "
