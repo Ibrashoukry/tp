@@ -1,5 +1,5 @@
 Hello from MAMA
-Enter a command (workout <description> /dur <duration>, meal <meal description> /cal <calories>, weight <weight>, milk <volume>, measure waist/<cm> hips/<cm> [chest/<cm>] [thigh/<cm>] [arm/<cm>], delete <index>, list [/t TYPE], dashboard, workout goal <minutes>, workout goal, goal <calories>, goal, bye)
+Enter a command (workout <description> /dur <duration (mins)> /feel <feeling (out of 5)>, meal <meal description> /cal <calories>, weight <weight>, milk <volume>, measure waist/<cm> hips/<cm> [chest/<cm>] [thigh/<cm>] [arm/<cm>], delete <index>, list [/t TYPE], dashboard, workout goal <minutes>, workout goal, goal <calories>, goal, bye)
 No entries found.
 Error: Invalid delete index (shown view): 1
 Here are your entries:

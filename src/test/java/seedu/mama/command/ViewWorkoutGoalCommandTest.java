@@ -51,8 +51,8 @@ public class ViewWorkoutGoalCommandTest {
         list.add(new WorkoutGoalEntry(150, weekStart.withHour(9)));
 
         // Workouts this week: 40 + 25 = 65
-        list.add(new WorkoutEntry("run", 40, weekStart.plusDays(1).withHour(7)));   // Tue
-        list.add(new WorkoutEntry("swim", 25, weekStart.plusDays(3).withHour(18))); // Thu
+        list.add(new WorkoutEntry("run", 40, 4, weekStart.plusDays(1).withHour(7)));   // Tue
+        list.add(new WorkoutEntry("swim", 25, 3, weekStart.plusDays(3).withHour(18))); // Thu
 
         ViewWorkoutGoalCommand cmd = new ViewWorkoutGoalCommand();
         CommandResult res = cmd.execute(list, storage);
@@ -76,7 +76,7 @@ public class ViewWorkoutGoalCommandTest {
         list.add(new WorkoutGoalEntry(120, weekStart.minusDays(7).withHour(10)));
 
         // Add a workout this week anyway
-        list.add(new WorkoutEntry("cycle", 30, weekStart.plusDays(2).withHour(6)));
+        list.add(new WorkoutEntry("cycle", 30, 5, weekStart.plusDays(2).withHour(6)));
 
         ViewWorkoutGoalCommand cmd = new ViewWorkoutGoalCommand();
         CommandResult res = cmd.execute(list, storage);

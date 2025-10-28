@@ -40,7 +40,7 @@ public class DashboardCommandTest {
         // Arrange: Add some data
         entries.add(new MealEntry("Lunch", 500));
         entries.add(new MilkEntry("120ml", LocalDateTime.now()));
-        entries.add(new WorkoutEntry("Run", 30, LocalDateTime.now()));
+        entries.add(new WorkoutEntry("Run", 30, 4, LocalDateTime.now()));
 
         // Act
         DashboardCommand command = new DashboardCommand();

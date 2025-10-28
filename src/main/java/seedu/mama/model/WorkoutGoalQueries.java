@@ -7,14 +7,28 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 /**
- * Helper methods for querying workout goals and workouts.
+ * Utility methods for weekly workout aggregation and resolving the active weekly workout goal.
+ *
+ * Definitions:
+ * - "Week" means the 7-day window starting at weekStart (inclusive) and ending before weekStart + 7 days (exclusive).
+ * - weekStart should be the Monday 00:00 boundary produced by DateTimeUtil.weekStartMonday(...).
+ *
+ * Only timestamps of TimestampedEntry are considered; non-workout entries are ignored in minute sums.
  */
 public final class WorkoutGoalQueries {
     private WorkoutGoalQueries() {
     }
 
     /**
-     * Sum workout minutes within [weekStart, weekStart+7d).
+     * Returns the total workout minutes recorded during the target week.
+     *
+     * The target week is [weekStart, weekStart + 7 days). Only entries of type WorkoutEntry
+     * whose timestamp falls within that window are counted.
+     *
+     * @param all        all entries (workouts, goals, etc.); only WorkoutEntry are summed
+     * @param weekStart  start of the target week (typically Monday 00:00)
+     * @return non-negative total number of minutes of workouts in the target week
+     * @see DateTimeUtil#inSameWeek(LocalDateTime, LocalDateTime)
      */
     public static int sumWorkoutMinutesThisWeek(List<Entry> all, LocalDateTime weekStart) {
         int sum = 0;
@@ -30,10 +44,16 @@ public final class WorkoutGoalQueries {
     }
 
     /**
-     * Returns the workout goal set within this week only.
-     * <p>
-     * If multiple goals exist this week, return the latest one.
-     * Returns null if no goal was set during this week.
+     * Returns the workout goal that applies to the target week, or null if none exists.
+     *
+     * Among all WorkoutGoalEntry entries whose timestamp falls within the target week
+     * [weekStart, weekStart + 7 days), the one with the latest timestamp is returned.
+     * If no goal was set during that week, this returns null.
+     *
+     * @param all        all entries (workouts, goals, etc.)
+     * @param weekStart  start of the target week (typically Monday 00:00)
+     * @return the latest WorkoutGoalEntry set in the target week, or null if no goal was set that week
+     * @see DateTimeUtil#inSameWeek(LocalDateTime, LocalDateTime)
      */
     public static WorkoutGoalEntry currentWeekGoal(List<Entry> all, LocalDateTime weekStart) {
         WorkoutGoalEntry latestThisWeek = null;

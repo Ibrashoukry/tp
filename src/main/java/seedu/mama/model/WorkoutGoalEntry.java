@@ -5,11 +5,23 @@ import seedu.mama.util.DateTimeUtil;
 
 import java.time.LocalDateTime;
 
+/**
+ * Represents a weekly workout goal set by the user.
+ * Immutable value object extending TimestampedEntry.
+ *
+ * Storage format: WORKOUT_GOAL|minutes|timestamp
+ * - minutes is a positive integer (minutes per week)
+ * - timestamp is the recorded time for when this goal was set
+ */
 public final class WorkoutGoalEntry extends TimestampedEntry {
     private final int minutesPerWeek;
 
     /**
-     * New entries created from user input. Timestamp = now().
+     * Creates a new goal from user input.
+     * Timestamp is set to now().
+     *
+     * @param minutesPerWeek positive number of minutes per week
+     * @throws IllegalArgumentException if minutesPerWeek <= 0
      */
     public WorkoutGoalEntry(int minutesPerWeek) {
         super("WORKOUT_GOAL", minutesPerWeek + " mins per week");
@@ -20,17 +32,31 @@ public final class WorkoutGoalEntry extends TimestampedEntry {
     }
 
     /**
-     * Deserialization with explicit timestamp.
+     * Creates a goal with an explicit timestamp (used during deserialization).
+     * Assumes minutesPerWeek has already been validated by the caller.
+     *
+     * @param minutesPerWeek minutes per week (should be > 0)
+     * @param when           timestamp to associate with this goal
      */
     public WorkoutGoalEntry(int minutesPerWeek, LocalDateTime when) {
         super("WORKOUT_GOAL", minutesPerWeek + " mins per week", when);
         this.minutesPerWeek = minutesPerWeek;
     }
 
+    /**
+     * Returns the goal in minutes per week (alias of minutesPerWeek()).
+     *
+     * @return minutes per week
+     */
     public int getMinutesPerWeek() {
         return minutesPerWeek();
     }
 
+    /**
+     * Returns the goal in minutes per week.
+     *
+     * @return minutes per week
+     */
     public int minutesPerWeek() {
         return minutesPerWeek;
     }
@@ -39,12 +65,24 @@ public final class WorkoutGoalEntry extends TimestampedEntry {
         return timestampString();
     }
 
+    /**
+     * Returns the user-facing line for list views.
+     * Example: [GOAL] 150 mins/week (28/10/25 23:59)
+     *
+     * @return display string for this entry
+     */
     @Override
     public String toListLine() {
         // [GOAL] 150 mins/week (28/10/25 23:59)
         return "[GOAL] " + minutesPerWeek + " mins/week (" + timestampString() + ")";
     }
 
+    /**
+     * Returns the storage line for this entry.
+     * Format: WORKOUT_GOAL|minutes|timestamp
+     *
+     * @return storage string
+     */
     @Override
     public String toStorageString() {
         // WORKOUT_GOAL|150|28/10/25 23:59
@@ -52,7 +90,12 @@ public final class WorkoutGoalEntry extends TimestampedEntry {
     }
 
     /**
-     * STRICT: WORKOUT_GOAL|minutes|timestamp
+     * Parses a stored line into a WorkoutGoalEntry.
+     * Strictly expects: WORKOUT_GOAL|minutes|timestamp
+     *
+     * @param line storage line
+     * @return a WorkoutGoalEntry parsed from the line
+     * @throws IllegalArgumentException if the line is malformed or minutes is not an integer
      */
     public static WorkoutGoalEntry fromStorage(String line) {
         String[] p = line.split("\\|", -1);

@@ -79,15 +79,16 @@ public class SetWorkoutGoalCommandTest {
 
     @Test
     public void addWorkout_noGoal_showsReminder() throws CommandException {
-        AddWorkoutCommand cmd = new AddWorkoutCommand("running", 40);
+        // include neutral feel = 3 for constructor
+        AddWorkoutCommand cmd = new AddWorkoutCommand("running", 40, 3);
 
         CommandResult res = cmd.execute(list, storage);
         String out = res.getFeedbackToUser().toLowerCase();
 
-        // Reminder is shown when no weekly goal is set
         assertTrue(out.contains("reminder") && out.contains("workout goal"),
                 "Should remind that weekly workout goal is not set.");
         assertEquals(1, list.size(), "Workout entry should still be added");
+        assertTrue(out.contains("40"), "Should mention duration in output");
     }
 
     @Test
@@ -96,8 +97,8 @@ public class SetWorkoutGoalCommandTest {
         LocalDateTime weekStart = DateTimeUtil.weekStartMonday(LocalDateTime.now());
         list.add(new WorkoutGoalEntry(100, weekStart.withHour(8))); // 100-minute goal
 
-        // Add a 30-min workout
-        AddWorkoutCommand cmd = new AddWorkoutCommand("yoga", 30);
+        // Add a 30-min workout with feel = 4
+        AddWorkoutCommand cmd = new AddWorkoutCommand("yoga", 30, 4);
         CommandResult res = cmd.execute(list, storage);
         String out = res.getFeedbackToUser();
 
@@ -105,6 +106,7 @@ public class SetWorkoutGoalCommandTest {
         assertTrue(out.contains("100"), "Should mention the 100-minute goal.");
         assertTrue(out.toLowerCase().contains("minutes left") || out.toLowerCase().contains("more minutes"),
                 "Should show remaining minutes toward the goal.");
+        assertTrue(out.contains("feel 4/5"), "Should include feel rating in feedback");
 
         // Now list should have 1 goal + 1 workout
         assertEquals(2, list.size());
