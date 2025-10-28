@@ -1,0 +1,36 @@
+@startuml
+title DeleteCommand — sequence for "delete 2"
+
+skinparam shadowing false
+skinparam defaultFontName Arial
+skinparam sequenceMessageAlign center
+' palette
+!define UI     #E3F2FD
+!define LOGIC  #E8F5E9
+!define MODEL  #FFF8E1
+!define STOR   #FCE4EC
+
+actor User
+participant "Ui"               as Ui    UI
+participant "Parser"           as Par   LOGIC
+participant "DeleteCommand"    as Del   LOGIC
+participant "EntryList"        as List  MODEL
+participant "Storage"          as Sto   STOR
+
+User -> Ui  : enter "delete 2"
+Ui   -> Par : parse("delete 2")
+Par  -> Del : new DeleteCommand(2)
+Par  --> Ui : DeleteCommand
+
+Ui   -> Del : execute(list, storage)
+
+alt invalid index
+  Del --> Ui : CommandException("Invalid index\\n" + previewList)
+else valid index
+  Del  -> List: deleteByIndex(1)  ' 1-based -> 0-based
+  List --> Del : removed Entry
+  Del  -> Sto : save(list)
+  Sto  --> Del : ok
+  Del  --> Ui  : CommandResult("Deleted: ...")
+end
+@enduml

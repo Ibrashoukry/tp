@@ -1,0 +1,18 @@
+@startuml
+title Validation & Append
+
+skinparam shadowing false
+skinparam defaultFontName Arial
+skinparam rectangle {
+  RoundCorner 12
+  FontSize 14
+}
+
+rectangle "EntryList (before)" as BEFORE #EEF1F4
+
+rectangle "EntryList (after)" as AFTER #EEF1F4 {
+  rectangle "[MEASURE] waist=70cm,\nhips=98cm,\nchest=90cm,\nthigh=55cm, arm=30cm\n(dd/MM/yy HH:mm)" as ITEM #FFF2CC
+}
+
+BEFORE -right-> AFTER : append new BodyMeasurementEntry
+@enduml

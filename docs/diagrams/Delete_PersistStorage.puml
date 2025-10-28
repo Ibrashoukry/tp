@@ -1,0 +1,21 @@
+@startuml
+title **Persist updated list to storage**
+
+skinparam shadowing false
+skinparam defaultFontName Arial
+skinparam roundcorner 12
+
+!define CMD  #E8F5E9
+!define STG  #FCE4EC
+!define MOD  #FFF8E1
+
+left to right direction
+
+rectangle "DeleteCommand"            as cmd CMD
+rectangle "EntryList (after delete)" as mdl MOD
+rectangle "Storage (mama.txt)"       as stg STG
+
+cmd --> mdl : uses updated list
+cmd --> stg : save(list)
+stg --> cmd : ok
+@enduml
