@@ -20,20 +20,6 @@ public class AddWeightCommand implements Command {
         this.weightInput = weightInput;
     }
 
-    private static String preview(EntryList list) {
-        if (list.size() == 0) {
-            return "No entries yet.";
-        }
-        StringBuilder sb = new StringBuilder("Your past weights:");
-        for (int i = 0; i < list.size(); i++) {
-            Entry e = list.get(i);
-            if (e.type().equals("WEIGHT")) {
-                sb.append(System.lineSeparator()).append(e.toListLine());
-            }
-        }
-        return sb.toString();
-    }
-
     @Override
     public CommandResult execute(EntryList list, Storage storage) {
         // Use an assertion to check for internal errors
