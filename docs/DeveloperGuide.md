@@ -390,7 +390,7 @@ If valid, a `WorkoutEntry` is created and added to `EntryList`.
 
 ---
 
-### 3.6 Add Milk — [Teammate / Owner]
+### 3.6 Add Milk — Ryan Siow
 
 #### Overview
 
@@ -402,10 +402,10 @@ It validates the volume, appends a `MilkEntry`, and persists via `Storage#save(l
 
 #### Implementation Details
 
-**Step 1.** User enters `add milk /v 150`. `Ui` captures input.
-> ![Milk_Initial](images/AddMilk_Initial.png)
+**Step 1.** User enters `milk 30`. `Ui` captures input.
+> ![AddMilk_Initial.png](images/AddMilk_Initial.png)
 
-**Step 2.** `Parser` constructs `AddMilkCommand(volume=150)`.
+**Step 2.** `Parser` constructs `AddMilkCommand(volume=30)`.
 > ![Milk_Parsing](images/AddMilk_Parsing.png)
 
 **Step 3.** `AddMilkCommand#execute(...)` checks `volume > 0`. If invalid, throws `CommandException`. If valid, appends
@@ -429,8 +429,8 @@ a `MilkEntry`.
 
 #### Summary
 
-- **Command:** `add milk /v <volume-ml>`
-- **Example:** `add milk /v 150`
+- **Command:** `add milk <volume-ml>`
+- **Example:** `add milk 30`
 - **Effect:** Appends a `MilkEntry` and saves immediately.
 
 ---
