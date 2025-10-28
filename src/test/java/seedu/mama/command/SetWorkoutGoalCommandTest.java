@@ -5,9 +5,9 @@ import org.junit.jupiter.api.Test;
 
 import seedu.mama.model.Entry;
 import seedu.mama.model.EntryList;
-import seedu.mama.model.WeekCheck;
 import seedu.mama.model.WorkoutGoalEntry;
 import seedu.mama.storage.Storage;
+import seedu.mama.util.DateTimeUtil;
 
 import java.nio.file.Path;
 import java.time.LocalDateTime;
@@ -93,7 +93,7 @@ public class SetWorkoutGoalCommandTest {
     @Test
     public void addWorkout_withGoal_showsRemaining() throws CommandException {
         // Set a weekly goal for THIS week
-        LocalDateTime weekStart = WeekCheck.weekStartMonday(LocalDateTime.now());
+        LocalDateTime weekStart = DateTimeUtil.weekStartMonday(LocalDateTime.now());
         list.add(new WorkoutGoalEntry(100, weekStart.withHour(8))); // 100-minute goal
 
         // Add a 30-min workout

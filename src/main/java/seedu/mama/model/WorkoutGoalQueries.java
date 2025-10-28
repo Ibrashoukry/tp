@@ -1,46 +1,53 @@
+// src/main/java/seedu/mama/model/WorkoutGoalQueries.java
 package seedu.mama.model;
 
+import seedu.mama.util.DateTimeUtil;
+
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import java.util.List;
 
+/**
+ * Helper methods for querying workout goals and workouts.
+ */
 public final class WorkoutGoalQueries {
-    private static final DateTimeFormatter FMT = DateTimeFormatter.ofPattern("dd/MM/yy HH:mm");
-    private WorkoutGoalQueries() {}
+    private WorkoutGoalQueries() {
+    }
 
-    /** Latest WORKOUT_GOAL set within [weekStart, weekStart+7d). Returns null if none. */
-    public static WorkoutGoalEntry currentWeekGoal(EntryList list, LocalDateTime weekStart) {
-        WorkoutGoalEntry latest = null;
-        LocalDateTime latestTs = null;
-
-        for (Entry e : list.asList()) {
-            if (!"WORKOUT_GOAL".equals(e.type())) {
-                continue;
-            }
-            WorkoutGoalEntry g = (WorkoutGoalEntry) e;
-            LocalDateTime ts = LocalDateTime.parse(g.getDate(), FMT);
-            if (WeekCheck.inSameWeek(ts, weekStart)) {
-                if (latest == null || ts.isAfter(latestTs)) {
-                    latest = g;
-                    latestTs = ts;
+    /**
+     * Sum workout minutes within [weekStart, weekStart+7d).
+     */
+    public static int sumWorkoutMinutesThisWeek(List<Entry> all, LocalDateTime weekStart) {
+        int sum = 0;
+        for (Entry e : all) {
+            if (e instanceof WorkoutEntry we) {
+                LocalDateTime ts = ((TimestampedEntry) we).timestamp();
+                if (DateTimeUtil.inSameWeek(ts, weekStart)) {
+                    sum += we.getDuration();
                 }
             }
         }
-        return latest;
+        return sum;
     }
 
-    /** Sum of WORKOUT minutes within [weekStart, weekStart+7d). */
-    public static int sumWorkoutMinutesThisWeek(EntryList list, LocalDateTime weekStart) {
-        int sum = 0;
-        for (Entry e : list.asList()) {
-            if (!"WORKOUT".equals(e.type())) {
-                continue;
-            }
-            WorkoutEntry w = (WorkoutEntry) e;
-            LocalDateTime ts = LocalDateTime.parse(w.getDate(), FMT);
-            if (WeekCheck.inSameWeek(ts, weekStart)) {
-                sum += w.getDuration();
+    /**
+     * Returns the workout goal set within this week only.
+     * <p>
+     * If multiple goals exist this week, return the latest one.
+     * Returns null if no goal was set during this week.
+     */
+    public static WorkoutGoalEntry currentWeekGoal(List<Entry> all, LocalDateTime weekStart) {
+        WorkoutGoalEntry latestThisWeek = null;
+
+        for (Entry e : all) {
+            if (e instanceof WorkoutGoalEntry g) {
+                LocalDateTime ts = ((TimestampedEntry) g).timestamp();
+                if (DateTimeUtil.inSameWeek(ts, weekStart)) {
+                    if (latestThisWeek == null || ts.isAfter(((TimestampedEntry) latestThisWeek).timestamp())) {
+                        latestThisWeek = g;
+                    }
+                }
             }
         }
-        return sum;
+        return latestThisWeek;
     }
 }

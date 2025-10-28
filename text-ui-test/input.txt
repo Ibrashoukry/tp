@@ -6,8 +6,6 @@ weight ?
 weight 83
 weight ?
 list /t weight
-measure waist/75 hips/95
-measure waist/76 hips/96 chest/88 arm/30
 list /t measure
 delete 3
 list

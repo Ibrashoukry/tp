@@ -4,10 +4,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import seedu.mama.model.EntryList;
-import seedu.mama.model.WeekCheck;
 import seedu.mama.model.WorkoutEntry;
 import seedu.mama.model.WorkoutGoalEntry;
 import seedu.mama.storage.Storage;
+import seedu.mama.util.DateTimeUtil;
 
 import java.nio.file.Path;
 import java.time.LocalDateTime;
@@ -20,7 +20,7 @@ public class ViewWorkoutGoalCommandTest {
     private Storage storage;
 
     private static LocalDateTime mondayThisWeek() {
-        return WeekCheck.weekStartMonday(LocalDateTime.now());
+        return DateTimeUtil.weekStartMonday(LocalDateTime.now());
     }
 
     @BeforeEach

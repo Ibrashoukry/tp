@@ -59,7 +59,7 @@ public class DeleteCommandTest {
                 () -> cmd.execute(list, storage)
         );
 
-        assertTrue(ex.getMessage().startsWith("Invalid index: 5"));
+        assertTrue(ex.getMessage().startsWith("Invalid delete index (shown view): 5"));
         assertTrue(ex.getMessage().contains("Here are your entries:"));
         assertEquals(3, list.size(), "List should remain unchanged");
     }

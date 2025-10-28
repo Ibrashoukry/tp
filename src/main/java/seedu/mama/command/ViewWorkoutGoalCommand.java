@@ -7,11 +7,11 @@ import java.util.List;
 
 import seedu.mama.model.Entry;
 import seedu.mama.model.EntryList;
-import seedu.mama.model.WeekCheck;
 import seedu.mama.model.WorkoutEntry;
 import seedu.mama.model.WorkoutGoalEntry;
 import seedu.mama.model.WorkoutGoalQueries;
 import seedu.mama.storage.Storage;
+import seedu.mama.util.DateTimeUtil;
 
 public final class ViewWorkoutGoalCommand implements Command {
 
@@ -20,25 +20,25 @@ public final class ViewWorkoutGoalCommand implements Command {
     @Override
     public CommandResult execute(EntryList list, Storage storage) throws CommandException {
         LocalDateTime now = LocalDateTime.now();
-        LocalDateTime weekStart = WeekCheck.weekStartMonday(now);
+        LocalDateTime weekStart = DateTimeUtil.weekStartMonday(now);
 
         // 1) Find this week's goal (latest goal set within [Mon..Sun))
-        WorkoutGoalEntry goal = WorkoutGoalQueries.currentWeekGoal(list, weekStart);
+        WorkoutGoalEntry goal = WorkoutGoalQueries.currentWeekGoal(list.asList(), weekStart);
 
         // 2) Collect this week's workouts and total minutes
         int minutesThisWeek = 0;
         List<String> thisWeeksWorkouts = new ArrayList<>();
 
         for (Entry e : list.asList()) {
-            if (!"WORKOUT".equals(e.type())) {
-                continue;
-            }
-            WorkoutEntry w = (WorkoutEntry) e;
-            LocalDateTime ts = LocalDateTime.parse(w.getDate(), FMT);
-            if (WeekCheck.inSameWeek(ts, weekStart)) {
-                minutesThisWeek += w.getDuration();
-                thisWeeksWorkouts.add("[Workout] " + w.description() + " (" +
-                        w.getDuration() + " mins) (" + w.getDate() + ")");
+            if (e instanceof WorkoutEntry w) {
+                LocalDateTime ts = w.getTimestamp(); // <-- use real timestamp
+                if (DateTimeUtil.inSameWeek(ts, weekStart)) {
+                    minutesThisWeek += w.getDuration();
+                    thisWeeksWorkouts.add(
+                            "[Workout] " + w.description() +
+                                    " (" + w.getDuration() + " mins) (" + w.timestampString() + ")"
+                    );
+                }
             }
         }
 
