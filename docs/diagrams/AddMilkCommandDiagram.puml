@@ -1,0 +1,113 @@
+@startuml
+title Mama – AddMilkCommand Class Diagram
+
+skinparam classAttributeIconSize 0
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+package "seedu.mama.command" {
+  interface Command {
+    +execute(list: EntryList, storage: Storage): CommandResult
+    +isExit(): boolean
+  }
+
+  class CommandResult {
+    -feedbackToUser: String
+    -isExit: boolean
+    --
+    +CommandResult(feedbackToUser: String)
+    +CommandResult(feedbackToUser: String, isExit: boolean)
+    +getFeedbackToUser(): String
+    +isExit(): boolean
+    +toString(): String
+  }
+
+  class CommandException {
+    +CommandException(message: String)
+    +CommandException(message: String, cause: Throwable)
+  }
+
+  class AddMilkCommand implements Command {
+    -LOG: Logger <<static>>
+    -milkVolume: int
+    --
+    +AddMilkCommand(milkVolume: int)
+    +fromInput(input: String): AddMilkCommand <<static>>
+    +execute(list: EntryList, storage: Storage): CommandResult
+  }
+}
+
+package "seedu.mama.model" {
+  abstract class Entry {
+    -type: String
+    -description: String
+    --
+    +type(): String
+    +description(): String
+    +toListLine(): String
+    +contains(keyword: String): Boolean
+    +toStorageString(): String
+  }
+
+  class EntryList {
+    -items: List<Entry>
+    -shown: List<Entry>
+    -currentFilter: Predicate<Entry>
+    --
+    +add(e: Entry): void
+    +size(): int
+    +get(i: int): Entry
+    +asList(): List<Entry>
+  }
+
+  class MilkEntry extends Entry {
+    -totalMilkVol: int <<static>>
+    -volumeMl: int
+    --
+    +MilkEntry(userInput: String)
+    +addTotalMilkVol(milkVol: int): void <<static>>
+    +minusTotalMilkVol(milkVol: int): void <<static>>
+    +toTotalMilk(): String <<static>>
+    +toListLine(): String
+    +toStorageString(): String
+  }
+}
+
+package "seedu.mama.storage" {
+  class Storage {
+    -file: Path
+    --
+    +save(list: EntryList): void
+    +loadOrEmpty(): EntryList
+  }
+}
+
+package "java.util.logging" {
+  class Logger
+}
+
+package "java.util" {
+  interface List<T>
+}
+
+package "java.util.function" {
+  interface Predicate<T>
+}
+
+' ====================
+' Relationships
+' ====================
+
+AddMilkCommand ..|> Command
+AddMilkCommand ..> EntryList : uses
+AddMilkCommand ..> Storage : saves data
+AddMilkCommand ..> CommandResult : returns
+AddMilkCommand ..> CommandException : throws
+AddMilkCommand ..> MilkEntry : creates and updates
+AddMilkCommand ..> Logger : logs activity
+
+EntryList "1" o-- "many" Entry
+MilkEntry --|> Entry
+Storage --> EntryList
+
+@enduml
