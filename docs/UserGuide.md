@@ -219,6 +219,23 @@ Sets or displays your daily calorie goal.
 - Calories are summed from logged meals.
 
 ---
+### 10. Viewing Health Dashboard — `dashboard`
+
+Displays a consolidated overview of your health data, including today's diet and milk output, and this week's fitness progress.
+
+**Format**
+
+> dashboard → view dashboard
+
+Example ```dashboard```
+
+**Notes**
+
+- The dashboard automatically aggregates data based on the current date and week (starting from Monday).
+
+- It will display calorie and workout goals, along with remaining amounts, if you have set them using the goal <calories> and workout goal <minutes> commands respectively.
+
+- If goals are not set, reminder messages will be shown instead.
 
 ### 10. Exiting the Program — `bye`
 
