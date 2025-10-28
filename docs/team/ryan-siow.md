@@ -45,7 +45,6 @@ My primary contributions focused on implementing the **core data entry commands 
 * **Highlights:**
     * Implemented `AddWeightCommand` with full input validation and error handling.
     * Introduced `WeightEntry` model class adhering to SRP, representing a clean abstraction for weight data.
-    * Added summary helper (`preview()`) showing historical weight data to encourage user engagement.
     * Ensured clean integration with the storage and entry listing subsystems.
     * Developed **JUnit tests** (`AddAddWeightCommandTest`) to verify multiple entry addition, correct string formatting, and data persistence consistency.
 
@@ -65,18 +64,9 @@ My primary contributions focused on implementing the **core data entry commands 
 
 ---
 
-### **Contributions to the User Guide (UG)**
-
-* Added new command usage sections:
-    * **`milk` command** — explained syntax, valid input ranges, and example output including cumulative totals.
-    * **`weight` command** — described functionality, examples, and integration with list command.
-* Updated the command summary table to include both new commands and clarified their relationship to `list` and `delete`.
-
----
-
 ### **Contributions to the Developer Guide (DG)**
 
-* Added detailed explanation of **AddMilkCommand** and **AddWeightCommand** design and implementation:
+* Added detailed explanation of **AddMilkCommand** design and implementation:
     * Command parsing and validation flow.
     * Interaction between `Command`, `EntryList`, and `Storage`.
     * Sequence diagram for `AddMilkCommand` execution (showing creation, model update, and storage save).
@@ -87,7 +77,6 @@ My primary contributions focused on implementing the **core data entry commands 
 
 ### **Contributions to Team-Based Tasks**
 
-* Helped design the **EntryList–Storage integration layer**, ensuring new entry types are stored and loaded consistently.
 * Participated actively in team meetings and milestone planning.
 * Conducted code reviews for teammates’ features and provided feedback on coding style, assertions, and SLAP adherence.
 * Assisted in setting up Gradle test configurations and resolving initial test failures related to file formatting and end-of-line handling.
@@ -96,23 +85,6 @@ My primary contributions focused on implementing the **core data entry commands 
 
 ### **Review / Mentoring Contributions**
 
-* **Reviewed PR [#47](https://github.com/AY2526S1-CS2113-T11-3/tp/pull/47)** (*Add Weight Feature*) — helped debug Gradle test failures caused by newline formatting inconsistencies.
-* **Reviewed PR [#56](https://github.com/AY2526S1-CS2113-T11-3/tp/pull/56)** (*Refactor CommandException*) — provided feedback on SRP violations and abstraction boundaries.
-* Paired with Yu Jie on refining **CommandResult** and improving message handling consistency across commands.
+* **Reviewed PR [#43](https://github.com/AY2526S1-CS2113-T11-3/tp/pull/43)** Reviewed teammates’ pull requests and suggested adding edge case tests (e.g. invalid meal inputs) to strengthen input validation and improve test coverage.
 
 ---
-
-### **Contributions Beyond the Project Team**
-
-* Engaged with other teams during peer testing — provided structured feedback on user input validation and persistence handling.
-* Raised a minor bug report for another team’s `goal` command (incorrect parsing of multi-word descriptions).
-
----
-
-## **Contributions to the User Guide (Extracts)**
-
-### **Adding Milk Entry — `milk`**
-
-Records the amount of breast milk pumped.
-
-**Format:**  
