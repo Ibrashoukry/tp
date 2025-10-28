@@ -1,0 +1,26 @@
+@startuml
+title **Validation & Removal**
+
+skinparam shadowing false
+skinparam defaultFontName Arial
+skinparam roundcorner 15
+skinparam packageStyle rectangle
+
+!define FRAME #F2F4F7
+!define CARD  #FFF8E1
+
+left to right direction
+
+rectangle "EntryList (before)" <<frame>> FRAME {
+  rectangle "1. [Meal] breakfast (500 kcal)" as b1 CARD
+  rectangle "2. [Workout] yoga (30 mins) (27/10/25 22.24)"          as b2 CARD
+  rectangle "3. [Milk] 150ml (27/10/25 22:27)"          as b3 CARD
+}
+
+rectangle "EntryList (after)" <<frame>> FRAME {
+  rectangle "1. [Meal] breakfast (500 kcal)" as a1 CARD
+  rectangle "2. [Milk] 150ml (27/10/25 22:27)"          as a3 CARD
+}
+
+b2 -[#777]-> a1 : delete index 2
+@enduml

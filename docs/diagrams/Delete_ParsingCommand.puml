@@ -1,0 +1,15 @@
+@startuml
+title Parsing command
+skinparam shadowing false
+skinparam defaultFontName Arial
+
+' Define colors
+!define COLOR_UI #E3F2FD
+!define COLOR_LOGIC #E8F5E9
+
+rectangle "UI" as ui #E3F2FD
+rectangle "Logic/Parser" as p #E8F5E9
+
+ui -right-> p : delete 2
+p -left-> ui  : DeleteCommand(index=2)
+@enduml
