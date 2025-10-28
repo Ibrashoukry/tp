@@ -2,7 +2,7 @@ package seedu.mama.parser;
 
 import seedu.mama.command.CommandException;
 import seedu.mama.command.CommandResult;
-import seedu.mama.command.DashboardCommand;
+import seedu.mama.command.ViewDashboardCommand;
 import seedu.mama.command.SetGoalCommand;
 import seedu.mama.command.SetWorkoutGoalCommand;
 import seedu.mama.command.ViewWorkoutGoalCommand;
@@ -53,7 +53,7 @@ public class Parser {
         }
 
         if (trimmed.equals("dashboard")) {
-            return new DashboardCommand();
+            return new ViewDashboardCommand();
         }
 
         // Handles "delete" commands

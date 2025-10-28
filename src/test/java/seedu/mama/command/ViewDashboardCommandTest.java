@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class DashboardCommandTest {
+public class ViewDashboardCommandTest {
 
     private EntryList entries;
     private Storage storageStub;
@@ -43,7 +43,7 @@ public class DashboardCommandTest {
         entries.add(new WorkoutEntry("Run", 30, 4, LocalDateTime.now()));
 
         // Act
-        DashboardCommand command = new DashboardCommand();
+        ViewDashboardCommand command = new ViewDashboardCommand();
         CommandResult result = command.execute(entries, storageStub);
         String output = result.getFeedbackToUser();
 
