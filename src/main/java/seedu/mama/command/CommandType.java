@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
  */
 public enum CommandType {
     WORKOUT("workout <description> /dur <duration (mins)> /feel <feeling (out of 5)>"),
-    MEAL("meal <meal description> /cal <calories>"),
+    MEAL("meal <meal description> /cal <calories> [/p <protein>] [/c <carbs>] [/f <fat>]"),
     WEIGHT("weight <weight>"),
     MILK("milk <volume>"),
     MEASURE("measure waist/<cm> hips/<cm> [chest/<cm>] [thigh/<cm>] [arm/<cm>]"),

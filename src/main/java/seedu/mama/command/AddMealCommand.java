@@ -7,40 +7,93 @@ import seedu.mama.storage.Storage;
 public class AddMealCommand implements Command {
     private final String mealType;
     private final int calories;
+    private final Integer protein;
+    private final Integer carbs;
+    private final Integer fat;
+
+    public AddMealCommand(String mealType, int calories, Integer protein, Integer carbs, Integer fat) {
+        this.mealType = mealType;
+        this.calories = calories;
+        this.protein = protein;
+        this.carbs = carbs;
+        this.fat = fat;
+    }
 
     public AddMealCommand(String mealType, int calories) {
         this.mealType = mealType;
         this.calories = calories;
+        this.protein = null;
+        this.carbs = null;
+        this.fat = null;
+
     }
 
     public static AddMealCommand fromInput(String input) throws CommandException {
         String desc = input.substring("meal".length()).trim();
 
         if (!desc.contains("/cal")) {
-            throw new CommandException("Invalid format! Try: meal <mealType> /cal <calories>");
+            throw new CommandException("Invalid format! Try: meal <mealType> /cal <calories> [/protein <protein>] [/carbs <carbs>] [/fat <fat>]");
         }
 
-        String[] parsedDesc = desc.split("/cal");
-        if (parsedDesc.length < 2) {
-            throw new CommandException("Invalid format! Try: meal <mealType> /cal <calories>");
+        String[] parts = desc.split("/cal");
+        String mealType = parts[0].trim();
+
+        if (parts.length < 2) {
+            throw new CommandException("Calories missing! Try: /cal <calories>");
         }
 
-        String mealType = parsedDesc[0].trim();
-        String calStr = parsedDesc[1].trim().split("\\s+")[0];
+        String rest = parts[1].trim();
+        String[] tokens = rest.split("\\s+");
+
+        if (tokens.length == 0) {
+            throw new CommandException("Calories missing! Try: /cal <calories>");
+        }
 
         int calories;
         try {
-            calories = Integer.parseInt(calStr);
+            calories = Integer.parseInt(tokens[0]);
+            if (calories < 0) throw new NumberFormatException();
         } catch (NumberFormatException e) {
-            throw new CommandException("Calories must be a number.");
+            throw new CommandException("Calories must be a non-negative number.");
         }
 
-        return new AddMealCommand(mealType, calories);
+        Integer protein = null, carbs = null, fat = null;
+
+        for (int i = 1; i < tokens.length - 1; i++) {
+            String macroValueStr = tokens[i + 1];
+            int macroValue;
+            try {
+                macroValue = Integer.parseInt(macroValueStr);
+                if (macroValue < 0) {
+                    throw new CommandException(tokens[i] + " must be a non-negative number.");
+                }
+            } catch (NumberFormatException e) {
+                throw new CommandException(tokens[i] + " must be a valid number.");
+            }
+
+            switch (tokens[i]) {
+            case "/protein":
+                protein = macroValue;
+                break;
+            case "/carbs":
+                carbs = macroValue;
+                break;
+            case "/fat":
+                fat = macroValue;
+                break;
+            default:
+                throw new CommandException("Unknown macro flag: " + tokens[i]);
+            }
+
+            i++; // skip the number token
+        }
+
+        return new AddMealCommand(mealType, calories, protein, carbs, fat);
     }
 
     @Override
     public CommandResult execute(EntryList list, Storage storage) {
-        MealEntry entry = new MealEntry(mealType, calories);
+        MealEntry entry = new MealEntry(mealType, calories, protein, carbs, fat);
         list.add(entry);
         if (storage != null) {
             storage.save(list);

@@ -4,7 +4,7 @@ public class CalorieGoalEntry extends Entry{
     private final int calorieGoal;
 
     public CalorieGoalEntry(int calorieGoal) {
-        super("CALORIE GOAL", "" + calorieGoal);
+        super("CALORIE_GOAL", "" + calorieGoal);
         this.calorieGoal = calorieGoal;
     }
 
