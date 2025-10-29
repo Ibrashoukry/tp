@@ -1,0 +1,36 @@
+@startuml
+' ===== Sequence: measure waist/70 hips/98 chest/90 thigh/55 arm/30 =====
+title AddMilkCommand - Sequence for "milk ..."
+
+skinparam shadowing false
+skinparam defaultFontName Arial
+skinparam sequence {
+  LifeLineBorderColor black
+  BoxBorderColor #90A4AE
+  BoxBackgroundColor #F5F7FA
+  ArrowColor #455A64
+  ArrowThickness 1
+}
+
+actor User
+participant Ui           as UI  #E3F2FD
+participant Parser       as PR  #E8F5E9
+participant AddWeightCommand as AMC #C8E6C9
+participant EntryList    as LIST #FFFDE7
+participant Storage      as ST   #FCE4EC
+
+User -> UI : enter "weight 60"
+UI -> PR  : parse(raw)
+PR -> UI  : new AddWeightCommand(60)
+UI -> AMC : execute(list, storage)
+
+alt invalid input (missing/≤0)
+  AMC -> UI : throw CommandException\n("Weight must be a number ...")
+else valid input
+  AMC -> LIST : add(new WeightEntry(...))
+  AMC -> ST   : save(list)
+  ST --> AMC  : ok
+  AMC --> UI  : CommandResult("Added: [WEIGHT] 60kg")
+end
+
+@enduml

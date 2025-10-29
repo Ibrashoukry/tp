@@ -453,12 +453,54 @@ a `MilkEntry`.
 
 #### Summary
 
-- **Command:** `add milk <volume-ml>`
-- **Example:** `add milk 30`
+- **Command:** `milk <volume-ml>`
+- **Example:** `milk 30`
 - **Effect:** Appends a `MilkEntry` and saves immediately.
 
 ---
+### 3.6 Add Weight — Ryan Siow
 
+#### Overview
+
+`AddWeightCommand` logs a user's weight (in kg).  
+It validates the weight, appends a `WeightEntry`, and persists via `Storage#save(list)`.
+
+> **Note:** Current implementation **does not** record the date and time of the user's input
+
+#### Implementation Details
+
+**Step 1.** User enters `weight 60`. `Ui` captures input.
+> ![AddWeight_Initial.png](images/AddWeight_Initial.png)
+
+**Step 2.** `Parser` constructs `AddWeightCommand(weight=60)`.
+> ![AddWeight_Parsing.png](images/AddWeight_Parsing.png)
+
+**Step 3.** `AddWeightCommand#execute(...)` checks `weight > 0`. If invalid, throws `CommandException`. If valid, appends
+a `WeightEntry`.
+> ![AddWeight_ValidationAndAppend.png](images/AddWeight_ValidationAndAppend.png)
+
+**Step 4.** `Storage#save(list)` persists the updated list.
+> ![AddWeight_Persist.png](images/AddWeight_Persist.png)
+
+**Step 5.** `Ui` shows `Added: [WEIGHT] 60kg`.
+> ![AddWeight_SequenceDiagram.png](images/AddWeight_SequenceDiagram.png)
+
+#### Design Considerations
+
+**Aspect: Weight input**
+
+| Alternative                       | Pros            | Cons                                |
+|-----------------------------------|-----------------|-------------------------------------|
+| **Positive integer kg (current)** | Simple, uniform | No fractional kg                    |
+| Decimal kg                        | Precise         | Extra parsing/validation complexity |
+
+#### Summary
+
+- **Command:** `weight <weight-kg>`
+- **Example:** `weight 60`
+- **Effect:** Appends a `WeightEntry` and saves immediately.
+
+---
 ## Product Scope
 
 ### Target User Profile
