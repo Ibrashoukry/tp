@@ -3,10 +3,11 @@ package seedu.mama.parser;
 import seedu.mama.command.CommandException;
 import seedu.mama.command.CommandResult;
 import seedu.mama.command.ViewDashboardCommand;
-import seedu.mama.command.SetGoalCommand;
 import seedu.mama.command.SetWorkoutGoalCommand;
 import seedu.mama.command.ViewWorkoutGoalCommand;
 import seedu.mama.command.AddWeightCommand;
+import seedu.mama.model.CalorieGoalQueries;
+
 
 import seedu.mama.command.AddMealCommand;
 
@@ -164,42 +165,16 @@ public class Parser {
             }
         }
 
-        // Handles "goal" command
-        if (trimmed.startsWith("goal ")) {
-            // "goal <calorie goal>" -> set new goal
-            String desc = trimmed.substring("goal".length()).trim();
-
-            if (desc.isEmpty()) {
-                throw new CommandException("Invalid format! Try: goal <calories>");
-            }
-
-            try {
-                int goal = Integer.parseInt(desc.split("\\s+")[0]);
-                return new SetGoalCommand(goal);
-            } catch (NumberFormatException e) {
-                throw new CommandException("Calorie goal must be a number.");
-            }
+        // Handles "calorie goal" command
+        if (trimmed.equals("calorie goal")) {
+            // Just "calorie goal" -> show current goal
+            return CalorieGoalQueries.viewCalorieGoal();
+        }
+        if (trimmed.startsWith("calorie goal ")) {
+            // "calorie goal <calorie goal>" -> set new goal
+            return CalorieGoalQueries.setCalorieGoal(trimmed);
         }
 
-        if (trimmed.equals("goal")) {
-            // Just "goal" -> show current goal
-            return (list, storage) -> {
-                Integer goalValue = (storage != null) ? storage.loadGoal() : null;
-                if (goalValue == null) {
-                    return new CommandResult("No calorie goal set yet. Use: goal <calories>");
-                }
-
-                // show how many calories logged
-                int totalCal = list.asList().stream()
-                        .filter(e -> e.type().equals("MEAL"))
-                        .mapToInt(e -> ((seedu.mama.model.MealEntry) e).getCalories())
-                        .sum();
-
-                String progress = "Your current calorie goal is: " + goalValue + " kcal."
-                        + " | Progress: " + totalCal + " kcal logged.";
-                return new CommandResult(progress);
-            };
-        }
         return (l, s) -> new CommandResult("Unknown command.");
     }
 }

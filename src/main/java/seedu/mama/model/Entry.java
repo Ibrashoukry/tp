@@ -48,8 +48,8 @@ public abstract class Entry {
             throw new IllegalArgumentException("Bad line: " + line);
         }
         switch (parts[0]) {
-        case "GOAL":
-            return GoalEntry.fromStorage(line);
+        case "CALORIE_GOAL":
+            return CalorieGoalEntry.fromStorage(line);
 
         case "NOTE":
             return NoteEntry.fromStorage(line);

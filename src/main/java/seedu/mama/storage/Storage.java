@@ -43,7 +43,7 @@ public class Storage {
 
                 while ((line = br.readLine()) != null) {
 
-                    if (line.startsWith("GOAL|")) {
+                    if (line.startsWith("CALORIE_GOAL|")) {
                         continue; // skip goal line
                     }
 
@@ -72,7 +72,7 @@ public class Storage {
             try (BufferedReader br = Files.newBufferedReader(file)) {
                 String line;
                 while ((line = br.readLine()) != null) {
-                    if (line.startsWith("GOAL|")) {
+                    if (line.startsWith("CALORIE_GOAL|")) {
                         String[] parts = line.split("\\|");
                         if (parts.length == 2) {
                             return Integer.parseInt(parts[1]);
@@ -94,7 +94,7 @@ public class Storage {
 
             try (BufferedWriter bw = Files.newBufferedWriter(tmp)) {
                 if (existingGoal != null) {
-                    bw.write("GOAL|" + existingGoal);
+                    bw.write("CALORIE_GOAL|" + existingGoal);
                     bw.newLine();
                 }
 
@@ -120,10 +120,10 @@ public class Storage {
 
             if (Files.exists(file)) {
                 lines = Files.readAllLines(file);
-                lines.removeIf(line -> line.startsWith("GOAL|"));
+                lines.removeIf(line -> line.startsWith("CALORIE_GOAL|"));
             }
 
-            lines.add(0, "GOAL|" + goal);
+            lines.add(0, "CALORIE_GOAL|" + goal);
             Files.write(file, lines);
         } catch (IOException e) {
             System.err.println("Failed to save calorie goal: " + e.getMessage());

@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
  */
 public enum CommandType {
     WORKOUT("workout <description> /dur <duration (mins)> /feel <feeling (out of 5)>"),
-    MEAL("meal <meal description> /cal <calories>"),
+    MEAL("meal <meal description> /cal <calories> [/p <protein>] [/c <carbs>] [/f <fat>]"),
     WEIGHT("weight <weight>"),
     MILK("milk <volume>"),
     MEASURE("measure waist/<cm> hips/<cm> [chest/<cm>] [thigh/<cm>] [arm/<cm>]"),
@@ -17,8 +17,8 @@ public enum CommandType {
     DASHBOARD("dashboard"),
     WORKOUT_GOAL_SET("workout goal <minutes>"),
     WORKOUT_GOAL_VIEW("workout goal"), // Separate entry for viewing
-    GOAL_SET("goal <calories>"),
-    GOAL_VIEW("goal"),
+    CALORIE_GOAL_SET("calorie goal <calories>"),
+    CALORIE_GOAL_VIEW("calorie goal"),
     BYE("bye");
 
     private final String usage;
