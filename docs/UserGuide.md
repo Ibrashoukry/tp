@@ -91,16 +91,19 @@ Removes an entry by its index as shown in the `list` or `list /t TYPE` command.
 Adds a meal entry with its calorie value.
 
 **Format**
-> meal MEAL_NAME /cal CALORIES
+> meal MEAL_NAME /cal CALORIES /protein PROTEIN /carbs CARBS /fat FAT
 
 
 **Examples**
-```meal breakfast /cal 500```
 ```meal chicken rice /cal 650```
+```meal breakfast /cal 500 /protein 25 /carbs 5 /fat 2```
 
 **Notes**
 
-- `CALORIES` must be a positive integer.
+- `PROTEIN, CARBS, and FAT` are optional.
+- `CALORIES, PROTEIN, CARBS, and FAT` must be a positive integer.
+- `CALORIES` is measured in `kcal`.
+- `PROTEIN, CARBS, and FAT` are measured in `grams`
 
 ---
 
@@ -219,19 +222,19 @@ You can include any combination of available fields.
 
 ---
 
-### 9. Calorie Goal — `goal`
+### 9. Calorie Goal — `calorie goal`
 
 Sets or displays your daily calorie goal.
 
 **Formats**
-> goal CALORIES → sets a new goal
+> calorie goal CALORIES → sets a new goal
 >
-> goal → views current goal
+> calorie goal → views current goal
 
 
 **Examples**
-```goal 1800```
-```goal```
+```calorie goal 1800```
+```calorie goal```
 
 **Notes**
 

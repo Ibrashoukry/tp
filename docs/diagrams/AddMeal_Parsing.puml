@@ -1,0 +1,17 @@
+@startuml
+' ===== Parsing command =====
+title Parsing command
+
+skinparam shadowing false
+skinparam defaultFontName Arial
+skinparam rectangle {
+  RoundCorner 12
+  FontSize 14
+}
+
+rectangle "UI" as UI #E3F2FD
+rectangle "Logic/Parser" as P #E8F5E9
+
+UI -right-> P : meal breakfast /cal 500 /protein 25 /carbs 10 /fat 14
+P -left-> UI  : AddMealCommand("breakfast",500,25,10,14)
+@enduml

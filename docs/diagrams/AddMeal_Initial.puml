@@ -1,0 +1,27 @@
+@startuml
+' ===== Initial State (before meal) =====
+title Initial State (before meal)
+
+skinparam shadowing false
+skinparam defaultFontName Arial
+skinparam rectangle {
+  RoundCorner 12
+  FontSize 14
+}
+skinparam note {
+  BackgroundColor #E3F2FD
+  BorderColor #90CAF9
+  RoundCorner 12
+}
+
+rectangle "EntryList (States)" as EL #F5F7FA {
+  ' empty before adding a measurement
+}
+
+' show "current state" pointer
+note as CS #E3F2FD
+Current State (before `meal`)
+end note
+CS -up-> EL
+
+@enduml
