@@ -53,7 +53,7 @@ You can also filter entries by their type.
 
 
 **Valid TYPE values:**  
-`meal`, `workout`, `milk`, `measure`, `weight`
+`meal`, `workout`, `milk`, `measure`, `weight`, `workout_goal`
 
 **Examples**
 
@@ -106,21 +106,36 @@ Adds a meal entry with its calorie value.
 
 ### 4. Logging a Workout — `workout`
 
-Adds a workout entry with its duration (in minutes).
+Adds a workout entry with its duration (in minutes) and a required “feel” rating (1–5) so you can track recovery.
 
 **Format**
-> workout TYPE /dur DURATION
+> workout TYPE /dur DURATION /feel RATING
 
 
 **Examples**
-```workout yoga /dur 30```
-```workout run /dur 45```
+```workout yoga /dur 30 /feel 5```
+```workout run /dur 45 /feel 3```
+
+Compact forms are also accepted: ```workout TYPE/durDURATION/feelRATING```
 
 **Notes**
 
+- `TYPE` can be any text (e.g., running, yoga, strength training).
 - `DURATION` must be a positive integer.
-- Each workout is timestamped automatically.
+- `FEEL` must be an integer from 1 to 5.
 
+| Feel rating | Description                                                                  |
+|-------------|------------------------------------------------------------------------------|
+| **1**       | I feel terrible and/or I hated the workout activity 😱🙅‍♀️                  |
+| **2**       | I do not feel good and/or I disliked the workout activity 😭👎               |
+| **3**       | I feel normal and/or I neither like nor dislike the workout activity 😐🤷‍♀️ |
+| **4**       | I feel good and/or I liked the workout activity 😊👍                         |
+| **5**       | I feel amazing and/or I loved the workout activity 😍💕                      |
+
+- Exactly one `/dur` and one `/feel` must be present.
+- Do not add extra words after the numbers (e.g., avoid `mins`, `great`):
+  use `... /dur 30 /feel 4`, not `... /dur 30 mins /feel 4 great`.
+- Each workout is timestamped automatically and saved to storage.
 ---
 
 ### 5. Managing Workout Goals — `workout goal`
@@ -140,6 +155,10 @@ Sets or views your **weekly workout goal**.
 **Notes**
 
 - The goal represents total minutes of workouts per week.
+- A week runs from **Monday 00:00** to **Sunday 23:59**
+- The latest goal you set within the week applies for that week. Setting a new goal later in the same week replaces the earlier one for that week only.
+- Goals do not backfill past weeks and do not carry forward automatically, set a new goal next week if you want one.
+- You can view past workout goals using ```list``` or ```list /t workout_goal```.
 
 ---
 
