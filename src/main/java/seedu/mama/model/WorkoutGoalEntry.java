@@ -74,7 +74,7 @@ public final class WorkoutGoalEntry extends TimestampedEntry {
     @Override
     public String toListLine() {
         // [GOAL] 150 mins/week (28/10/25 23:59)
-        return "[GOAL] " + minutesPerWeek + " mins/week (" + timestampString() + ")";
+        return "[WORKOUT GOAL] " + minutesPerWeek + " mins/week (" + timestampString() + ")";
     }
 
     /**
