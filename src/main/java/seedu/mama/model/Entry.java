@@ -49,7 +49,7 @@ public abstract class Entry {
         }
         switch (parts[0]) {
         case "GOAL":
-            return GoalEntry.fromStorage(line);
+            return CalorieGoalEntry.fromStorage(line);
 
         case "NOTE":
             return NoteEntry.fromStorage(line);

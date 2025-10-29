@@ -3,11 +3,11 @@ package seedu.mama.command;
 import seedu.mama.model.EntryList;
 import seedu.mama.storage.Storage;
 
-public class SetGoalCommand implements Command {
-    private final int goal;
+public class SetCalorieGoalCommand implements Command {
+    private final int calorieGoal;
 
-    public SetGoalCommand(int goal) {
-        this.goal = goal;
+    public SetCalorieGoalCommand(int calGoal) {
+        this.calorieGoal = calGoal;
     }
 
     @Override
@@ -16,7 +16,7 @@ public class SetGoalCommand implements Command {
             throw new CommandException("Storage not initialized properly.");
         }
 
-        storage.saveGoal(goal);
-        return new CommandResult("Calorie goal set to " + goal + " kcal.");
+        storage.saveGoal(calorieGoal);
+        return new CommandResult("Calorie goal set to " + calorieGoal + " kcal.");
     }
 }

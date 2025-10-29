@@ -17,8 +17,8 @@ public enum CommandType {
     DASHBOARD("dashboard"),
     WORKOUT_GOAL_SET("workout goal <minutes>"),
     WORKOUT_GOAL_VIEW("workout goal"), // Separate entry for viewing
-    GOAL_SET("goal <calories>"),
-    GOAL_VIEW("goal"),
+    CALORIE_GOAL_SET("calorie goal <calories>"),
+    CALORIE_GOAL_VIEW("calorie goal"),
     BYE("bye");
 
     private final String usage;
