@@ -16,6 +16,13 @@ public class SetCalorieGoalCommand implements Command {
             throw new CommandException("Storage not initialized properly.");
         }
 
+
+        if (calorieGoal < 0) {
+            return new CommandResult("Calorie goal cannot be less than 0!");
+        } else if (calorieGoal > 10000) {
+            return new CommandResult("Calorie goal too high");
+        }
+
         storage.saveGoal(calorieGoal);
         return new CommandResult("Calorie goal set to " + calorieGoal + " kcal.");
     }
