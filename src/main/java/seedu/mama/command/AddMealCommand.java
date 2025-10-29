@@ -32,7 +32,8 @@ public class AddMealCommand implements Command {
         String desc = input.substring("meal".length()).trim();
 
         if (!desc.contains("/cal")) {
-            throw new CommandException("Invalid format! Try: meal <mealType> /cal <calories> [/protein <protein>] [/carbs <carbs>] [/fat <fat>]");
+            throw new CommandException("Invalid format! Try: meal <mealType> /cal <calories> " +
+                    "[/protein <protein>] [/carbs <carbs>] [/fat <fat>]");
         }
 
         String[] parts = desc.split("/cal");
@@ -52,12 +53,16 @@ public class AddMealCommand implements Command {
         int calories;
         try {
             calories = Integer.parseInt(tokens[0]);
-            if (calories < 0) throw new NumberFormatException();
+            if (calories < 0) {
+                throw new NumberFormatException();
+            }
         } catch (NumberFormatException e) {
             throw new CommandException("Calories must be a non-negative number.");
         }
 
-        Integer protein = null, carbs = null, fat = null;
+        Integer protein = null;
+        Integer carbs = null;
+        Integer fat = null;
 
         for (int i = 1; i < tokens.length - 1; i++) {
             String macroValueStr = tokens[i + 1];

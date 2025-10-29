@@ -3,7 +3,6 @@ package seedu.mama.parser;
 import seedu.mama.command.CommandException;
 import seedu.mama.command.CommandResult;
 import seedu.mama.command.ViewDashboardCommand;
-import seedu.mama.command.SetCalorieGoalCommand;
 import seedu.mama.command.SetWorkoutGoalCommand;
 import seedu.mama.command.ViewWorkoutGoalCommand;
 import seedu.mama.command.AddWeightCommand;

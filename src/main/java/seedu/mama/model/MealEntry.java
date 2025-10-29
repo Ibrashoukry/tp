@@ -62,11 +62,19 @@ public class MealEntry extends Entry {
         String type = parts.length > 1 ? parts[1] : "";
         int cal = parts.length > 2 ? Integer.parseInt(parts[2]) : 0;
 
-        Integer protein = null, carbs = null, fat = null;
+        Integer protein = null;
+        Integer carbs = null;
+        Integer fat = null;
 
-        if (parts.length > 3 && !parts[3].equals("-")) protein = Integer.parseInt(parts[3]);
-        if (parts.length > 4 && !parts[4].equals("-")) carbs = Integer.parseInt(parts[4]);
-        if (parts.length > 5 && !parts[5].equals("-")) fat = Integer.parseInt(parts[5]);
+        if (parts.length > 3 && !parts[3].equals("-")) {
+            protein = Integer.parseInt(parts[3]);
+        }
+        if (parts.length > 4 && !parts[4].equals("-")) {
+            carbs = Integer.parseInt(parts[4]);
+        }
+        if (parts.length > 5 && !parts[5].equals("-")) {
+            fat = Integer.parseInt(parts[5]);
+        }
 
         return new MealEntry(type, cal, protein, carbs, fat);
     }
