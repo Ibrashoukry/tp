@@ -1,0 +1,44 @@
+@startuml
+title Workout sequence - "workout yoga /dur 30 /feel 4"
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam ParticipantBorderRadius 0
+
+' Color legend:
+' UI = #CFE2FF (blue) | Command logic = #D1E7DD (green)
+' Model = #FFF3CD (yellow) | Storage = #F8D7DA (red)
+
+actor User
+participant "UI" as UI                      #CFE2FF
+participant Parser                          #D1E7DD
+participant AddWorkoutCommand as Cmd        #D1E7DD
+participant EntryList as List               #FFF3CD
+participant Storage                         #F8D7DA
+participant "Workout Entry" as WEntry       #FFF3CD
+
+User -> UI : enter command
+UI -> Parser : parse("workout ...")
+Parser --> UI : AddWorkoutCommand("yoga", 30, 4)
+
+opt valid input (ensured by Parser + constructor)
+  UI -> Cmd : execute(List, Storage)
+  Cmd -> WEntry ++ : new("yoga", 30, 4)
+  Cmd -> List : add(WEntry)
+  List --> Cmd : added
+
+  opt storage != null
+    Cmd -> Storage : save(List)
+    Storage --> Cmd : saved
+  end
+
+  Cmd -> Cmd : compute weekly progress ...
+  Cmd --> UI : CommandResult(feedback)
+end
+
+UI -> User : show feedback
+
+legend right
+UI = #CFE2FF | Command logic = #D1E7DD | Model = #FFF3CD | Storage = #F8D7DA
+endlegend
+@enduml
+

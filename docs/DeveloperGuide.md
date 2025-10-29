@@ -77,7 +77,7 @@ Model. The Model updates state and Logic instructs Storage to persist data. UI r
 #### Example File Content
 
 > MEAL|breakfast|500
-> WORKOUT|yoga|45|28/10/25 02:33 
+> WORKOUT|yoga|45|28/10/25 02:33
 > MILK|120ml|28/10/25 02:32
 > MEASURE|70|98|90|55|30|28/10/25 02:53
 
@@ -241,8 +241,10 @@ This implementation ensures data safety and provides clear user feedback for bot
 
 #### Overview
 
-The `AddMeasurementCommand` logs **waist** and **hips** (required) with optional **chest**, **thigh**, **arm** — all in **cm**.  
-On success, it creates a **timestamped** `BodyMeasurementEntry` (via `TimestampedEntry`) and persists the updated list using `Storage#save(list)`.  
+The `AddMeasurementCommand` logs **waist** and **hips** (required) with optional **chest**, **thigh**, **arm** — all in
+**cm**.  
+On success, it creates a **timestamped** `BodyMeasurementEntry` (via `TimestampedEntry`) and persists the updated list
+using `Storage#save(list)`.  
 **All new entries include a timestamp** formatted with `DateTimeUtil` as `dd/MM/yy HH:mm`.
 
 #### Implementation Details
@@ -272,7 +274,7 @@ The `Ui` captures the raw input.
 **Step 4.** Persist: `Storage#save(list)`.
 > ![Measure_Persist](images/AddMeasurement_Persist.png)
 
-**Step 5.** `Ui` prints 
+**Step 5.** `Ui` prints
 ```Added: [MEASURE] waist=70cm, hips=98cm, chest=90cm, thigh=55cm, arm=30cm (28/10/25 02:53)```.
 
 > **AddMeasurement Sequence Diagram**
@@ -347,45 +349,67 @@ If valid, a new `MealEntry` is created and appended to `EntryList`.
 
 ---
 
-### 3.5 Add Workout — [Teammate / Owner]
+### 3.5 Add Workout — Jewel Jace Lim
 
 #### Overview
 
-`AddWorkoutCommand` records a workout with a type/description and duration.  
+`AddWorkoutCommand` records a workout with a type/description, duration (in minutes), and a feel rating (from 1 to 5).  
 It validates inputs, appends a `WorkoutEntry`, and persists via `Storage#save(list)`.
 
 #### Implementation Details
 
-**Step 1.** User enters `add workout yoga /d 30min`. `Ui` captures input.
-> ![Workout_Initial](images/AddWorkout_Initial.png)
+**Step 1.** User enters `workout yoga /dur 30 /feel 4` and `Ui` captures input.
+> ![AddWorkout_UI](images/AddWorkoutUIDiagram.png)
 
-**Step 2.** `Parser` builds `AddWorkoutCommand(description="yoga", duration="30min")`.
-> ![Workout_Parsing](images/AddWorkout_Parsing.png)
+**Step 2.** `Parser` validates the segments and builds `AddWorkoutCommand(description="yoga", duration="30", feel="4")`.
 
-**Step 3.** `AddWorkoutCommand#execute(...)` validates non-empty description and non-empty duration; throws
-`CommandException` if invalid.  
-If valid, a `WorkoutEntry` is created and added to `EntryList`.
-> ![Workout_ValidationAndAppend](images/AddWorkout_ValidationAndAppend.png)
+**Checks enforced:**
 
-**Step 4.** `Storage#save(list)` persists the updated list.
-> ![Workout_Persist](images/AddWorkout_Persist.png)
+- Exactly one /dur and one /feel
+- DURATION is a positive integer
+- FEEL is an integer in [1..5]
+- No extra tokens after the numbers
 
-**Step 5.** `Ui` displays success (e.g., `Added: [Workout] yoga (30 mins)`).
-> ![AddWorkout_Sequence](images/AddWorkout_SequenceDiagram.png)
+> ![AddWorkout_Parsing](images/AddWorkoutParserDiagram.png)
+
+**Step 3.** `AddWorkoutCommand#execute(...)`  updates the model and persists.
+Precondition: input already validated.
+
+**Flow:**
+
+1. Create WorkoutEntry("yoga", 30, 4).
+2. EntryList.add(entry).
+3. Persist via Storage.save(list).
+4. Compute weekly minutes vs goal and compose feedback.
+5. Return CommandResult to UI.
+
+> ![Workout_ValidationAndAppend](images/AddWorkoutCommandExecuteDiagram.png)
+
+**Step 4.** `Ui` displays result (e.g.,
+`Got it. I've logged this workout: [Workout] yoga (30 mins, feel 4/5) (dd/MM/yy HH:mm)...`).
+
+> ![AddWorkout_Sequence](images/AddWorkoutUseCase.png)
 
 #### Design Considerations
 
 **Aspect: Duration representation**
 
-| Alternative                          | Pros                   | Cons                                |
-|--------------------------------------|------------------------|-------------------------------------|
-| **Free text like `30min` (current)** | Flexible, easy to type | Harder to aggregate without parsing |
-| Normalised minutes (e.g., `30`)      | Easy to compute totals | Less user-friendly input            |
+| Alternative                          | Pros                                              | Cons                                 |
+|--------------------------------------|---------------------------------------------------|--------------------------------------|
+| **Strict integer minutes (current)** | Flexible, easy to type, simple to parse/aggregate | Users must omit units (mins)         |
+| Accept suffix (e.g., 30min)          | More natural for some users                       | More parsing branches, error surface |
+
+**Aspect: Segment whitespace**
+
+| Alternative                                            | Pros                                               | Cons                                                                   |
+|--------------------------------------------------------|----------------------------------------------------|------------------------------------------------------------------------|
+| **Compact markers allowed (/dur30, /feel4) (current)** | Flexible, easy to type, allows for more user error | Input might look ugly                                                  |
+| Require whitespace (/dur 30, /feel 4)                  | Looks neater                                       | Less forgiving—missing a space causes errors; slightly more keystrokes |
 
 #### Summary
 
-- **Command:** `add workout <description> /d <duration>`
-- **Example:** `add workout yoga /d 30min`
+- **Command:** `workout TYPE /dur DURATION /feel FEEL`
+- **Example:** `workout yoga /dur 30 /feel 4`
 - **Effect:** Appends a `WorkoutEntry` and saves immediately.
 
 ---
@@ -429,12 +453,54 @@ a `MilkEntry`.
 
 #### Summary
 
-- **Command:** `add milk <volume-ml>`
-- **Example:** `add milk 30`
+- **Command:** `milk <volume-ml>`
+- **Example:** `milk 30`
 - **Effect:** Appends a `MilkEntry` and saves immediately.
 
 ---
+### 3.6 Add Weight — Ryan Siow
 
+#### Overview
+
+`AddWeightCommand` logs a user's weight (in kg).  
+It validates the weight, appends a `WeightEntry`, and persists via `Storage#save(list)`.
+
+> **Note:** Current implementation **does not** record the date and time of the user's input
+
+#### Implementation Details
+
+**Step 1.** User enters `weight 60`. `Ui` captures input.
+> ![AddWeight_Initial.png](images/AddWeight_Initial.png)
+
+**Step 2.** `Parser` constructs `AddWeightCommand(weight=60)`.
+> ![AddWeight_Parsing.png](images/AddWeight_Parsing.png)
+
+**Step 3.** `AddWeightCommand#execute(...)` checks `weight > 0`. If invalid, throws `CommandException`. If valid, appends
+a `WeightEntry`.
+> ![AddWeight_ValidationAndAppend.png](images/AddWeight_ValidationAndAppend.png)
+
+**Step 4.** `Storage#save(list)` persists the updated list.
+> ![AddWeight_Persist.png](images/AddWeight_Persist.png)
+
+**Step 5.** `Ui` shows `Added: [WEIGHT] 60kg`.
+> ![AddWeight_SequenceDiagram.png](images/AddWeight_SequenceDiagram.png)
+
+#### Design Considerations
+
+**Aspect: Weight input**
+
+| Alternative                       | Pros            | Cons                                |
+|-----------------------------------|-----------------|-------------------------------------|
+| **Positive integer kg (current)** | Simple, uniform | No fractional kg                    |
+| Decimal kg                        | Precise         | Extra parsing/validation complexity |
+
+#### Summary
+
+- **Command:** `weight <weight-kg>`
+- **Example:** `weight 60`
+- **Effect:** Appends a `WeightEntry` and saves immediately.
+
+---
 ## Product Scope
 
 ### Target User Profile

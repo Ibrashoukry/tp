@@ -1,0 +1,20 @@
+@startuml
+' ===== Persist updated list to storage =====
+title Persist updated list to storage
+
+skinparam shadowing false
+skinparam defaultFontName Arial
+skinparam rectangle {
+  RoundCorner 12
+  FontSize 14
+}
+
+rectangle "AddWeightCommand" as C #E8F5E9
+rectangle "Storage (mama.txt)" as S #FCE4EC
+rectangle "EntryList (after add)" as L #FFFDE7
+
+C -right-> S : save(list)
+S -left-> C  : ok
+C ..> L : uses updated list
+
+@enduml

@@ -1,5 +1,5 @@
 @startuml
-title Mama – AddMilkCommand Class Diagram
+title Mama – AddWeightCommand Class Diagram
 
 skinparam classAttributeIconSize 0
 skinparam packageStyle rectangle
@@ -27,12 +27,11 @@ package "seedu.mama.command" {
     +CommandException(message: String, cause: Throwable)
   }
 
-  class AddMilkCommand implements Command {
+  class AddWeightCommand implements Command {
     -LOG: Logger <<static>>
-    -milkVolume: int
+    -weightInput: int
     --
-    +AddMilkCommand(milkVolume: int)
-    +fromInput(input: String): AddMilkCommand <<static>>
+    +AddWeightCommand(weightInput: int)
     +execute(list: EntryList, storage: Storage): CommandResult
   }
 }
@@ -49,18 +48,6 @@ package "seedu.mama.model" {
     +toStorageString(): String
   }
 
-  ' Abstract intermediate class
-  abstract class TimestampedEntry {
-      - timestamp : LocalDateTime
-      --
-      + TimestampedEntry(type: String, description: String)
-      + TimestampedEntry(type: String, description: String, when: LocalDateTime)
-      + timestamp() : LocalDateTime
-      + getTimestamp() : LocalDateTime
-      + timestampString() : String
-      + withTimestamp(storagePrefix: String) : String
-  }
-
   class EntryList {
     -items: List<Entry>
     -shown: List<Entry>
@@ -72,22 +59,13 @@ package "seedu.mama.model" {
     +asList(): List<Entry>
   }
 
-  class MilkEntry extends Entry {
-    {static} - TYPE : String = "MILK"
-    {static} - totalMilkVol : int
-    {static} - volumeMl : int
-    --
-    +MilkEntry(userInput: String)
-    + MilkEntry(userInput: String, when: LocalDateTime)
-    + getMilk() : String
-    + toListLine() : String
-    + toStorageString() : String
-    + {static} addTotalMilkVol(milkVol: int)
-    + {static} minusTotalMilkVol(milkVol: int)
-    + {static} toTotalMilk() : String
-    + {static} fromStorage(line: String) : MilkEntry
-    + {static} volumeMl() : int
+  class WeightEntry {
+      + WeightEntry(description: String)
+      + getWeight() : String
+      + toStorageString() : String
+      + fromStorage(line: String) : WeightEntry
   }
+
 }
 
 package "seedu.mama.storage" {
@@ -115,19 +93,16 @@ package "java.util.function" {
 ' Relationships
 ' ====================
 
-AddMilkCommand ..|> Command
-AddMilkCommand ..> EntryList : uses
-AddMilkCommand ..> Storage : saves data
-AddMilkCommand ..> CommandResult : returns
-AddMilkCommand ..> CommandException : throws
-AddMilkCommand ..> MilkEntry : creates and updates
-AddMilkCommand ..> Logger : logs activity
-Entry <|-- TimestampedEntry
-TimestampedEntry <|-- MilkEntry
-
+AddWeightCommand ..|> Command
+AddWeightCommand ..> EntryList : uses
+AddWeightCommand ..> Storage : saves data
+AddWeightCommand ..> CommandResult : returns
+AddWeightCommand ..> CommandException : throws
+AddWeightCommand ..> WeightEntry : creates and updates
+AddWeightCommand ..> Logger : logs activity
 
 EntryList "1" o-- "many" Entry
-MilkEntry --|> Entry
+WeightEntry --|> Entry
 Storage --> EntryList
 
 @enduml
