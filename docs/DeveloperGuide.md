@@ -34,7 +34,7 @@ Mama follows the **AB3 layered architecture**, extended with additional commands
 | **Logic**   | Parses and executes commands (`Parser`, `Command` subclasses) |
 | **Model**   | Stores data (`EntryList`, `Entry`, and subclasses)            |
 | **Storage** | Saves/loads data to/from file (`Storage`)                     |
-| **Commons** | Shared classes (`CommandResult`, `CommandException`, etc.)    |
+| **Command** | Shared classes (`CommandResult`, `CommandException`, etc.)    |
 
 The UI reads user commands and passes them to Logic for parsing. Logic constructs a `Command` and executes it on the
 Model. The Model updates state and Logic instructs Storage to persist data. UI renders the `CommandResult` to the user.
@@ -75,11 +75,12 @@ Model. The Model updates state and Logic instructs Storage to persist data. UI r
 - Each line in the file stores an entry separated by `|`.
 
 #### Example File Content
-
-> MEAL|breakfast|500
-> WORKOUT|yoga|45|28/10/25 02:33
-> MILK|120ml|28/10/25 02:32
-> MEASURE|70|98|90|55|30|28/10/25 02:53
+```
+MEAL|breakfast|500|50|14|10
+WORKOUT|yoga|45|28/10/25 02:33 
+MILK|120ml|28/10/25 02:32
+MEASURE|70|98|90|55|30|28/10/25 02:53
+```
 
 | Field | Description                                       |
 |-------|---------------------------------------------------|
@@ -297,31 +298,37 @@ The `Ui` captures the raw input.
 
 ---
 
-### 3.4 Add Meal — [Teammate / Owner]
+### 3.4 Add Meal — Ibrahim Shoukry
 
 #### Overview
 
-`AddMealCommand` lets users record a meal with a short description and calories.  
+`AddMealCommand` lets users record a meal with a short description, calories, and macronutrients (optional).  
 The command validates basic input, appends a `MealEntry` to `EntryList`, and persists immediately via
 `Storage#save(list)`.
 
 #### Implementation Details
 
-**Step 1.** The user enters `add meal breakfast /c 500`. The `Ui` captures the raw input.
+**Step 1.** The user enters for example:
+```add meal breakfast /cal 500 /protein 25 /carbs 10 /fat 14```
+
 > ![Meal_Initial](images/AddMeal_Initial.png)
 
-**Step 2.** `Parser` recognises `add meal` and constructs `AddMealCommand(description="breakfast", calories=500)`.
+**Step 2.** `Parser` recognises `add meal` and constructs `AddMealCommand(description="breakfast", calories=500, protein=25, carbs=10, fat=14)`.
 > ![Meal_Parsing](images/AddMeal_Parsing.png)
 
-**Step 3.** `AddMealCommand#execute(list, storage)` validates that calories is a positive integer and description is
-non-empty. If invalid, a `CommandException` is thrown; no mutation/save occurs.  
-If valid, a new `MealEntry` is created and appended to `EntryList`.
+**Step 3.** 
+- **Required:** `mealType`, `calorues` must be present and **> 0** (for calories only).
+- **Optional:** `protein`, `carbs`, `fat` if present must be **> 0**.  
+  If validation fails → `CommandException`.  
+  If valid → create `MealEntry` and append to `EntryList`.
+
 > ![Meal_ValidationAndAppend](images/AddMeal_ValidationAndAppend.png)
 
 **Step 4.** `Storage#save(list)` is called to write the updated list to `mama.txt`.
 > ![Meal_Persist](images/AddMeal_Persist.png)
 
-**Step 5.** `Ui` prints the result (e.g., `Added: [Meal] breakfast (500 kcal)`).
+**Step 5.** `Ui` prints the result (e.g., `Got it. I've logged this meal:
+  [Meal] breakfast (500 kcal) [protein:25g carbs:10g fat:14g]`).
 
 > ![AddMeal_Sequence](images/AddMeal_SequenceDiagram.png)
 
@@ -329,22 +336,22 @@ If valid, a new `MealEntry` is created and appended to `EntryList`.
 
 **Aspect: Input format**
 
-| Alternative                                   | Pros                               | Cons                                 |
-|-----------------------------------------------|------------------------------------|--------------------------------------|
-| **`add meal <desc> /c <calories>` (current)** | Clear calories flag; easy to parse | Slightly longer to type              |
-| `add meal <desc> <calories>`                  | Short                              | Ambiguity if desc ends with a number |
+| Alternative                                                                            | Pros                       | Cons                                                                                 |
+|----------------------------------------------------------------------------------------|----------------------------|--------------------------------------------------------------------------------------|
+| **Optional Macronutrients (current)**                                                  | Flexible                   | Longer to type                                                                       |
+| **Adding Meal information without use of `/cal` and have `Ui` prompt user for macros** | More intuitive and cleaner | User might not want to be asked if they want to add macros everytime they add a meal |
 
 **Aspect: Validation**
 
-| Rule                                | Rationale                             |
-|-------------------------------------|---------------------------------------|
-| Calories must be a positive integer | Avoids invalid/negative energy values |
-| Description must be non-empty       | Prevents meaningless entries          |
+| Rule                                                  | Rationale                             |
+|-------------------------------------------------------|---------------------------------------|
+| Calories and macronutrients must be positive integers | Avoids invalid/negative energy values |
+| Description must be non-empty                         | Prevents meaningless entries          |
 
 #### Summary
 
-- **Command:** `add meal <description> /c <calories>`
-- **Example:** `add meal breakfast /c 500`
+- **Command:** `meal <description> /cal <calories> [/protein <protein>] [/carbs <carbs>] [/fat <fat>]`
+- **Example:** `meal breakfast /cal 500 /protein 25`
 - **Effect:** Appends a `MealEntry` and saves to disk immediately.
 
 ---
@@ -582,13 +589,13 @@ Replace the existing `mama.txt` with `sample_mama.txt` before launch.
 
 ### 3. Example Commands
 
-| Command                  | Expected Output                |
-|--------------------------|--------------------------------|
-| `add meal breakfast 500` | Adds a meal entry              |
-| `list`                   | Displays all entries           |
-| `delete 2`               | Deletes the second entry       |
-| `measure weight 70`      | Adds a measurement entry       |
-| `list /t measure`        | Lists only measurement entries |
+| Command              | Expected Output                |
+|----------------------|--------------------------------|
+| `meal breakfast 500` | Adds a meal entry              |
+| `list`               | Displays all entries           |
+| `delete 2`           | Deletes the second entry       |
+| `measure weight 70`  | Adds a measurement entry       |
+| `list /t measure`    | Lists only measurement entries |
 
 ### 4. Error Scenarios
 
