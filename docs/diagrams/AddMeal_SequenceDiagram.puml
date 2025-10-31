@@ -21,10 +21,10 @@ participant Storage      as ST   #FCE4EC
 
 User -> UI : enter "meal breakfast /cal 500 /protein 25 /carbs 10 /fat 14"
 UI -> PR  : parse(raw)
-PR -> UI  : new AddMealCommand("breakfast",500,25,10,14)
+PR --> UI  : new AddMealCommand("breakfast",500,25,10,14)
 UI -> AMC : execute(list, storage)
 
-alt invalid input (missing/≤0)
+opt invalid input (missing/≤0)
   AMC -> UI : throw CommandException\n("Calories must be a non-negative number ...")
 else valid input
   AMC -> LIST : add(new MealEntry(...))

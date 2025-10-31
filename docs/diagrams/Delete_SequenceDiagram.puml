@@ -24,7 +24,7 @@ Par  --> Ui : DeleteCommand
 
 Ui   -> Del : execute(list, storage)
 
-alt invalid index
+opt invalid index
   Del --> Ui : CommandException("Invalid index\\n" + previewList)
 else valid index
   Del  -> List: deleteByIndex(1)  ' 1-based -> 0-based

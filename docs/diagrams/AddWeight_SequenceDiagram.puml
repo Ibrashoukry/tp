@@ -21,10 +21,10 @@ participant Storage      as ST   #FCE4EC
 
 User -> UI : enter "weight 60"
 UI -> PR  : parse(raw)
-PR -> UI  : new AddWeightCommand(60)
+PR --> UI  : new AddWeightCommand(60)
 UI -> AMC : execute(list, storage)
 
-alt invalid input (missing/≤0)
+opt invalid input (missing/≤0)
   AMC -> UI : throw CommandException\n("Weight must be a number ...")
 else valid input
   AMC -> LIST : add(new WeightEntry(...))
