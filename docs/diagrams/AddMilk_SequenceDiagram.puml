@@ -19,12 +19,12 @@ participant AddMilkCommand as AMC #C8E6C9
 participant EntryList    as LIST #FFFDE7
 participant Storage      as ST   #FCE4EC
 
-User -> UI : enter "milk 30"
+User -> UI  : enter "milk 30"
 UI -> PR  : parse(raw)
-PR -> UI  : new AddMilkCommand(30)
+PR --> UI  : new AddMilkCommand(30)
 UI -> AMC : execute(list, storage)
 
-alt invalid input (missing/≤0)
+opt invalid input (missing/≤0)
   AMC -> UI : throw CommandException\n("Milk volume must be positive ...")
 else valid input
   AMC -> LIST : add(new MilkEntry(... timestamp=now))
