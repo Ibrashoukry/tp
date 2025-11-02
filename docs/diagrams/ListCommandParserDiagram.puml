@@ -39,6 +39,7 @@ package "seedu.mama.model" {
     MILK
     MEASURE
     WEIGHT
+    --
     +getValidTypesString(): String
   }
 }

@@ -113,6 +113,7 @@ Users can also filter entries by type (e.g., meals, workouts, milk, or measureme
 This feature helps users quickly view relevant records without scrolling through the entire list.
 
 #### Design
+> ![ListCommand_ClassDiagram](images/ListCommandDiagram.png)
 
 | Component               | Description                                                                                                                                                                                                                 |
 |-------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -515,6 +516,8 @@ The `dashboard` feature provides a consolidated summary of the user's health dat
 #### Design
 
 This feature is designed with high cohesion and adherence to the **Single Responsibility Principle (SRP)** by splitting the logic into three distinct components, ensuring that calculation, formatting, and command execution are all handled separately.
+> ![Dashboard Class Diagram](images/DashboardClassDiagram.png)
+
 
 | Component                  | Description                                                                                                                                                                                                                  |
 |----------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -628,11 +631,7 @@ Unlike typical mobile apps, Mama stores all information locally and works withou
 
 ### 1. Launching the Application
 
-### 2. Loading Sample Data
-
-Replace the existing `mama.txt` with `sample_mama.txt` before launch.
-
-### 3. Example Commands
+### 2. Example Commands
 
 | Command              | Expected Output                |
 |----------------------|--------------------------------|
@@ -642,13 +641,13 @@ Replace the existing `mama.txt` with `sample_mama.txt` before launch.
 | `weight 70`  | Adds a measurement entry       |
 | `list /t measure`    | Lists only measurement entries |
 
-### 4. Error Scenarios
+### 3. Error Scenarios
 
 | Command             | Expected Output         |
 |---------------------|-------------------------|
 | `delete 99`         | “Invalid index”         |
 | `measure waist abc` | “Invalid number format” |
-| `milk -50`      | “Invalid milk volume”   |
+| `milk -50`          | “Invalid milk volume”   |
 
 ## Appendix: Requirements, Glossary, and Notes
 
