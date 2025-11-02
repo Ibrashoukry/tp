@@ -101,7 +101,7 @@ Adds a meal entry with its calorie value.
 **Notes**
 
 - `PROTEIN, CARBS, and FAT` are optional.
-- `CALORIES, PROTEIN, CARBS, and FAT` must be a positive integer.
+- `CALORIES, PROTEIN, CARBS, and FAT` must be a non-negative integer.
 - `CALORIES` is measured in `kcal`.
 - `PROTEIN, CARBS, and FAT` are measured in `grams`
 
@@ -356,6 +356,6 @@ Each entry is stored on a separate line, using the `|` character as a separator.
 | **Add Milk**        | `milk VOLUME`                                                         | `milk 150`                 |
 | **Add Weight**      | `weight VALUE`                                                        | `weight 70`                |
 | **Add Measurement** | `measure waist/WAIST hips/HIPS [chest/CHEST] [thigh/THIGH] [arm/ARM]` | `measure waist/78 hips/92` |
-| **Calorie Goal**    | `goal [CALORIES]`                                                     | `goal 1800`                |
+| **Calorie Goal**    | `calorie goal [CALORIES]`                                             | `calorie goal 1800`        |
 | **Exit**            | `bye`                                                                 | `bye`                      |
 
