@@ -9,6 +9,11 @@ public class CalorieGoalEntry extends Entry{
     }
 
     @Override
+    public String toListLine() {
+        return "[CALORIE GOAL] " + calorieGoal + " kcal";
+    }
+
+    @Override
     public String toStorageString() {
         return "CALORIE_GOAL|" + calorieGoal;
     }
