@@ -1,7 +1,7 @@
 package seedu.mama.model;
 
 /**
- * Defines the valid types of entries in the application.
+ * Defines the valid types of entries to be listed by ListCommand in the application.
  */
 public enum EntryType {
     MEAL(MealEntry.class),

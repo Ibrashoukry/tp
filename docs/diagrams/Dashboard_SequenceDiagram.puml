@@ -1,0 +1,75 @@
+@startuml
+title ViewDashboardCommand - Sequence
+
+skinparam shadowing false
+skinparam defaultFontName Arial
+skinparam sequence {
+  LifeLineBorderColor black
+  BoxBorderColor #90A4AE
+  BoxBackgroundColor #F5F7FA
+  ArrowColor #455A64
+  ArrowThickness 1
+}
+
+!define UI #E3F2FD
+!define LOGIC #E8F5E9
+!define MODEL #FFFDE7
+!define STOR #FCE4EC
+
+actor User
+participant ":Ui" as Ui UI
+participant ":Parser" as Parser LOGIC
+participant ":ViewDashboardCommand" as DashCmd LOGIC
+participant ":DashboardSummary" as Summary MODEL
+participant ":EntryList" as List MODEL
+participant ":Storage" as Storage STOR
+participant ":DashboardFormatter" as Formatter UI
+
+User -> Ui : enter "dashboard"
+activate Ui
+
+Ui -> Parser : parse("dashboard")
+activate Parser
+create DashCmd
+Parser -> DashCmd : new ViewDashboardCommand()
+Parser --> Ui : cmd
+deactivate Parser
+
+Ui -> DashCmd : execute(list, storage)
+activate DashCmd
+
+create Summary
+DashCmd -> Summary : new DashboardSummary(list, storage)
+activate Summary
+
+Summary -> Storage : loadGoal()
+activate Storage
+Storage --> Summary : calorieGoal
+deactivate Storage
+
+Summary -> List : asList()
+activate List
+List --> Summary : entries
+deactivate List
+
+Summary -> Summary : calculateCaloriesToday()
+Summary -> Summary : calculateMilkToday()
+Summary -> Summary : sumWorkoutMinutesThisWeek()
+Summary -> Summary : currentWeekGoal()
+
+Summary --> DashCmd : summary
+deactivate Summary
+
+create Formatter
+DashCmd -> Formatter : new DashboardFormatter()
+activate Formatter
+DashCmd -> Formatter : format(summary)
+Formatter --> DashCmd : dashboardText
+deactivate Formatter
+
+DashCmd --> Ui : CommandResult(dashboardText)
+deactivate DashCmd
+
+Ui --> User : show dashboardText
+deactivate Ui
+@enduml

@@ -1,5 +1,5 @@
 Hello from MAMA
-Enter a command (workout <description> /dur <duration (mins)> /feel <feeling (out of 5)>, meal <meal description> /cal <calories> [/p <protein>] [/c <carbs>] [/f <fat>], weight <weight>, milk <volume>, measure waist/<cm> hips/<cm> [chest/<cm>] [thigh/<cm>] [arm/<cm>], delete <index>, list [/t TYPE], dashboard, workout goal <minutes>, workout goal, calorie goal <calories>, calorie goal, bye)
+Enter 'help' to see available commands.
 No entries found.
 Error: Invalid delete index (shown view): 1
 Here are your entries:
@@ -8,15 +8,15 @@ No entries found.
 Error: Invalid delete index (shown view): 2
 Here are your entries:
 (none)
-Error: weightInput must be greater that 0!
-Added new weight entry: [WEIGHT] 83kg
-Error: weightInput must be greater that 0!
+Weight must be a number. Try `weight`+ 'value of weight'
+Added new weight entry: [WEIGHT] 83.00kg
+Weight must be a number. Try `weight`+ 'value of weight'
 Here are your weight entries:
-1. [WEIGHT] 83kg
+1. [WEIGHT] 83.00kg
 No measure entries found.
 Error: Invalid delete index (shown view): 3
 Here are your entries:
 (none)
 Here are your entries:
-1. [WEIGHT] 83kg
+1. [WEIGHT] 83.00kg
 Bye. Hope to see you again soon!
