@@ -1,6 +1,5 @@
 package seedu.mama.command;
 
-import seedu.mama.model.CalorieGoalEntry;
 import seedu.mama.model.EntryList;
 import seedu.mama.storage.Storage;
 
@@ -13,8 +12,6 @@ public class SetCalorieGoalCommand implements Command {
 
     @Override
     public CommandResult execute(EntryList list, Storage storage) throws CommandException {
-        CalorieGoalEntry entry = new CalorieGoalEntry(calorieGoal);
-        list.add(entry);
         if (storage == null) {
             throw new CommandException("Storage not initialized properly.");
         }
