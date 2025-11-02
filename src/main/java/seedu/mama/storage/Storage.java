@@ -43,10 +43,6 @@ public class Storage {
 
                 while ((line = br.readLine()) != null) {
 
-                    if (line.startsWith("CALORIE_GOAL|")) {
-                        continue; // skip goal line
-                    }
-
                     try {
                         list.add(Entry.fromStorageString(line));
                     } catch (IllegalArgumentException ex) {
