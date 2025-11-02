@@ -1,7 +1,7 @@
 package seedu.mama.model;
 
 /**
- * Defines the valid types of entries in the application.
+ * Defines the valid types of entries to be listed by ListCommand in the application.
  */
 public enum EntryType {
     MEAL(MealEntry.class),
@@ -9,8 +9,7 @@ public enum EntryType {
     MILK(MilkEntry.class),
     WEIGHT(WeightEntry.class),
     MEASURE(BodyMeasurementEntry.class),
-    WORKOUT_GOAL(WorkoutGoalEntry.class),
-    CALORIE_GOAL(CalorieGoalEntry.class);
+    WORKOUT_GOAL(WorkoutGoalEntry.class);
 
     // This field can be used for more advanced logic later if needed
     public final Class<? extends Entry> entryClass;

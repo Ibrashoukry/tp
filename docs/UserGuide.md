@@ -250,6 +250,40 @@ Displays a consolidated overview of your health data, including today's diet and
 > dashboard → view dashboard
 
 Example ```dashboard```
+**What it shows:**
+
+* **>> DIET (Today):**
+    * `Calories Consumed`: The total calories from all `meal` entries logged for the current day.
+    * `Calorie Goal` & `Remaining`: Your progress towards your daily calorie goal (if set).
+* **>> MILK (Today):**
+    * `Total Pumped`: The total milk volume from all `milk` entries logged for the current day.
+* **>> FITNESS (This Week):**
+    * `Workout Minutes`: The total workout minutes from all `workout` entries logged for the current week (Mon-Sun).
+    * `Weekly Goal` & `Remaining`: Your progress towards your weekly workout goal (if set).
+
+**Example Output:**
+
+--- Your Daily Health Dashboard ---
+
+DIET (Today)
+
+Calories Consumed: 1200 kcal
+
+Calorie Goal: 2000 kcal
+
+Remaining: 800 kcal
+
+MILK (Today)
+
+Total Pumped: 350 ml
+
+FITNESS (This Week)
+
+Workout Minutes: 90 mins
+
+Weekly Goal: 150 mins
+
+Remaining: 60 mins
 
 **Notes**
 

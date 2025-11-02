@@ -1,22 +1,26 @@
 package seedu.mama.command;
 
+import seedu.mama.model.EntryType; // Import EntryType
+
 import java.util.Arrays;
 import java.util.stream.Collectors;
 
 /**
  * Defines the available commands and their basic usage format for display.
+ * This enum provides a single source of truth for command syntax.
  */
 public enum CommandType {
+    HELP("help"),
     WORKOUT("workout <description> /dur <duration (mins)> /feel <feeling (out of 5)>"),
     MEAL("meal <meal description> /cal <calories> [/p <protein>] [/c <carbs>] [/f <fat>]"),
     WEIGHT("weight <weight>"),
     MILK("milk <volume>"),
     MEASURE("measure waist/<cm> hips/<cm> [chest/<cm>] [thigh/<cm>] [arm/<cm>]"),
     DELETE("delete <index>"),
-    LIST("list [/t TYPE]"),
+    LIST("list [/t " + EntryType.getValidTypesString() + "]"),
     DASHBOARD("dashboard"),
     WORKOUT_GOAL_SET("workout goal <minutes>"),
-    WORKOUT_GOAL_VIEW("workout goal"), // Separate entry for viewing
+    WORKOUT_GOAL_VIEW("workout goal"),
     CALORIE_GOAL_SET("calorie goal <calories>"),
     CALORIE_GOAL_VIEW("calorie goal"),
     BYE("bye");
@@ -32,26 +36,12 @@ public enum CommandType {
     }
 
     /**
-     * Generates a string listing all command usages, separated by commas.
-     * @return A string like "(command1, command2, ...)"
+     * Generates a formatted string of all command usages for the help command.
+     * @return A multi-line string with each command on a new line.
      */
-    public static String getAllUsageString() {
-        CommandType[] commands = CommandType.values();
-        final String INDENT = "     ";
-
-        // Use an IntStream to generate indices (0, 1, 2, ...)
-        return java.util.stream.IntStream.range(0, commands.length)
-                .mapToObj(i -> {
-                    // 'i' is the zero-based index. Add 1 for the list number (1., 2., 3., ...)
-                    int index = i + 1;
-
-                    // Get the corresponding CommandType and its usage string
-                    String usage = commands[i].getUsage();
-
-                    // Format the output: "1. usage_string"
-                    return String.format("%s%d. %s", INDENT, index, usage);
-                })
-                // Join the indexed strings with a newline character
-                .collect(java.util.stream.Collectors.joining("\n"));
+    public static String getFormattedUsage() {
+        return Arrays.stream(CommandType.values())
+                .map(CommandType::getUsage)
+                .collect(Collectors.joining("\n  - ")); // Format as a bulleted list
     }
 }

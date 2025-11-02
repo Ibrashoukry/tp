@@ -1,0 +1,58 @@
+@startuml
+title ListCommand - Sequence for "list /t meal"
+
+skinparam shadowing false
+skinparam defaultFontName Arial
+skinparam sequence {
+  LifeLineBorderColor black
+  BoxBorderColor #90A4AE
+  BoxBackgroundColor #F5F7FA
+  ArrowColor #455A64
+  ArrowThickness 1
+}
+
+!define UI #E3F2FD
+!define LOGIC #E8F5E9
+!define MODEL #FFFDE7
+
+actor User
+participant ":Ui" as Ui UI
+participant ":Parser" as Parser LOGIC
+participant ":ListCommandParser" as ListParser LOGIC
+participant ":ListCommand" as ListCmd LOGIC
+participant ":EntryList" as EntryList MODEL
+
+User -> Ui : enter "list /t meal"
+Ui -> Parser : parse("list /t meal")
+activate Parser
+
+Parser -> ListParser : parseListCommand("/t meal")
+activate ListParser
+
+create ListCmd
+ListParser -> ListCmd : new ListCommand(predicate, "meal")
+ListParser --> Parser : command
+deactivate ListParser
+
+Parser --> Ui : command
+deactivate Parser
+
+Ui -> ListCmd : execute(list, storage)
+activate ListCmd
+
+ListCmd -> EntryList : setFilter(predicate)
+activate EntryList
+EntryList -> EntryList : recomputeShown()
+deactivate EntryList
+
+ListCmd -> EntryList : getShownSnapshot()
+activate EntryList
+EntryList --> ListCmd : filteredEntries
+deactivate EntryList
+
+ListCmd -> ListCmd : formatFilteredList(filteredEntries)
+ListCmd --> Ui : CommandResult(formattedText)
+deactivate ListCmd
+
+Ui -> User : show formattedText
+@enduml
