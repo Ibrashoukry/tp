@@ -10,8 +10,7 @@ package "seedu.mama.command" {
   }
 
   class CommandResult {
-    +CommandResult(message: String)
-    +getMessage(): String
+    +getFeedbackToUser(): String
   }
 
   class CommandException {

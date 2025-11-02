@@ -113,6 +113,7 @@ Users can also filter entries by type (e.g., meals, workouts, milk, or measureme
 This feature helps users quickly view relevant records without scrolling through the entire list.
 
 #### Design
+> ![ListCommand_ClassDiagram](images/ListCommandDiagram.png)
 
 | Component               | Description                                                                                                                                                                                                                 |
 |-------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -523,6 +524,8 @@ The `dashboard` feature provides a consolidated summary of the user's health dat
 #### Design
 
 This feature is designed with high cohesion and adherence to the **Single Responsibility Principle (SRP)** by splitting the logic into three distinct components, ensuring that calculation, formatting, and command execution are all handled separately.
+> ![Dashboard Class Diagram](images/DashboardClassDiagram.png)
+
 
 | Component                  | Description                                                                                                                                                                                                                  |
 |----------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|

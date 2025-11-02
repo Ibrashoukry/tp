@@ -1,6 +1,10 @@
 package seedu.mama.model;
 
-public class MealEntry extends Entry {
+import seedu.mama.util.DateTimeUtil;
+
+import java.time.LocalDateTime;
+
+public class MealEntry extends TimestampedEntry {
     private int calories; // kcal
     private Integer protein; // grams or null
     private Integer carbs;
@@ -11,8 +15,21 @@ public class MealEntry extends Entry {
         this.calories = calories;
     }
 
+    public MealEntry(String mealType, int calories, LocalDateTime when) {
+        super("MEAL", mealType.trim(), when);
+        this.calories = calories;
+    }
+
     public MealEntry(String mealType, int calories, Integer protein, Integer carbs, Integer fat) {
         super("MEAL", mealType.trim());
+        this.calories = calories;
+        this.protein = protein;
+        this.carbs = carbs;
+        this.fat = fat;
+    }
+
+    public MealEntry(String mealType, int calories, Integer protein, Integer carbs, Integer fat, LocalDateTime when) {
+        super("MEAL", mealType.trim(), when);
         this.calories = calories;
         this.protein = protein;
         this.carbs = carbs;
@@ -44,20 +61,20 @@ public class MealEntry extends Entry {
                     carbs == null ? "-" : carbs,
                     fat == null ? "-" : fat);
         }
-        return "[Meal] " + description() + " (" + calories + " kcal)" + macroInfo;
+        return "[Meal] " + description() + " (" + calories + " kcal)" + macroInfo + " (" + timestampString() + ")";
     }
 
     @Override
     public String toStorageString() {
-        // Stable storage: MEAL|<type>|<calories>|<protein>|<carbs>|<fat>
-        return "MEAL|" + description() + "|" + calories
+        // Stable storage: MEAL|<type>|<calories>|<protein>|<carbs>|<fat>|timestamp
+        return withTimestamp("MEAL|" + description() + "|" + calories
                 + "|" + (protein != null ? protein : "-")
                 + "|" + (carbs != null ? carbs : "-")
-                + "|" + (fat != null ? fat : "-");
+                + "|" + (fat != null ? fat : "-"));
     }
 
     public static MealEntry fromStorage(String line) {
-        // Expected: MEAL|<type>|<calories>|<protein>|<carbs>|<fat>
+        // Expected: MEAL|<type>|<calories>|<protein>|<carbs>|<fat>|timestamp
         String[] parts = line.split("\\|");
         String type = parts.length > 1 ? parts[1] : "";
         int cal = parts.length > 2 ? Integer.parseInt(parts[2]) : 0;
@@ -75,7 +92,8 @@ public class MealEntry extends Entry {
         if (parts.length > 5 && !parts[5].equals("-")) {
             fat = Integer.parseInt(parts[5]);
         }
+        LocalDateTime ts = DateTimeUtil.parse(parts[6].trim());
 
-        return new MealEntry(type, cal, protein, carbs, fat);
+        return new MealEntry(type, cal, protein, carbs, fat, ts);
     }
 }
