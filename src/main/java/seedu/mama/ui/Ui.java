@@ -1,7 +1,5 @@
 package seedu.mama.ui;
 
-import seedu.mama.command.CommandType;
-
 /**
  * Handles all user interface interactions.
  * <p>
