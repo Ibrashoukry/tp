@@ -104,7 +104,7 @@ This section documents the design and implementation of major features.
 
 ---
 
-### 3.1 List Command Filter — Lee Yi Sheng
+### 3.1 List Command — Lee Yi Sheng
 
 #### Overview
 
@@ -114,25 +114,30 @@ This feature helps users quickly view relevant records without scrolling through
 
 #### Design
 
-| Component           | Description                                                                                     |
-|---------------------|-------------------------------------------------------------------------------------------------|
-| **Command Class**   | `ListCommand` — Displays all entries or filters them by type.                                   |
-| **Parser Class**    | `ListCommandParser` — Parses user input (e.g., `/t meal`) and creates a `ListCommand` instance. |
-| **Model**           | `EntryList` — Provides methods for retrieving and filtering entries.                            |
-| **EntryType Enum**  | Defines valid entry types (`MEAL`, `WORKOUT`, `MILK`, `MEASURE`).                               |
-| **Flow of Control** | `Parser → ListCommand → EntryList → Ui`                                                         |
+| Component               | Description                                                                                                                                                                                                                 |
+|-------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **`ListCommand`**       | The command responsible for displaying entries. It is instantiated with a `Predicate<Entry>` that determines which entries to show. If no predicate is provided, it shows all entries.                                      |
+| **`ListCommandParser`** | A dedicated parser that handles the `list` command's arguments. It recognizes the `/t` prefix and is responsible for creating the correct `Predicate` based on the user-provided type.                                      |
+| **`EntryList`**         | The model class that holds all entries. It now includes a concept of a "shown" view, which can be updated by applying a filter. This ensures subsequent commands like `delete` operate on the correct list.                 |
+| **`EntryType` Enum**    | This enum acts as a single source of truth for all valid entry types. It is used by the `ListCommandParser` to validate the `TYPE` argument and ensures that non-listable types like `CALORIE_GOAL` are correctly excluded. |
+| **Flow of Control**     | `Parser` → `ListCommandParser` → `ListCommand` → `EntryList` → `Ui`                                                                                                                                                         |
 
 #### Implementation Steps
 
-```
-list /t meal
-```
+The following steps describe the process for a user command like `list /t meal`:
 
-1. `Parser` interprets `/t meal` as `EntryType.MEAL`.
-2. `ListCommand` retrieves and filters `EntryList`.
-3. `Ui` prints the filtered list.
+1.  The user's input is passed from `Mama` to the main `Parser`.
+2.  The `Parser` identifies the `list` command word and delegates the arguments (`/t meal`) to the `ListCommandParser`.
+3.  `ListCommandParser` validates the `/t` prefix and the `meal` type against the `EntryType` enum.
+4.  It then constructs a `Predicate<Entry>` (e.g., `entry -> entry.type().equalsIgnoreCase("MEAL")`).
+5.  A new `ListCommand(predicate, "meal")` is created and returned for execution.
+6.  `ListCommand#execute()` calls `entryList.setFilter(predicate)`, which updates the internal "shown" list to contain only meal entries.
+7.  The command then formats the *newly filtered* "shown" list into a string and returns it in a `CommandResult` to be displayed by the `Ui`.
 
-> **[Insert Sequence Diagram: `images/ListCommandSequenceDiagram.png`]**
+> **ListCommand Sequence Diagram**
+> ![ListCommand Sequence Diagram](images/ListCommandSequenceDiagram.png)
+
+---
 
 #### Alternatives Considered
 
@@ -500,6 +505,46 @@ a `WeightEntry`.
 |-----------------------------------|-----------------|-------------------------------------|
 | **Positive integer kg (current)** | Simple, uniform | No fractional kg                    |
 | Decimal kg                        | Precise         | Extra parsing/validation complexity |
+
+### 3.7 Feature: View Dashboard
+
+#### Overview
+
+The `dashboard` feature provides a consolidated summary of the user's health data, fulfilling the user story: "As a mom, I want to see a combined dashboard of milk output, diet, and fitness so that I can understand the bigger picture of my health." It aggregates data for different timeframes (daily for diet/milk, weekly for fitness) and presents it in a clear, readable format.
+
+#### Design
+
+This feature is designed with high cohesion and adherence to the **Single Responsibility Principle (SRP)** by splitting the logic into three distinct components, ensuring that calculation, formatting, and command execution are all handled separately.
+
+| Component                  | Description                                                                                                                                                                                                                  |
+|----------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **`ViewDashboardCommand`** | The command class that orchestrates the feature. Its only responsibility is to initiate the data gathering process and then pass the results to the formatter. It does not contain any business or UI logic itself.          |
+| **`DashboardSummary`**     | A model class responsible for all **business logic**. It queries the `EntryList` and `Storage` to perform all necessary calculations (e.g., summing calories for today, calculating remaining workout minutes for the week). |
+| **`DashboardFormatter`**   | A UI class responsible for **presentation logic**. It takes a `DashboardSummary` data object and formats it into the final, multi-line string that is displayed to the user.                                                 |
+| **Flow of Control**        | `Parser` → `ViewDashboardCommand` → `DashboardSummary` → `DashboardFormatter` → `Ui`                                                                                                                                         |
+
+This separation ensures that changes to the calculation logic (e.g., changing "today" to mean "last 24 hours") do not affect the formatting, and changes to the UI (e.g., re-ordering sections) do not affect the calculations, making the feature robust and maintainable.
+
+#### Implementation Steps
+
+The following steps describe the execution flow of the `dashboard` command:
+
+1.  The user enters `dashboard`.
+2.  The main `Parser` recognizes the command and creates a `new ViewDashboardCommand()`.
+3.  The `ViewDashboardCommand#execute()` method is called.
+4.  Inside `execute()`, it instantiates a `new DashboardSummary(list, storage)`.
+5.  The `DashboardSummary` constructor performs all the data aggregation:
+    * It determines the current date and the start of the current week.
+    * It calls `storage.loadGoal()` to get the calorie goal.
+    * It filters and sums `MealEntry` and `MilkEntry` lists for the current day.
+    * It uses `WorkoutGoalQueries` to get the weekly workout goal and sum the minutes for the current week.
+6.  The `ViewDashboardCommand` then instantiates a `new DashboardFormatter()`.
+7.  It calls `formatter.format(summary)`, passing the populated `DashboardSummary` object.
+8.  The `DashboardFormatter` builds the final, formatted string with headers, data, and goal progress.
+9.  This string is returned in a `CommandResult` to the `Ui` to be displayed to the user.
+
+> **ViewDashboardCommand Sequence Diagram**
+> ![Dashboard Sequence Diagram](images/Dashboard_SequenceDiagram.png)
 
 #### Summary
 
