@@ -9,15 +9,20 @@ import seedu.mama.storage.Storage;
  * Adds the user weight to the list and returns the user's weight in kg
  */
 public class AddWeightCommand implements Command {
-    private final int weightInput;
+    private final double weightInput;
 
     // weight must be a positive number
     // if not positive, we throw an exception handled by calling code
-    public AddWeightCommand(int weightInput) throws CommandException {
+    public AddWeightCommand(double weightInput) throws CommandException {
         if (weightInput <= 0) {
             throw new CommandException("weightInput must be greater that 0!");
         }
+        weightInput = roundToTwoDecimalPlaces(weightInput);
         this.weightInput = weightInput;
+    }
+
+    public static double roundToTwoDecimalPlaces(double value) {
+        return Math.round(value * 100.0) / 100.0;
     }
 
     @Override
@@ -26,7 +31,7 @@ public class AddWeightCommand implements Command {
         // confirms our assumption that weight entries should never be null
         assert this.weightInput > 0 : "The weight input must be greater than 0!";
 
-        Entry newWeight = new WeightEntry(weightInput + "kg");
+        Entry newWeight = new WeightEntry(this.weightInput);
         list.add(newWeight);
         if (storage != null) {
             storage.save(list);
