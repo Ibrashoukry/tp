@@ -33,7 +33,7 @@ public class Ui {
      */
     public void showWelcome() {
         showMessage("Hello from MAMA");
-        showMessage("Enter a command (" + CommandType.getAllUsageString() + ")");
+        showMessage("Enter a command:\n" + CommandType.getAllUsageString());
     }
 
     /**

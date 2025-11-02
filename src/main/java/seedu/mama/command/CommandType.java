@@ -36,8 +36,22 @@ public enum CommandType {
      * @return A string like "(command1, command2, ...)"
      */
     public static String getAllUsageString() {
-        return Arrays.stream(CommandType.values())
-                .map(CommandType::getUsage)
-                .collect(Collectors.joining(", "));
+        CommandType[] commands = CommandType.values();
+        final String INDENT = "     ";
+
+        // Use an IntStream to generate indices (0, 1, 2, ...)
+        return java.util.stream.IntStream.range(0, commands.length)
+                .mapToObj(i -> {
+                    // 'i' is the zero-based index. Add 1 for the list number (1., 2., 3., ...)
+                    int index = i + 1;
+
+                    // Get the corresponding CommandType and its usage string
+                    String usage = commands[i].getUsage();
+
+                    // Format the output: "1. usage_string"
+                    return String.format("%s%d. %s", INDENT, index, usage);
+                })
+                // Join the indexed strings with a newline character
+                .collect(java.util.stream.Collectors.joining("\n"));
     }
 }
