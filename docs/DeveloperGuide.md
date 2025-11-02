@@ -594,7 +594,7 @@ Replace the existing `mama.txt` with `sample_mama.txt` before launch.
 | `meal breakfast 500` | Adds a meal entry              |
 | `list`               | Displays all entries           |
 | `delete 2`           | Deletes the second entry       |
-| `measure weight 70`  | Adds a measurement entry       |
+| `weight 70`  | Adds a measurement entry       |
 | `list /t measure`    | Lists only measurement entries |
 
 ### 4. Error Scenarios
