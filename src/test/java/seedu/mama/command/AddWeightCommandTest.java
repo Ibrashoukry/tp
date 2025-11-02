@@ -10,9 +10,9 @@ import seedu.mama.model.EntryList;
 import seedu.mama.model.WeightEntry;
 
 public class AddWeightCommandTest {
-    private EntryList entries;
     // Define a small delta for comparing double values due to floating-point arithmetic
     private static final double DELTA = 0.0001;
+    private EntryList entries;
 
 
     @BeforeEach
