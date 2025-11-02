@@ -1,6 +1,6 @@
 @startuml
 ' ===== Sequence: measure waist/70 hips/98 chest/90 thigh/55 arm/30 =====
-title AddMilkCommand - Sequence for "milk ..."
+title AddWeightCommand - Sequence for "weight ..."
 
 skinparam shadowing false
 skinparam defaultFontName Arial

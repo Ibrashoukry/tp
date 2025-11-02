@@ -490,7 +490,7 @@ a `WeightEntry`.
 > ![AddWeight_Persist.png](images/AddWeight_Persist.png)
 
 **Step 5.** `Ui` shows `Added: [WEIGHT] 60kg`.
-> ![AddWeight_SequenceDiagram.png](images/AddWeight_SequenceDiagram.png)
+![AddWeight_SequenceDiagram.png](images/AddWeight_SequenceDiagram.png)
 
 #### Design Considerations
 
@@ -554,7 +554,7 @@ Unlike typical mobile apps, Mama stores all information locally and works withou
 
 ## Non-Functional Requirements
 
-1. Must run on Java 11+.
+1. Must run on Java 17.
 2. Startup time ≤ 2 seconds.
 3. Handles up to 10,000 entries smoothly.
 4. File size ≤ 10 MB.
@@ -603,7 +603,7 @@ Replace the existing `mama.txt` with `sample_mama.txt` before launch.
 |---------------------|-------------------------|
 | `delete 99`         | “Invalid index”         |
 | `measure waist abc` | “Invalid number format” |
-| `add milk -50`      | “Invalid milk volume”   |
+| `milk -50`      | “Invalid milk volume”   |
 
 ## Appendix: Requirements, Glossary, and Notes
 
