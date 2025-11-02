@@ -8,15 +8,15 @@ No entries found.
 Error: Invalid delete index (shown view): 2
 Here are your entries:
 (none)
-Error: weightInput must be greater that 0!
-Added new weight entry: [WEIGHT] 83kg
-Error: weightInput must be greater that 0!
+Weight must be a number. Try `weight`+ 'value of weight'
+Added new weight entry: [WEIGHT] 83.00kg
+Weight must be a number. Try `weight`+ 'value of weight'
 Here are your weight entries:
-1. [WEIGHT] 83kg
+1. [WEIGHT] 83.00kg
 No measure entries found.
 Error: Invalid delete index (shown view): 3
 Here are your entries:
 (none)
 Here are your entries:
-1. [WEIGHT] 83kg
+1. [WEIGHT] 83.00kg
 Bye. Hope to see you again soon!

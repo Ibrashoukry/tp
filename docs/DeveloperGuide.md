@@ -470,7 +470,7 @@ a `MilkEntry`.
 - **Effect:** Appends a `MilkEntry` and saves immediately.
 
 ---
-### 3.6 Add Weight — Ryan Siow
+### 3.7 Add Weight — Ryan Siow
 
 #### Overview
 
@@ -506,7 +506,7 @@ a `WeightEntry`.
 | **Positive integer kg (current)** | Simple, uniform | No fractional kg                    |
 | Decimal kg                        | Precise         | Extra parsing/validation complexity |
 
-### 3.7 Feature: View Dashboard
+### 3.8 Feature: View Dashboard
 
 #### Overview
 
@@ -634,13 +634,13 @@ Replace the existing `mama.txt` with `sample_mama.txt` before launch.
 
 ### 3. Example Commands
 
-| Command                   | Expected Output                |
-|---------------------------|--------------------------------|
-| `meal breakfast /cal 500` | Adds a meal entry              |
-| `list`                    | Displays all entries           |
-| `delete 2`                | Deletes the second entry       |
-| `measure weight 70`       | Adds a measurement entry       |
-| `list /t measure`         | Lists only measurement entries |
+| Command              | Expected Output                |
+|----------------------|--------------------------------|
+| `meal breakfast 500` | Adds a meal entry              |
+| `list`               | Displays all entries           |
+| `delete 2`           | Deletes the second entry       |
+| `weight 70`  | Adds a measurement entry       |
+| `list /t measure`    | Lists only measurement entries |
 
 ### 4. Error Scenarios
 
