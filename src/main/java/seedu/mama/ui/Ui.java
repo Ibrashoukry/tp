@@ -28,12 +28,13 @@ public class Ui {
     private void printLine() {
         System.out.println(line);
     }
+
     /**
-     * Displays the welcome message and available commands to the user.
+     * Displays a short welcome message to the user.
      */
     public void showWelcome() {
         showMessage("Hello from MAMA");
-        showMessage("Enter a command (" + CommandType.getAllUsageString() + ")");
+        showMessage("Enter 'help' to see available commands.");
     }
 
     /**
@@ -45,7 +46,7 @@ public class Ui {
     }
 
     /**
-     * Displays an error message to the user.
+     * Displays an error message to the user, prefixed with "Error: ".
      * @param errorMessage The error message to display.
      */
     public void showError(String errorMessage) {

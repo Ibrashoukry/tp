@@ -2,6 +2,7 @@ package seedu.mama.parser;
 
 import seedu.mama.command.CommandException;
 import seedu.mama.command.CommandResult;
+import seedu.mama.command.HelpCommand;
 import seedu.mama.command.ViewDashboardCommand;
 import seedu.mama.command.SetWorkoutGoalCommand;
 import seedu.mama.command.ViewWorkoutGoalCommand;
@@ -51,6 +52,10 @@ public class Parser {
         // Handles the "bye" command (terminates the program)
         if (trimmed.equals("bye")) {
             return (l, s) -> new CommandResult("Bye. Hope to see you again soon!");
+        }
+
+        if (trimmed.equals("help")) {
+            return new HelpCommand();
         }
 
         if (trimmed.equals("dashboard")) {
