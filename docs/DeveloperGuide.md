@@ -259,8 +259,7 @@ using `Storage#save(list)`.
 **Step 1 — User issues a command**  
 The user enters, for example:
 ```measure waist/70 hips/98 chest/90 thigh/55 arm/30```
-
-> ![Measure_Initial](images/AddMeasurement_Initial.png)
+![AddMeasurement_Initial.png](images/AddMeasurement_Initial.png)
 
 The `Ui` captures the raw input.
 
@@ -275,8 +274,7 @@ The `Ui` captures the raw input.
 - **Optional:** `chest`, `thigh`, `arm` if present must be **> 0**.  
   If validation fails → `CommandException`.  
   If valid → create `BodyMeasurementEntry` and append to `EntryList`.
-
-> ![Measure_ValidationAndAppend](images/AddMeasurement_ValidationAndAppend.png)
+![ValidationAppendMeasurement.png](images/ValidationAppendMeasurement.png)
 
 **Step 4.** Persist: `Storage#save(list)`.
 > ![Measure_Persist](images/AddMeasurement_Persist.png)
@@ -440,14 +438,14 @@ It validates the volume, appends a `MilkEntry`, and persists via `Storage#save(l
 #### Implementation Details
 
 **Step 1.** User enters `milk 30`. `Ui` captures input.
-> ![AddMilk_Initial.png](images/AddMilk_Initial.png)
+![AddMilk_Initial.png](images/AddMilk_Initial.png)
 
 **Step 2.** `Parser` constructs `AddMilkCommand(volume=30)`.
 > ![Milk_Parsing](images/AddMilk_Parsing.png)
 
 **Step 3.** `AddMilkCommand#execute(...)` checks `volume > 0`. If invalid, throws `CommandException`. If valid, appends
 a `MilkEntry`.
-![ValidationAppendMilk.png](images/ValidationAppendMilk.png)
+![ValidationAppendMilk-Validation.png](images/ValidationAppendMilk-Validation.png)
 
 **Step 4.** `Storage#save(list)` persists the updated list.
 > ![Milk_Persist](images/AddMilk_Persist.png)
@@ -483,7 +481,7 @@ It validates the weight, appends a `WeightEntry`, and persists via `Storage#save
 #### Implementation Details
 
 **Step 1.** User enters `weight 60`. `Ui` captures input.
-> ![AddWeight_Initial.png](images/AddWeight_Initial.png)
+![AddWeight_Initial.png](images/AddWeight_Initial.png)
 
 **Step 2.** `Parser` constructs `AddWeightCommand(weight=60)`.
 > ![AddWeight_Parsing.png](images/AddWeight_Parsing.png)

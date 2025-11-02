@@ -1,18 +1,25 @@
-@startuml
+@startuml ValidationAppendMeasurement
 title Validation & Append
 
-skinparam shadowing false
-skinparam defaultFontName Arial
-skinparam rectangle {
-  RoundCorner 12
-  FontSize 14
+skinparam component {
+  BorderColor black
+  BackgroundColor white
+  FontSize 12
 }
 
-rectangle "EntryList (before)" as BEFORE #EEF1F4
-
-rectangle "EntryList (after)" as AFTER #EEF1F4 {
-  rectangle "[MEASURE] waist=70cm,\nhips=98cm,\nchest=90cm,\nthigh=55cm, arm=30cm\n(dd/MM/yy HH:mm)" as ITEM #FFF2CC
+' Define the object instances
+object "EntryList (before)" as EL_B
+object "EntryList (after)" as EL_A {
+}
+object "BodyMeasurementEntry" as ME {
+  [MEASURE] waist=70cm\nhips=98cm\nchest=90cm\nthigh=55cm,arm=30cm\n(dd/MM/yy HH:mm)
 }
 
-BEFORE -right-> AFTER : append new BodyMeasurementEntry
+' 1. Show the action (Append)
+EL_B -right-> EL_A : append new BodyMeasurementEntry
+
+' 2. Show the containment/link relationship
+'    The EntryList (after) contains the new WeightEntry
+EL_A o-- ME : contains
+
 @enduml
