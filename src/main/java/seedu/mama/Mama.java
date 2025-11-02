@@ -14,7 +14,6 @@ import java.util.logging.Logger;
 
 public class Mama {
     private static final Logger LOG = Logger.getLogger(Mama.class.getName());
-
     // --- Add Ui instance ---
     private final Ui ui;
     private final Storage storage;
@@ -73,6 +72,7 @@ public class Mama {
 
 
     public static void main(String[] args) {
+        Logger.getLogger("").setLevel(Level.WARNING);
         new Mama().run(); // Create instance and run
     }
 }

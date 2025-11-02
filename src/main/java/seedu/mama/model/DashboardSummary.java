@@ -46,11 +46,14 @@ public class DashboardSummary {
     }
 
     private int calculateCaloriesToday(EntryList list) {
-        // Assert list is not null again for defensive programming within the method
         assert list != null : "EntryList cannot be null for calorie calculation";
+        LocalDate today = LocalDate.now();
+
         return list.asList().stream()
-                .filter(entry -> entry.type().equalsIgnoreCase(EntryType.MEAL.name()))
-                .mapToInt(entry -> ((MealEntry) entry).getCalories())
+                .filter(entry -> entry instanceof MealEntry)
+                .map(entry -> (MealEntry) entry)
+                .filter(meal -> meal.timestamp().toLocalDate().isEqual(today))
+                .mapToInt(MealEntry::getCalories)
                 .sum();
     }
 
@@ -58,18 +61,19 @@ public class DashboardSummary {
         assert list != null : "EntryList cannot be null for milk calculation";
         assert today != null : "Today's date cannot be null";
 
-        int totalMilk = 0;
-        for (Entry entry : list.asList()) {
-            if ("MILK".equals(entry.type())) {                 // or EntryType.MILK.name()
-                MilkEntry m = (MilkEntry) entry;
-                // timestamp() comes from TimestampedEntry
-                if (m.timestamp().toLocalDate().isEqual(today)) {
-                    // volumeMl() is the instance getter you added in MilkEntry
-                    totalMilk += MilkEntry.volumeMl();
-                }
-            }
-        }
-        return totalMilk;
+        return list.asList().stream()
+                .filter(entry -> entry instanceof MilkEntry)
+                .map(entry -> (MilkEntry) entry)
+                .filter(milk -> milk.timestamp().toLocalDate().isEqual(today))
+                .mapToInt(milk -> {
+                    try {
+                        String volStr = milk.getMilk().replace("ml", "").trim();
+                        return Integer.parseInt(volStr);
+                    } catch (NumberFormatException e) {
+                        return 0; // Ignore entries with bad formatting
+                    }
+                })
+                .sum();
     }
 
 
