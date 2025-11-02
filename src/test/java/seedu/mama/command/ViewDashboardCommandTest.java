@@ -12,7 +12,6 @@ import seedu.mama.storage.Storage;
 import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class ViewDashboardCommandTest {
