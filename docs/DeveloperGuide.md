@@ -603,7 +603,7 @@ Replace the existing `mama.txt` with `sample_mama.txt` before launch.
 |---------------------|-------------------------|
 | `delete 99`         | “Invalid index”         |
 | `measure waist abc` | “Invalid number format” |
-| `add milk -50`      | “Invalid milk volume”   |
+| `milk -50`      | “Invalid milk volume”   |
 
 ## Appendix: Requirements, Glossary, and Notes
 
