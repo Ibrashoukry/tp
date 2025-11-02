@@ -110,16 +110,16 @@ public class Parser {
         // Handles "weight" command
         if (trimmed.startsWith("weight")) {
             String[] parts = trimmed.split("\\s+");
-            if (parts.length == 2 && parts[1].equals("?")) {
-                return new AddWeightCommand(-1);
-            }
+
             if (parts.length < 2) {
-                return (l, s) -> new CommandResult("Weight must be a number. Try `weight`+ 'value of weight'");
+                return (l, s) -> new CommandResult("Weight must be a number. " +
+                        "Try `weight`+ 'value of weight'");
             }
             try {
-                return new AddWeightCommand(Integer.parseInt(parts[1]));
+                return new AddWeightCommand(Double.parseDouble(parts[1]));
             } catch (NumberFormatException e) {
-                return (l, s) -> new CommandResult("Weight must be a number. Try `weight`+ 'value of weight'");
+                return (l, s) -> new CommandResult("Weight must be a number. " +
+                        "Try `weight`+ 'value of weight'");
             }
         }
 

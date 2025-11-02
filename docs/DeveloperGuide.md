@@ -113,6 +113,7 @@ Users can also filter entries by type (e.g., meals, workouts, milk, or measureme
 This feature helps users quickly view relevant records without scrolling through the entire list.
 
 #### Design
+> ![ListCommand_ClassDiagram](images/ListCommandDiagram.png)
 
 | Component               | Description                                                                                                                                                                                                                 |
 |-------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -470,7 +471,7 @@ a `MilkEntry`.
 - **Effect:** Appends a `MilkEntry` and saves immediately.
 
 ---
-### 3.6 Add Weight — Ryan Siow
+### 3.7 Add Weight — Ryan Siow
 
 #### Overview
 
@@ -506,7 +507,7 @@ a `WeightEntry`.
 | **Positive integer kg (current)** | Simple, uniform | No fractional kg                    |
 | Decimal kg                        | Precise         | Extra parsing/validation complexity |
 
-### 3.7 Feature: View Dashboard
+### 3.8 Feature: View Dashboard
 
 #### Overview
 
@@ -515,6 +516,8 @@ The `dashboard` feature provides a consolidated summary of the user's health dat
 #### Design
 
 This feature is designed with high cohesion and adherence to the **Single Responsibility Principle (SRP)** by splitting the logic into three distinct components, ensuring that calculation, formatting, and command execution are all handled separately.
+> ![Dashboard Class Diagram](images/DashboardClassDiagram.png)
+
 
 | Component                  | Description                                                                                                                                                                                                                  |
 |----------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -628,27 +631,23 @@ Unlike typical mobile apps, Mama stores all information locally and works withou
 
 ### 1. Launching the Application
 
-### 2. Loading Sample Data
-
-Replace the existing `mama.txt` with `sample_mama.txt` before launch.
-
-### 3. Example Commands
+### 2. Example Commands
 
 | Command              | Expected Output                |
 |----------------------|--------------------------------|
 | `meal breakfast 500` | Adds a meal entry              |
 | `list`               | Displays all entries           |
 | `delete 2`           | Deletes the second entry       |
-| `measure weight 70`  | Adds a measurement entry       |
+| `weight 70`  | Adds a measurement entry       |
 | `list /t measure`    | Lists only measurement entries |
 
-### 4. Error Scenarios
+### 3. Error Scenarios
 
 | Command             | Expected Output         |
 |---------------------|-------------------------|
 | `delete 99`         | “Invalid index”         |
 | `measure waist abc` | “Invalid number format” |
-| `milk -50`      | “Invalid milk volume”   |
+| `milk -50`          | “Invalid milk volume”   |
 
 ## Appendix: Requirements, Glossary, and Notes
 
