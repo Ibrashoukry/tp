@@ -494,17 +494,25 @@ a `WeightEntry`.
 **Step 4.** `Storage#save(list)` persists the updated list.
 > ![AddWeight_Persist.png](images/AddWeight_Persist.png)
 
-**Step 5.** `Ui` shows `Added: [WEIGHT] 60kg`.
+**Step 5.** `Ui` shows `Added: [WEIGHT] 60.00kg`.
 ![AddWeight_SequenceDiagram.png](images/AddWeight_SequenceDiagram.png)
 
 #### Design Considerations
 
 **Aspect: Weight input**
 
-| Alternative                       | Pros            | Cons                                |
-|-----------------------------------|-----------------|-------------------------------------|
-| **Positive integer kg (current)** | Simple, uniform | No fractional kg                    |
-| Decimal kg                        | Precise         | Extra parsing/validation complexity |
+| Alternative      | Pros                                  | Cons                                                  |
+|------------------|---------------------------------------|-------------------------------------------------------|
+| Positive Integer | Simplest to implement and validate    | Lacks necessary precision. Cannot track small changes |
+| Strict Decimal   | Guarantees absolute decimal precision | Increase complexity                                   |
+
+#### Summary
+
+- **Command:** `weight <weight-kg>`
+- **Example:** `weight 60`
+- **Effect:** Appends a `WeightEntry` and saves immediately.
+
+---
 
 ### 3.8 Feature: View Dashboard
 
@@ -546,13 +554,7 @@ The following steps describe the execution flow of the `dashboard` command:
 > **ViewDashboardCommand Sequence Diagram**
 > ![Dashboard Sequence Diagram](images/Dashboard_SequenceDiagram.png)
 
-#### Summary
 
-- **Command:** `weight <weight-kg>`
-- **Example:** `weight 60`
-- **Effect:** Appends a `WeightEntry` and saves immediately.
-
----
 ## Product Scope
 
 ### Target User Profile
@@ -627,28 +629,27 @@ Unlike typical mobile apps, Mama stores all information locally and works withou
 ## Instructions for Manual Testing
 
 ### 1. Launching the Application
+**`MAMA`** is the main entry point of the application.
+* At app launch, it initializes UI, Storage, and loads existing notes from disk
+* Manages the main application loop, reading user input and executing commands via Parser
 
-### 2. Loading Sample Data
+### 2. Example Commands
 
-Replace the existing `mama.txt` with `sample_mama.txt` before launch.
+| Command                   | Expected Output                |
+|---------------------------|--------------------------------|
+| `meal breakfast /cal 500` | Adds a meal entry              |
+| `list`                    | Displays all entries           |
+| `delete 1`                | Deletes the first entry        |
+| `weight 70`               | Adds a measurement entry       |
+| `list /t measure`         | Lists only measurement entries |
 
-### 3. Example Commands
-
-| Command              | Expected Output                |
-|----------------------|--------------------------------|
-| `meal breakfast 500` | Adds a meal entry              |
-| `list`               | Displays all entries           |
-| `delete 2`           | Deletes the second entry       |
-| `weight 70`  | Adds a measurement entry       |
-| `list /t measure`    | Lists only measurement entries |
-
-### 4. Error Scenarios
+### 3. Error Scenarios
 
 | Command             | Expected Output         |
 |---------------------|-------------------------|
-| `delete 99`         | “Invalid index”         |
-| `measure waist abc` | “Invalid number format” |
-| `milk -50`      | “Invalid milk volume”   |
+| `delete 99`         | “Invalid delete index”         |
+| `measure waist abc` | “Unknown field: waist” |
+| `milk -50`      | “milkVolume must be a positive number!”   |
 
 ## Appendix: Requirements, Glossary, and Notes
 
