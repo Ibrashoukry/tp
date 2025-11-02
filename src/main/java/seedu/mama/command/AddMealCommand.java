@@ -4,7 +4,12 @@ import seedu.mama.model.EntryList;
 import seedu.mama.model.MealEntry;
 import seedu.mama.storage.Storage;
 
+import java.util.Arrays;
+import java.util.logging.Logger;
+
 public class AddMealCommand implements Command {
+    private static final Logger LOG = Logger.getLogger(AddMealCommand.class.getName());
+
     private final String mealType;
     private final int calories;
     private final Integer protein;
@@ -32,22 +37,31 @@ public class AddMealCommand implements Command {
         String desc = input.substring("meal".length()).trim();
 
         if (!desc.contains("/cal")) {
-            throw new CommandException("Invalid format! Try: meal <mealType> /cal <calories> " +
+            throw new CommandException("Invalid format! Try: meal <description> /cal <calories> " +
                     "[/protein <protein>] [/carbs <carbs>] [/fat <fat>]");
         }
 
         String[] parts = desc.split("/cal");
+
+        if (parts.length == 0) {
+            throw new CommandException("Invalid Input! Try: meal <desc> /cal <calories>");
+        }
+
         String mealType = parts[0].trim();
 
+        if (mealType.isEmpty()) {
+            throw new CommandException("Meal description missing! Try: meal <desc> /cal <calories>");
+        }
+
         if (parts.length < 2) {
-            throw new CommandException("Calories missing! Try: /cal <calories>");
+            throw new CommandException("Calories missing! Try: meal <desc> /cal <calories>");
         }
 
         String rest = parts[1].trim();
         String[] tokens = rest.split("\\s+");
 
         if (tokens.length == 0) {
-            throw new CommandException("Calories missing! Try: /cal <calories>");
+            throw new CommandException("Calories missing! Try: meal <desc> /cal <calories>");
         }
 
         int calories;
@@ -57,7 +71,7 @@ public class AddMealCommand implements Command {
                 throw new NumberFormatException();
             }
         } catch (NumberFormatException e) {
-            throw new CommandException("Calories must be a non-negative number.");
+            throw new CommandException("Calories must be a non-negative integer.");
         }
 
         Integer protein = null;
