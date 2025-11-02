@@ -1,0 +1,109 @@
+@startuml
+title ViewDashboardCommand - Class Diagram
+
+skinparam classAttributeIconSize 0
+skinparam packageStyle rectangle
+skinparam shadowing false
+skinparam defaultFontName Arial
+
+!define LOGIC #E8F5E9
+!define MODEL #FFFDE7
+!define UI    #E3F2FD
+!define STOR  #FCE4EC
+
+package "command" LOGIC {
+  interface Command
+  class CommandResult
+
+  class ViewDashboardCommand implements Command {
+    -LOGGER: Logger <<static>>
+    +execute(list: EntryList, storage: Storage): CommandResult
+  }
+}
+
+package "ui" UI {
+  class DashboardFormatter {
+    -LOGGER: Logger <<static>>
+    +format(summary: DashboardSummary): String
+    -formatDietSection(sb: StringBuilder, summary: DashboardSummary)
+    -formatMilkSection(sb: StringBuilder, summary: DashboardSummary)
+    -formatFitnessSection(sb: StringBuilder, summary: DashboardSummary)
+  }
+}
+
+package "model" MODEL {
+  class DashboardSummary {
+    -LOGGER: Logger <<static>>
+    -DATE_FORMATTER: DateTimeFormatter <<static>>
+    --
+    -caloriesToday: int
+    -calorieGoal: Integer
+    -milkToday: int
+    -workoutMinutesThisWeek: int
+    -workoutGoal: WorkoutGoalEntry
+    --
+    +DashboardSummary(list: EntryList, storage: Storage)
+    -calculateCaloriesToday(list: EntryList): int
+    -calculateMilkToday(list: EntryList, today: LocalDate): int
+    --
+    +getCaloriesToday(): int
+    +getCalorieGoal(): Integer
+    +getMilkToday(): int
+    +getWorkoutMinutesThisWeek(): int
+    +getWorkoutGoal(): WorkoutGoalEntry
+  }
+
+  class WorkoutGoalQueries {
+    +sumWorkoutMinutesThisWeek(all: List<Entry>, weekStart: LocalDateTime): int <<static>>
+    +currentWeekGoal(all: List<Entry>, weekStart: LocalDateTime): WorkoutGoalEntry <<static>>
+  }
+
+  class EntryList {
+    +asList(): List<Entry>
+  }
+  class WorkoutGoalEntry
+  class Entry
+}
+
+package "storage" STOR {
+  class Storage {
+    +loadGoal(): Integer
+  }
+}
+
+' --- External Java Dependencies ---
+package "java.util.logging" {
+  class Logger
+}
+
+package "java.time" {
+  class LocalDate
+  class LocalDateTime
+}
+
+package "java.time.format" {
+  class DateTimeFormatter
+}
+
+' --- Relationships ---
+ViewDashboardCommand ..> DashboardSummary : "1. creates & uses"
+ViewDashboardCommand ..> DashboardFormatter : "2. creates & uses"
+ViewDashboardCommand ..> CommandResult : "3. returns"
+ViewDashboardCommand ..> Logger : "logs"
+
+DashboardSummary ..> Storage : "uses"
+DashboardSummary ..> EntryList : "uses"
+DashboardSummary ..> WorkoutGoalQueries : "uses"
+DashboardSummary ..> Logger : "logs"
+DashboardSummary ..> LocalDate : "uses"
+DashboardSummary ..> DateTimeFormatter : "uses"
+
+DashboardFormatter ..> DashboardSummary : "uses"
+DashboardFormatter ..> WorkoutGoalEntry : "uses"
+DashboardFormatter ..> Logger : "logs"
+
+WorkoutGoalQueries ..> Entry
+WorkoutGoalQueries ..> WorkoutGoalEntry
+WorkoutGoalQueries ..> LocalDateTime
+@enduml
+

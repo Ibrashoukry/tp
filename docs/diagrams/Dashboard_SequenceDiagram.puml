@@ -26,29 +26,50 @@ participant ":Storage" as Storage STOR
 participant ":DashboardFormatter" as Formatter UI
 
 User -> Ui : enter "dashboard"
+activate Ui
+
 Ui -> Parser : parse("dashboard")
+activate Parser
 create DashCmd
 Parser -> DashCmd : new ViewDashboardCommand()
-Parser --> Ui : DashCmd
+Parser --> Ui : cmd
+deactivate Parser
+
 Ui -> DashCmd : execute(list, storage)
+activate DashCmd
 
 create Summary
 DashCmd -> Summary : new DashboardSummary(list, storage)
+activate Summary
+
 Summary -> Storage : loadGoal()
+activate Storage
 Storage --> Summary : calorieGoal
+deactivate Storage
+
 Summary -> List : asList()
+activate List
 List --> Summary : entries
+deactivate List
+
 Summary -> Summary : calculateCaloriesToday()
 Summary -> Summary : calculateMilkToday()
 Summary -> Summary : sumWorkoutMinutesThisWeek()
 Summary -> Summary : currentWeekGoal()
+
 Summary --> DashCmd : summary
+deactivate Summary
 
 create Formatter
 DashCmd -> Formatter : new DashboardFormatter()
-DashCmd -> Formmator : format(summary)
+activate Formatter
+DashCmd -> Formatter : format(summary)
 Formatter --> DashCmd : dashboardText
+deactivate Formatter
 
 DashCmd --> Ui : CommandResult(dashboardText)
-Ui -> User : show dashboardText
+deactivate DashCmd
+
+Ui --> User : show dashboardText
+deactivate Ui
 @enduml

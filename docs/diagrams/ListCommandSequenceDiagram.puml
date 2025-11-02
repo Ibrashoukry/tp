@@ -23,9 +23,10 @@ participant ":ListCommand" as ListCmd LOGIC
 participant ":EntryList" as EntryList MODEL
 
 User -> Ui : enter "list /t meal"
+activate Ui
+
 Ui -> Parser : parse("list /t meal")
 activate Parser
-
 Parser -> ListParser : parseListCommand("/t meal")
 activate ListParser
 
@@ -43,6 +44,7 @@ activate ListCmd
 ListCmd -> EntryList : setFilter(predicate)
 activate EntryList
 EntryList -> EntryList : recomputeShown()
+EntryList --> ListCmd
 deactivate EntryList
 
 ListCmd -> EntryList : getShownSnapshot()
@@ -54,5 +56,6 @@ ListCmd -> ListCmd : formatFilteredList(filteredEntries)
 ListCmd --> Ui : CommandResult(formattedText)
 deactivate ListCmd
 
-Ui -> User : show formattedText
+Ui --> User : show formattedText
+deactivate Ui
 @enduml
