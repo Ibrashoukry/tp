@@ -470,7 +470,7 @@ a `MilkEntry`.
 - **Effect:** Appends a `MilkEntry` and saves immediately.
 
 ---
-### 3.6 Add Weight — Ryan Siow
+### 3.7 Add Weight — Ryan Siow
 
 #### Overview
 
@@ -506,7 +506,7 @@ a `WeightEntry`.
 | **Positive integer kg (current)** | Simple, uniform | No fractional kg                    |
 | Decimal kg                        | Precise         | Extra parsing/validation complexity |
 
-### 3.7 Feature: View Dashboard
+### 3.8 Feature: View Dashboard
 
 #### Overview
 
