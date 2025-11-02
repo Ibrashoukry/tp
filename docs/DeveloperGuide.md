@@ -554,7 +554,7 @@ Unlike typical mobile apps, Mama stores all information locally and works withou
 
 ## Non-Functional Requirements
 
-1. Must run on Java 11+.
+1. Must run on Java 17.
 2. Startup time ≤ 2 seconds.
 3. Handles up to 10,000 entries smoothly.
 4. File size ≤ 10 MB.
