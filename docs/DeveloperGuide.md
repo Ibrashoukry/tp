@@ -447,7 +447,7 @@ It validates the volume, appends a `MilkEntry`, and persists via `Storage#save(l
 
 **Step 3.** `AddMilkCommand#execute(...)` checks `volume > 0`. If invalid, throws `CommandException`. If valid, appends
 a `MilkEntry`.
-> ![Milk_ValidationAndAppend](images/AddMilk_ValidationAndAppend.png)
+![ValidationAppendMilk.png](images/ValidationAppendMilk.png)
 
 **Step 4.** `Storage#save(list)` persists the updated list.
 > ![Milk_Persist](images/AddMilk_Persist.png)
@@ -490,7 +490,7 @@ It validates the weight, appends a `WeightEntry`, and persists via `Storage#save
 
 **Step 3.** `AddWeightCommand#execute(...)` checks `weight > 0`. If invalid, throws `CommandException`. If valid, appends
 a `WeightEntry`.
-> ![AddWeight_ValidationAndAppend.png](images/AddWeight_ValidationAndAppend.png)
+![ValidationAppendWeight.png](images/ValidationAppendWeight.png)
 
 **Step 4.** `Storage#save(list)` persists the updated list.
 > ![AddWeight_Persist.png](images/AddWeight_Persist.png)
