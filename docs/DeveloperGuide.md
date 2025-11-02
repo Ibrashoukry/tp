@@ -490,7 +490,7 @@ a `WeightEntry`.
 > ![AddWeight_Persist.png](images/AddWeight_Persist.png)
 
 **Step 5.** `Ui` shows `Added: [WEIGHT] 60kg`.
-> ![AddWeight_SequenceDiagram.png](images/AddWeight_SequenceDiagram.png)
+![AddWeight_SequenceDiagram.png](images/AddWeight_SequenceDiagram.png)
 
 #### Design Considerations
 
