@@ -4,12 +4,7 @@ import seedu.mama.model.EntryList;
 import seedu.mama.model.MealEntry;
 import seedu.mama.storage.Storage;
 
-import java.util.Arrays;
-import java.util.logging.Logger;
-
 public class AddMealCommand implements Command {
-    private static final Logger LOG = Logger.getLogger(AddMealCommand.class.getName());
-
     private final String mealType;
     private final int calories;
     private final Integer protein;
