@@ -3,9 +3,11 @@ package seedu.mama.model;
 import java.text.DecimalFormat;
 
 public class WeightEntry extends Entry {
-    private final double weightInKG;
 
-    private final static DecimalFormat DECIMAL_FORMAT= new DecimalFormat("0.00");
+    // FIX 1 & 2: Moved to the top and corrected modifier order.
+    private static final DecimalFormat DECIMAL_FORMAT= new DecimalFormat("0.00");
+
+    private final double weightInKG;
 
     /**
      * Constructs WeightEntry with the given weight value
