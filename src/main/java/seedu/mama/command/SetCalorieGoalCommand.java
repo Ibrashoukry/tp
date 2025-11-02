@@ -13,8 +13,6 @@ public class SetCalorieGoalCommand implements Command {
 
     @Override
     public CommandResult execute(EntryList list, Storage storage) throws CommandException {
-        CalorieGoalEntry entry = new CalorieGoalEntry(calorieGoal);
-        list.add(entry);
         if (storage == null) {
             throw new CommandException("Storage not initialized properly.");
         }
