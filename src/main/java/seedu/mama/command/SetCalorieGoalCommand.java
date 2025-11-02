@@ -1,6 +1,5 @@
 package seedu.mama.command;
 
-import seedu.mama.model.CalorieGoalEntry;
 import seedu.mama.model.EntryList;
 import seedu.mama.storage.Storage;
 
