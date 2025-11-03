@@ -10,34 +10,11 @@
 
 ### **Enhancements Implemented**
 
-1. **List Command and enhanced with Type Filtering:**
-    * **What it does:** Allows users to filter the displayed entries by type (e.g., list /t meal, list /t workout). Previously, users could only view all entries.
-    * **Justification:** This feature significantly improves usability, especially as the number of entries grows. Users can quickly find specific types of records without manually scanning the entire list.
-    * **Highlights:**
-        * Implemented a dedicated ListCommandParser to handle the parsing logic for the list command, adhering to the Single Responsibility Principle (SRP).
-        * Refactored ListCommand to accept a Predicate\<Entry\>, making the filtering logic flexible and easily extensible for potential future filters (e.g., by date).
-        * Ensured backward compatibility: list with no arguments still shows all entries.
-        * Added comprehensive JUnit tests using a StorageStub to ensure test isolation from the file system.
-        * Included robust assertions and logging for better maintainability.
-2. **New Feature: dashboard Command:**
-    * **What it does:** Provides a consolidated, at-a-glance view of the user's health status, including today's calorie intake vs. goal, today's total milk pumped, and this week's workout minutes vs. goal.
-    * **Justification:** Addresses the user need to see the "bigger picture" of their health across different metrics without needing to run multiple list commands. This provides immediate, actionable insights.
-    * **Highlights:**
-        * Designed with high cohesion by abstracting logic into three distinct components:
-            * DashboardSummary (Model): Handles all data aggregation and calculations.
-            * DashboardFormatter (UI): Responsible solely for formatting the summary data into a user-friendly string.
-            * ViewDashboardCommand (Control): Acts as a simple orchestrator.
-        * This abstraction adheres strongly to SRP and makes the feature easy to test and modify (e.g., changing the dashboard layout only requires editing the DashboardFormatter).
-        * Added logging and assertions to all relevant classes.
-        * Included JUnit tests with a StorageStub to ensure correctness and isolation.
-3. **Refactoring for Cohesion and Extensibility (OCP):**
-    * **What it does:** Introduced EntryType and suggested CommandType enums to teammate Yu Jie to serve as single sources of truth for entry type definitions/parsing and command usage strings, respectively. Refactored ListCommandParser, Entry.fromStorageString, and Ui to utilize these enums.
-    * **Justification:** The previous design scattered type and command information across multiple classes (Parser, ListCommandParser, Entry, Mama), violating SRP and the Open/Closed Principle. Adding new entry types or commands required modifying multiple files, increasing maintenance burden and risk of bugs.
-    * **Highlights:**
-        * Significantly improved code cohesion by centralizing related logic within the enums.
-        * Made the system highly extensible. Adding a new Entry type now requires only modifying the EntryType enum; the parsers and UI update automatically.
-        * Cleaned up the Mama.main() method by abstracting UI messages into the Ui class.
+My primary contributions centered on enhancing data visibility and improving the application's architectural quality. I upgraded the **`list` command** to support type filtering (e.g., `list /t meal`), a critical usability feature for users managing a growing number of entries. This was achieved by implementing a dedicated `ListCommandParser` to adhere to the Single Responsibility Principle (SRP) and refactoring `ListCommand` to accept a `Predicate<Entry>`, which makes the filtering logic flexible and easily extensible for future criteria, such as filtering by date.
 
+To provide users with immediate, actionable insights, I introduced the new **`dashboard` command**. This feature gives a consolidated, at-a-glance view of the user's health status, summarizing daily calorie intake, milk production, and weekly workout progress against their goals. The design is highly cohesive, separating concerns into three distinct components: `DashboardSummary` (Model) for data aggregation, `DashboardFormatter` (UI) for presentation, and `ViewDashboardCommand` (Control) as an orchestrator, making the feature robust and easy to modify.
+
+Finally, I led a significant **refactoring effort to improve code cohesion and extensibility**. I introduced `EntryType` and `CommandType` enums to serve as single sources of truth, centralizing logic that was previously scattered across multiple classes. This change resolved violations of SRP and the Open/Closed Principle (OCP), making the system highly extensible; adding a new entry type now only requires updating the enum, and the relevant parsers and UI components adapt automatically.
 ### **Contributions to Team-Based Tasks**
 
 * Participated actively in weekly team meetings, contributing to feature planning and task allocation, ensuring that everything is moving accordingly.
