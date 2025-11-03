@@ -293,6 +293,8 @@ Remaining: 60 mins
 
 - If goals are not set, reminder messages will be shown instead.
 
+___
+
 ### 10. Exiting the Program — `bye`
 
 Ends the session and saves all data automatically.
@@ -309,6 +311,27 @@ Ends the session and saves all data automatically.
 - Your data is saved automatically before exiting, so no need to save manually.
 
 ---
+
+### 11. Getting Help — `help`
+
+Displays a list of all available commands and their formats. Use this command whenever you are unsure about what a command does or how to use it.
+
+**Format**
+> help
+
+**Example Output**
+
+Here are the available commands:
+
+help
+
+workout <description> /dur <duration (mins)> /feel <feeling (out of 5)>
+
+meal <meal description> /cal <calories> [/p <protein>] [/c <carbs>] [/f <fat>]
+
+... (and so on for all commands)
+
+___
 
 ## Data File
 

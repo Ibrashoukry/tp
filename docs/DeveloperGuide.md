@@ -507,6 +507,12 @@ a `WeightEntry`.
 | **Positive integer kg (current)** | Simple, uniform | No fractional kg                    |
 | Decimal kg                        | Precise         | Extra parsing/validation complexity |
 
+#### Summary
+
+- **Command:** `weight <weight-kg>`
+- **Example:** `weight 60`
+- **Effect:** Appends a `WeightEntry` and saves immediately.
+
 ### 3.8 Feature: View Dashboard
 
 #### Overview
@@ -548,13 +554,38 @@ The following steps describe the execution flow of the `dashboard` command:
 
 > **ViewDashboardCommand Sequence Diagram**
 > ![Dashboard Sequence Diagram](images/Dashboard_SequenceDiagram.png)
+---
+### 3.9 Help Command
+
+#### Overview
+
+The `HelpCommand` provides users with a quick reference to all available commands and their correct syntax. When the user enters `help`, the command dynamically generates a formatted list of usage instructions for every command defined in the application.
+
+#### Design
+
+The `HelpCommand` is designed for simplicity and maintainability, adhering to the **Single Responsibility Principle (SRP)** and the **Open/Closed Principle (OCP)**.
+
+| Component              | Description                                                                                                                                          |
+|------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **`HelpCommand`**      | A simple command class whose only responsibility is to retrieve and format the help message. It does not contain any complex logic itself.           |
+| **`CommandType` Enum** | This enum acts as the **single source of truth** for all command usage strings. The `HelpCommand` reads directly from this enum to build its output. |
+| **Flow of Control**    | `Parser` → `HelpCommand` → `CommandType` → `CommandResult` → `Ui`                                                                                    |
+
+This design is highly maintainable. To add a new command to the help message, a developer only needs to add a new entry to the `CommandType` enum. The `HelpCommand` will automatically include it without needing any code changes, thus satisfying the Open/Closed Principle.
+
+#### Implementation Steps
+
+1.  The user enters the `help` command.
+2.  The main `Parser` recognizes the keyword and creates a `new HelpCommand()`.
+3.  The `HelpCommand#execute()` method is called.
+4.  Inside `execute()`, it calls the static method `CommandType.getFormattedUsage()` to get a single string containing all command formats.
+5.  This string is then wrapped in a `CommandResult` and returned to the `Ui` to be displayed to the user.
 
 #### Summary
 
-- **Command:** `weight <weight-kg>`
-- **Example:** `weight 60`
-- **Effect:** Appends a `WeightEntry` and saves immediately.
-
+* **Command:** `help`
+* **Effect:** Displays a list of all commands and their formats.
+* **Key Design:** Leverages the `CommandType` enum as a single source of truth for maintainability.
 ---
 ## Product Scope
 
@@ -638,7 +669,7 @@ Unlike typical mobile apps, Mama stores all information locally and works withou
 | `meal breakfast 500` | Adds a meal entry              |
 | `list`               | Displays all entries           |
 | `delete 2`           | Deletes the second entry       |
-| `weight 70`  | Adds a measurement entry       |
+| `weight 70`          | Adds a measurement entry       |
 | `list /t measure`    | Lists only measurement entries |
 
 ### 3. Error Scenarios
