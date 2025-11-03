@@ -321,8 +321,8 @@ The command validates basic input, appends a `MealEntry` to `EntryList`, and per
 > ![Meal_Parsing](images/AddMeal_Parsing.png)
 
 **Step 3.** 
-- **Required:** `mealType`, `calorues` must be present and **> 0** (for calories only).
-- **Optional:** `protein`, `carbs`, `fat` if present must be **> 0**.  
+- **Required:** `mealType`, `calories` must be present and **>= 0** (for calories only).
+- **Optional:** `protein`, `carbs`, `fat` if present, must be **>= 0**.  
   If validation fails → `CommandException`.  
   If valid → create `MealEntry` and append to `EntryList`.
 
@@ -560,8 +560,71 @@ The following steps describe the execution flow of the `dashboard` command:
 
 > **ViewDashboardCommand Sequence Diagram**
 > ![Dashboard Sequence Diagram](images/Dashboard_SequenceDiagram.png)
+
 ---
-### 3.9 Help Command
+
+### 3.9 Set and View Calorie Goal — Ibrahim Shoukry
+
+#### Overview
+
+The `calorie goal` feature allows users to set a daily calorie target and view progress against it. The feature stores the latest daily calorie goal 
+in persistent storage and exposes two main user-facing flows:
+- `calorie goal` — view the currently set goal.
+- `calorie goal <CALORIES>` — set a new daily calorie goal which is persisted to storage.
+
+#### Implementation Details
+
+**Step 1.** The user enters for example: `calorie goal 1800`
+
+**Step 2.** `Parser` recognises the `calorie goal` keyword and delegates handling to `CalorieGoalQueries`.
+
+**Step 3.**
+- If a number follows (`calorie goal 1800`): creates `SetCalorieGoalCommand(1800)`.
+- If no number (`calorie goal`): creates a view command to show current goal and progress.
+
+**Step 4.** Command executes using `Storage`:
+- `SetCalorieGoalCommand#execute` → validates input → calls `Storage#saveGoal(int)`.
+- `ViewCalorieGoalCommand#execute` → calls `Storage#loadGoal()` → sums `MealEntry#getCalories()` → prints progress.
+
+**Step 5.** `Ui` displays a message confirming the operation:
+
+- For set: `Calorie goal set to 1800 kcal.`
+
+- For view: `Your current calorie goal is 1800 kcal. Progress: 1200 kcal logged.`
+
+**Class Diagram**
+
+> ![CalorieGoal_ClassDiagram.png](images/CalorieGoal_ClassDiagram.png)
+
+**Sequence Diagram**
+
+> ![CalorieGoal_SequenceDiagram.png](images/CalorieGoal_SequenceDiagram.png)
+
+#### Design Considerations
+
+**Aspect: Input format**
+
+| Alternative               | Pros                    | Cons                           |
+|---------------------------|-------------------------|--------------------------------|
+| **Global goal (current)** | Simple and clear        | Cannot set per-day goals       |
+| **Per-day goals**         | Flexible and historical | More complex storage and logic |
+
+**Aspect: Validation**
+
+| Rule                                  | Rationale                             |
+|---------------------------------------|---------------------------------------|
+| Calories must be non-negative integer | Avoids invalid/negative goal values   |
+| Input must be non-empty               | Prevents missing and unclear commands |
+
+#### Summary
+
+- **Command:** `calorie goal <calories>`, `calorie goal`
+- **Example:** `calorie goal 1800`
+- **Effect:** Stores or views daily `calorie goal`, persists via `Storage`, and displays via `Ui`.
+
+---
+
+### 3.10 Help Command
 
 #### Overview
 

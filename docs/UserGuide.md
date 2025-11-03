@@ -321,13 +321,15 @@ Displays a list of all available commands and their formats. Use this command wh
 
 **Example Output**
 
-Here are the available commands:
 
-help
+> Here are the available commands:
+>
+> help
+>
+> workout <description> /dur <duration (mins)> /feel <feeling (out of 5)>
+>
+> meal <meal description> /cal <calories> \[/protein \<protein>] \[/carbs \<carbs>] \[/fat \<fat>]
 
-workout <description> /dur <duration (mins)> /feel <feeling (out of 5)>
-
-meal <meal description> /cal <calories> [/p <protein>] [/c <carbs>] [/f <fat>]
 
 ... (and so on for all commands)
 
@@ -339,7 +341,7 @@ Mama automatically creates and updates a text file named `mama.txt` in the same 
 Each entry is stored on a separate line, using the `|` character as a separator.
 
 **Example Content**
-> MEAL|breakfast|500
+> MEAL|breakfast|500|25|5|2|28/10/25 05:20
 >
 > WORKOUT|yoga|45|28/10/25 02:33
 >
@@ -369,16 +371,16 @@ Each entry is stored on a separate line, using the `|` character as a separator.
 
 ## Command Summary
 
-| Command             | Format                                                                | Example                    |
-|---------------------|-----------------------------------------------------------------------|----------------------------|
-| **List**            | `list` or `list /t TYPE`                                              | `list /t meal`             |
-| **Delete**          | `delete INDEX`                                                        | `delete 2`                 |
-| **Add Meal**        | `meal MEAL_NAME /cal CALORIES`                                        | `meal breakfast /cal 500`  |
-| **Add Workout**     | `workout TYPE /dur DURATION`                                          | `workout yoga /dur 30`     |
-| **Workout Goal**    | `workout goal [MINUTES]`                                              | `workout goal 150`         |
-| **Add Milk**        | `milk VOLUME`                                                         | `milk 150`                 |
-| **Add Weight**      | `weight VALUE`                                                        | `weight 70`                |
-| **Add Measurement** | `measure waist/WAIST hips/HIPS [chest/CHEST] [thigh/THIGH] [arm/ARM]` | `measure waist/78 hips/92` |
-| **Calorie Goal**    | `calorie goal [CALORIES]`                                             | `calorie goal 1800`        |
-| **Exit**            | `bye`                                                                 | `bye`                      |
+| Command             | Format                                                                      | Example                    |
+|---------------------|-----------------------------------------------------------------------------|----------------------------|
+| **List**            | `list` or `list /t TYPE`                                                    | `list /t meal`             |
+| **Delete**          | `delete INDEX`                                                              | `delete 2`                 |
+| **Add Meal**        | `meal MEAL_NAME /cal CALORIES [/protein PROTEIN] [/carbs CARBS] [/fat FAT]` | `meal breakfast /cal 500`  |
+| **Add Workout**     | `workout TYPE /dur DURATION`                                                | `workout yoga /dur 30`     |
+| **Workout Goal**    | `workout goal [MINUTES]`                                                    | `workout goal 150`         |
+| **Add Milk**        | `milk VOLUME`                                                               | `milk 150`                 |
+| **Add Weight**      | `weight VALUE`                                                              | `weight 70`                |
+| **Add Measurement** | `measure waist/WAIST hips/HIPS [chest/CHEST] [thigh/THIGH] [arm/ARM]`       | `measure waist/78 hips/92` |
+| **Calorie Goal**    | `calorie goal [CALORIES]` or `calorie goal`                                 | `calorie goal 1800`        |
+| **Exit**            | `bye`                                                                       | `bye`                      |
 
