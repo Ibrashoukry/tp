@@ -1,0 +1,28 @@
+@startuml
+skinparam style strict
+
+package "Mama Application Architecture" {
+
+  rectangle "UI" as UI
+  rectangle "Parser" as Parser
+  rectangle "Model" as Model
+  rectangle "Storage" as Storage
+  rectangle "File" as File
+  actor User as User
+
+  User -> UI : Inputs Command
+  UI -> Parser : Sends Input
+  Parser -> Model : Executes Command
+  Model -> Parser : Queries Data
+  Parser -> Storage : Persists Data
+  Storage <-> File : Reads/Writes Data
+  Parser -> UI : Returns CommandResult
+  UI -> User : Displays Output
+}
+
+' Arrange the main components vertically
+Model -down-> Storage
+Parser -[hidden]down-> Model
+UI -[hidden]down-> Parser
+
+@enduml

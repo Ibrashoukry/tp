@@ -259,8 +259,7 @@ using `Storage#save(list)`.
 **Step 1 — User issues a command**  
 The user enters, for example:
 ```measure waist/70 hips/98 chest/90 thigh/55 arm/30```
-
-> ![Measure_Initial](images/AddMeasurement_Initial.png)
+![AddMeasurement_Initial.png](images/AddMeasurement_Initial.png)
 
 The `Ui` captures the raw input.
 
@@ -275,8 +274,7 @@ The `Ui` captures the raw input.
 - **Optional:** `chest`, `thigh`, `arm` if present must be **> 0**.  
   If validation fails → `CommandException`.  
   If valid → create `BodyMeasurementEntry` and append to `EntryList`.
-
-> ![Measure_ValidationAndAppend](images/AddMeasurement_ValidationAndAppend.png)
+![ValidationAppendMeasurement.png](images/ValidationAppendMeasurement.png)
 
 **Step 4.** Persist: `Storage#save(list)`.
 > ![Measure_Persist](images/AddMeasurement_Persist.png)
@@ -440,14 +438,14 @@ It validates the volume, appends a `MilkEntry`, and persists via `Storage#save(l
 #### Implementation Details
 
 **Step 1.** User enters `milk 30`. `Ui` captures input.
-> ![AddMilk_Initial.png](images/AddMilk_Initial.png)
+![AddMilk_Initial.png](images/AddMilk_Initial.png)
 
 **Step 2.** `Parser` constructs `AddMilkCommand(volume=30)`.
 > ![Milk_Parsing](images/AddMilk_Parsing.png)
 
 **Step 3.** `AddMilkCommand#execute(...)` checks `volume > 0`. If invalid, throws `CommandException`. If valid, appends
 a `MilkEntry`.
-> ![Milk_ValidationAndAppend](images/AddMilk_ValidationAndAppend.png)
+![ValidationAppendMilk-Validation.png](images/ValidationAppendMilk-Validation.png)
 
 **Step 4.** `Storage#save(list)` persists the updated list.
 > ![Milk_Persist](images/AddMilk_Persist.png)
@@ -483,29 +481,37 @@ It validates the weight, appends a `WeightEntry`, and persists via `Storage#save
 #### Implementation Details
 
 **Step 1.** User enters `weight 60`. `Ui` captures input.
-> ![AddWeight_Initial.png](images/AddWeight_Initial.png)
+![AddWeight_Initial.png](images/AddWeight_Initial.png)
 
 **Step 2.** `Parser` constructs `AddWeightCommand(weight=60)`.
 > ![AddWeight_Parsing.png](images/AddWeight_Parsing.png)
 
 **Step 3.** `AddWeightCommand#execute(...)` checks `weight > 0`. If invalid, throws `CommandException`. If valid, appends
 a `WeightEntry`.
-> ![AddWeight_ValidationAndAppend.png](images/AddWeight_ValidationAndAppend.png)
+![ValidationAppendWeight.png](images/ValidationAppendWeight.png)
 
 **Step 4.** `Storage#save(list)` persists the updated list.
 > ![AddWeight_Persist.png](images/AddWeight_Persist.png)
 
-**Step 5.** `Ui` shows `Added: [WEIGHT] 60kg`.
+**Step 5.** `Ui` shows `Added: [WEIGHT] 60.00kg`.
 ![AddWeight_SequenceDiagram.png](images/AddWeight_SequenceDiagram.png)
 
 #### Design Considerations
 
 **Aspect: Weight input**
 
-| Alternative                       | Pros            | Cons                                |
-|-----------------------------------|-----------------|-------------------------------------|
-| **Positive integer kg (current)** | Simple, uniform | No fractional kg                    |
-| Decimal kg                        | Precise         | Extra parsing/validation complexity |
+| Alternative      | Pros                                  | Cons                                                  |
+|------------------|---------------------------------------|-------------------------------------------------------|
+| Positive Integer | Simplest to implement and validate    | Lacks necessary precision. Cannot track small changes |
+| Strict Decimal   | Guarantees absolute decimal precision | Increase complexity                                   |
+
+#### Summary
+
+- **Command:** `weight <weight-kg>`
+- **Example:** `weight 60`
+- **Effect:** Appends a `WeightEntry` and saves immediately.
+
+---
 
 #### Summary
 
@@ -661,24 +667,27 @@ Unlike typical mobile apps, Mama stores all information locally and works withou
 ## Instructions for Manual Testing
 
 ### 1. Launching the Application
+**`MAMA`** is the main entry point of the application.
+* At app launch, it initializes UI, Storage, and loads existing notes from disk
+* Manages the main application loop, reading user input and executing commands via Parser
 
 ### 2. Example Commands
 
-| Command              | Expected Output                |
-|----------------------|--------------------------------|
-| `meal breakfast 500` | Adds a meal entry              |
-| `list`               | Displays all entries           |
-| `delete 2`           | Deletes the second entry       |
-| `weight 70`          | Adds a measurement entry       |
-| `list /t measure`    | Lists only measurement entries |
+| Command                   | Expected Output                |
+|---------------------------|--------------------------------|
+| `meal breakfast /cal 500` | Adds a meal entry              |
+| `list`                    | Displays all entries           |
+| `delete 1`                | Deletes the first entry        |
+| `weight 70`               | Adds a measurement entry       |
+| `list /t measure`         | Lists only measurement entries |
 
 ### 3. Error Scenarios
 
 | Command             | Expected Output         |
 |---------------------|-------------------------|
-| `delete 99`         | “Invalid index”         |
-| `measure waist abc` | “Invalid number format” |
-| `milk -50`          | “Invalid milk volume”   |
+| `delete 99`         | “Invalid delete index”         |
+| `measure waist abc` | “Unknown field: waist” |
+| `milk -50`      | “milkVolume must be a positive number!”   |
 
 ## Appendix: Requirements, Glossary, and Notes
 
